@@ -1,5 +1,6 @@
 package com.planejamentopessoal.app.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,30 @@ public class TransactionService {
 				
 	}
 	
-	public Transaction insert(Transaction obj) {
-		return repository.save(obj);
+	public List<Transaction> insert(Transaction obj) {
+		List<Transaction> objList = new ArrayList<>();
+		if(obj.getParcelas()==1) {
+			obj.setParcelaAtual(1);
+			objList.add(obj);
+			repository.save(obj);
+		}else {
+			
+			for(int i =0;i<obj.getParcelas();i++) {
+				Transaction parcela = new Transaction
+						(null,
+						obj.getNome(),
+						obj.getData().plusMonths(i),
+						obj.getPreco()/obj.getParcelas(),
+						i+1,
+						obj.getParcelas(),
+						obj.getCategoria());
+				objList.add(parcela);
+				repository.save(parcela);
+			}
+		
+		}
+		
+		return objList;
 	}
 	
 	public void delete(Long id) {

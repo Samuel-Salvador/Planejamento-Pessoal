@@ -1,24 +1,38 @@
-const url = "http://localhost:5050/transactions";
+const url = "http://127.0.0.1:5050/transactions";
 
-const button = document.querySelector(".modal button");
+const dateOptions = {
+	day: 'numeric',
+	month: 'numeric',
+	year: 'numeric'
+}
+
 
 function addFromDb(body, i) {
-  document.getElementById(
-    "transacoes_nome"
-  ).innerHTML += `<div class="linha">${body[i].nome}</div>`;
-  document.getElementById(
-    "transacoes_data"
-  ).innerHTML += `<div class="linha">${body[i].data}</div>`;
-  document.getElementById(
-    "transacoes_preco"
-  ).innerHTML += `<div class="linha">${body[i].preco}</div>`;
-  document.getElementById(
-    "transacoes_parcelas"
-  ).innerHTML += `<div class="linha">${body[i].parcelas}</div>`;
-  document.getElementById(
-    "transacoes_categoria"
-  ).innerHTML += `<div class="linha">${body[i].categoria}</div>`;
+	const dataFromDb = new Date(body[i].data);
+	const dataCerta = new Date(dataFromDb.getTime() 
+			+ Math.abs(dataFromDb.getTimezoneOffset()*60000)).
+			toLocaleString("pt-BR",dateOptions);
+	
+	document.getElementById("transacoes_nome")
+		.innerHTML += `<div class="linha">${body[i].nome}</div>`;
+  	document.getElementById("transacoes_data")
+  		.innerHTML += `<div class="linha">
+		${dataCerta}</div>`;
+  	document.getElementById("transacoes_preco")
+  		.innerHTML += 
+		`<div class="linha">${(body[i].preco)
+		.toLocaleString("pt-BR",
+  			{style: 'currency', currency: 'BRL'})}</div>`;
+  	document.getElementById("transacoes_parcelas")
+		.innerHTML += `<div class="linha">
+		${body[i].parcelaAtual+"/"
+		+body[i].parcelas}</div>`;
+  	document.getElementById("transacoes_categoria")
+		.innerHTML += `<div class="linha">
+		${body[i].categoria}</div>`;
 }
+
+
 
 export default function initFetch() {
   fetch(url)
@@ -28,8 +42,10 @@ export default function initFetch() {
         addFromDb(body, i);
       }
     });
-
-  button.addEventListener("click", () => {
+	
+	const button = document.querySelector(".modal button");
+	
+  	button.addEventListener("click", () => {
     const modal = document.querySelector(".adicionar_transacao");
 
     const nome = document.forms.transaction.nome.value;

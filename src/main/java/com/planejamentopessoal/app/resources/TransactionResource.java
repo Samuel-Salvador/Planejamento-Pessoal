@@ -38,10 +38,15 @@ public class TransactionResource {
 	
 	@PostMapping
 	public ResponseEntity<Transaction> insert(@RequestBody Transaction obj){
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		List<Transaction> objList = service.insert(obj);
+		
+		for(Transaction transaction: objList) {
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}").buildAndExpand(transaction.getId()).toUri();
+			
+			ResponseEntity.created(uri).body(obj);
+		}
+		return null;		
 	}
 	
 	@DeleteMapping(value = "/{id}")
