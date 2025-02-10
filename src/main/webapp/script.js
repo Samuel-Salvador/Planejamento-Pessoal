@@ -1,5 +1,5 @@
-import initFetch from "./modules/fetch.js";
-import initModal from "./modules/modal.js";
+import initFetch from "./modules/transactionFetchData.js";
+import initModal from "./modules/addModal.js";
 
 initFetch();
 initModal();

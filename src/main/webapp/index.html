@@ -32,14 +32,8 @@
 
     <main>
 
-        <div class="container_transacoes">
-            <div class="container_gerenciamento_transacoes container_adicionar">
-                <a class="botao_adicionar_transicao" href="">+ Adicionar</a>
-            </div>
-			<div class="container_gerenciamento_transacoes container_remover">
-				<a class="botao_remover_transicao" href="">Remover</a>
-				
-			</div>
+        	<div class="container_transacoes">
+            
             <span></span>
 
             <div class="container_transacoes_titulo_lista" id="transacoes_nome">
@@ -62,34 +56,70 @@
             <div class="container_transacoes_titulo_lista" id="transacoes_preco">
                 <p class="transacoes_titulo">Preço</p>
             </div>
-
+			
+			<div class="container_gerenciamento_transacoes container_adicionar">
+				<a class="botao_adicionar_transicao" href="">+ Adicionar</a>
+			</div>
+			<div class="container_gerenciamento_transacoes container_remover">
+				<a class="botao_remover_transicao">Remover</a>			
+			</div>
         </div>
+		
 
-
+		
+	
+			
 
     </main>
     <div class="adicionar_transacao">
-        <form class="modal" name="transaction" method="POST" action="./transactions">
-            <a href="">X</a>
+		
+        <form class="modal" name="transaction">
+			<a class="x_add" href="">X</a>
+			
+			
             <label for="nome">Nome: </label>
-            <input type="text" id="nome">
+            <input name="nome" type="text" id="nome" required>
             <label for="categoria">Categoria: </label>
-            <input type="text" id="categoria">
+            <input name="categoria" type="text" id="categoria">
 
 
             <label for="data">Data: </label>
-            <input type="date" id="data">
+            <input name="data" type="date" id="data" required>
 
             <label for="parcelas">Parcelas: </label>
-            <input type="number" id="parcelas">
+            <input name="parcelas" type="number" id="parcelas" required>
             <label for="preco">Preço: </label>
-            <input type="number" id="preco">
+            <input name="preco" type="number" id="preco" required>
 
             <button type="button">Confirmar</button>
         </form>
 
     </div>
+	
+	<div class="remover_transacao">	
+		<form class="modal removal_modal" name="removal">
+			<a class="x_removal" href="">X</a>
+			<div class="container_selection">
+				<select id="selection_transaction" name="selection">	
+							
+				</select>	
+			</div>
+			
+			<div class="dados_removal">
+				<div class="dados_removal_h3">
+					<h3> ← Selecione a transação a ser removida: </h3>
+									
+				</div>
+				
+			</div>	
+			<div class="removal_modal_button">
+				<button  type="button">Confirmar</button>
+			</div>
+			
+		</form>
+	</div>
 
+	
 
     <script type="module" src="./script.js"></script>
 </body>

@@ -1,6 +1,7 @@
 package com.planejamentopessoal.app.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +38,17 @@ public class TransactionResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Transaction> insert(@RequestBody Transaction obj){
+	public List<ResponseEntity<Transaction>> insert(@RequestBody Transaction obj){
+		System.out.println(obj.getNome());
 		List<Transaction> objList = service.insert(obj);
-		
+		List<ResponseEntity<Transaction>> responseList = new ArrayList<>();
 		for(Transaction transaction: objList) {
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 					.path("/{id}").buildAndExpand(transaction.getId()).toUri();
 			
-			ResponseEntity.created(uri).body(obj);
+			responseList.add(ResponseEntity.created(uri).body(obj));
 		}
-		return null;		
+		return responseList;		
 	}
 	
 	@DeleteMapping(value = "/{id}")

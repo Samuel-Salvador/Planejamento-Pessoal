@@ -34,12 +34,22 @@ public class TransactionService {
 			objList.add(obj);
 			repository.save(obj);
 		}else {
+			Transaction parcela = new Transaction
+					(null,
+					obj.getNome(),
+					obj.getData(),
+					obj.getPreco()/obj.getParcelas(),
+					1,
+					obj.getParcelas(),
+					obj.getCategoria());
+			objList.add(parcela);
+			repository.save(parcela);
 			
-			for(int i =0;i<obj.getParcelas();i++) {
-				Transaction parcela = new Transaction
+			for(int i =1;i<obj.getParcelas();i++) {
+				parcela = new Transaction
 						(null,
 						obj.getNome(),
-						obj.getData().plusMonths(i),
+						obj.getData().minusDays(obj.getData().getDayOfMonth()-6).plusMonths(i),
 						obj.getPreco()/obj.getParcelas(),
 						i+1,
 						obj.getParcelas(),
@@ -47,9 +57,7 @@ public class TransactionService {
 				objList.add(parcela);
 				repository.save(parcela);
 			}
-		
 		}
-		
 		return objList;
 	}
 	
