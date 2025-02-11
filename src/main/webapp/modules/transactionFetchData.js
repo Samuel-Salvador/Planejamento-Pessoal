@@ -1,10 +1,19 @@
-const url = "http://127.0.0.1:9090/transactions";
+let monthInvoice = 	new Date().getDate()>5 ? 
+						new Date().getMonth()+1 : 
+						new Date().getMonth();
+
+const url = "http://127.0.0.1:8080/transactions";
+let urlMonthInvoice = url.concat(`/month/${monthInvoice}`);
 
 const modalConfirmButton = document.querySelector(".modal button");
 const modalElement = document.querySelector(".adicionar_transacao");
 const selectionForRemoval = document.getElementById("selection_transaction");
 const modalRemovalDiv = document.querySelector(".dados_removal");
-	
+const removalButtonConfirm = document.querySelector(".removal_modal_button");
+const removalModal = document.querySelector(".remover_transacao");
+const leftArrow = document.querySelector(".seta_esquerda");
+const rightArrow = document.querySelector(".seta_direita");
+const monthTitle = document.querySelector(".titulo_mes h2 span");
 
 const dateOptions = {
 	day: 'numeric',
@@ -12,18 +21,32 @@ const dateOptions = {
 	year: 'numeric'
 }
 
+let transactions = [];
+
+function cleanTransactions(){
+	document.getElementById("transacoes_nome").innerHTML =
+		`<p class="transacoes_titulo">Nome</p>`;
+	document.getElementById("transacoes_data").innerHTML =	
+		`<p class="transacoes_titulo">Data</p>`;
+	document.getElementById("transacoes_categoria").innerHTML =	
+		`<p class="transacoes_titulo">Categoria</p>`;
+	document.getElementById("transacoes_parcelas").innerHTML =
+		`<p class="transacoes_titulo">Parcelas</p>`;
+	document.getElementById("transacoes_preco").innerHTML =	
+		`<p class="transacoes_titulo">Preço</p>`;
+		
+	selectionForRemoval.innerHTML=``;
+}
+
+
 function addFromDb(body, i) {
-	const dataFromDb = new Date(body[i].data);
-	const dataCerta = new Date(dataFromDb.getTime() 
-			+ Math.abs(dataFromDb.getTimezoneOffset()*60000)).
-			toLocaleString("pt-BR",dateOptions);
-	
+
 	document.getElementById("transacoes_nome")
 		.innerHTML += `<div class="linha">${body[i].nome}</div>`;
 		
   	document.getElementById("transacoes_data")
   		.innerHTML += `<div class="linha">
-		${dataCerta}</div>`;
+		${formattedDate(body[i].data)}</div>`;
 		
 	document.getElementById("transacoes_categoria")
 		.innerHTML += `<div class="linha">
@@ -41,16 +64,28 @@ function addFromDb(body, i) {
   		{style: 'currency', currency: 'BRL'})}</div>`;
 		
 	const option = document.createElement("option");
-	option.setAttribute("value",`${body[i].nome}`);
+	option.setAttribute("date-data",`${formattedDate(body[i].data)}`);
+	option.setAttribute("preco-data",`${body[i].preco}`)
 	option.innerHTML = `${body[i].nome}`;
 	selectionForRemoval.appendChild(option);
 }
 
+//verifies if there's no empty values in the forms
 function formValidated(validation) {
   if (validation == "") {
     alert("Todos os campos precisam ser preenchidos!");
     return false;
   }else return true;
+}
+
+//corrects the timezone and set date to dd/MM/yyyy
+function formattedDate(date){
+	
+	const dateFormatted = new Date(new Date(date).getTime() 
+		+ Math.abs(new Date(date).getTimezoneOffset()*60000))
+		.toLocaleString("pt-BR",dateOptions);
+	
+	return dateFormatted;
 }
 
 function httpPostTransaction(){
@@ -78,16 +113,23 @@ function httpPostTransaction(){
 					    "categoria": "${formValueCategoria}"
 					    }`,
 					};
-					fetch(url, options).then(() => location.reload(true));
-					modalElement.classList.remove("ativar");
+			fetch(url, options).then(() => location.reload(true));
+			modalElement.classList.remove("ativar");
 	}
 	
 }
 
 export default function initFetch() {
-  	fetch(url)
+	
+	
+  	fetch(urlMonthInvoice)
     	.then((r) => r.json())
     	.then((body) => {
+			
+			//adds transactions to the array
+			transactions=transactions.concat(body);
+			
+			//adds the transactions to the main frame
       		for (let i = 0; i < body.length; i++) {
         		addFromDb(body, i);
      		 }
@@ -107,35 +149,110 @@ export default function initFetch() {
 	
 	});
 	
-	let removalId = 1;
+	let removalIdDB=0;
+	let removalCorrectArrayIndex=0;
 	
+	//checks the <select> tab for the removal in the removal modal
 	selectionForRemoval.addEventListener('change',()=>{
 		
 		const removalButton = document.querySelector(".removal_modal_button");
 		removalButton.classList.add("block");
 		
-		for(let i=0;i<selectionForRemoval.children.length;i++){
-			if(selectionForRemoval.value==selectionForRemoval[i].value){
-				removalId=i;
+		for(let i=0;i<transactions.length;i++){
+			
+			//Gets the correct id in DB and the array index for removal
+			if(	selectionForRemoval.value == transactions[i].nome &&
+				selectionForRemoval.options[selectionForRemoval.selectedIndex]
+				.getAttribute("date-data") == formattedDate(transactions[i].data) &&
+				selectionForRemoval.options[selectionForRemoval.selectedIndex]
+				.getAttribute("preco-data") == transactions[i].preco){
+					removalIdDB=transactions[i].id;
+					removalCorrectArrayIndex = i;
 			}
 		}
-		fetch(url).then((r)=> r.json().then((body)=>{
-			const dataFromDb = new Date(body[removalId].data);
-			const dataCerta = new Date(dataFromDb.getTime() 
-						+ Math.abs(dataFromDb.getTimezoneOffset()*60000)).
-						toLocaleString("pt-BR",dateOptions);
 			
-			
-			modalRemovalDiv.innerHTML=`<div class="dados_removal_h3 margin"><h3>Dados da transação a ser removida: </h3></div>
-					<div>Nome: ${body[removalId].nome}<br>
-					Data: ${dataCerta}<br>
-				 	Categoria: ${body[removalId].categoria}<br>
-					Parcelas: ${body[removalId].parcelaAtual+"/"
-						+body[removalId].parcelas}<br>
-					Preço: ${body[removalId].preco											.toLocaleString("pt-BR",
-						{style: 'currency', currency: 'BRL'})}<br>
-					</div>`;
-		}))
+		//adds the data from the selected transaction in the removal modal
+		modalRemovalDiv.innerHTML=`<div class="dados_removal_h3 margin">
+			<h3>Dados da transação a ser removida: </h3></div>
+			<div>Nome: ${transactions[removalCorrectArrayIndex].nome}<br>
+			Data: ${formattedDate(transactions[removalCorrectArrayIndex].data)}<br>
+			Categoria: ${transactions[removalCorrectArrayIndex].categoria}<br>
+			Parcelas: ${transactions[removalCorrectArrayIndex].parcelaAtual+"/"
+				+transactions[removalCorrectArrayIndex].parcelas}<br>
+			Preço: ${transactions[removalCorrectArrayIndex].preco.toLocaleString("pt-BR",
+				{style: 'currency', currency: 'BRL'})}<br>
+			</div>`;
+		
 	});
+	
+	
+	
+	removalButtonConfirm.addEventListener('click',()=>{
+			
+		fetch(url+"/"+removalIdDB,{method: "DELETE"})
+		.then(location.reload(true));
+		removalModal.classList.remove("ativar");
+	})
+	
+	let dataString;
+
+	leftArrow.addEventListener("click",(event)=>{
+		event.preventDefault();
+		
+		monthInvoice--;
+		
+		dataString = "2025-0"+monthInvoice+"-29";
+		const monthString = new Date(dataString)
+							.toLocaleDateString("pt-BR",{"month":"long"});
+				
+		const monthStringCammelCase = monthString.replace(monthString.charAt(0),	
+												monthString.charAt(0).toUpperCase());
+		
+		monthTitle.innerHTML = monthStringCammelCase;
+												
+		urlMonthInvoice = url.concat(`/month/${monthInvoice}`);
+		cleanTransactions();
+		
+		fetch(urlMonthInvoice)
+		    .then((r) => r.json())
+		    .then((body) => {
+				for (let i = 0; i < body.length; i++) {
+		        	addFromDb(body, i);
+		     	}	
+		})
+		
+		
+	})
+	
+	rightArrow.addEventListener("click",(event)=>{
+		event.preventDefault();
+				
+		monthInvoice++;
+		
+		dataString = "2025-0"+monthInvoice+"-29";
+		const monthString = new Date(dataString)
+								.toLocaleDateString("pt-BR",{"month":"long"});
+		
+		const monthStringCammelCase = monthString.replace(monthString.charAt(0),	
+											monthString.charAt(0).toUpperCase());
+							
+		
+		monthTitle.innerHTML = monthStringCammelCase;
+
+		urlMonthInvoice = url.concat(`/month/${monthInvoice}`);
+		cleanTransactions();
+				
+		fetch(urlMonthInvoice)
+			.then((r) => r.json())
+			.then((body) => {
+				for (let i = 0; i < body.length; i++) {
+					addFromDb(body, i);
+				}	
+		})
+		
+		
+					
+	})
+	
 	
 }

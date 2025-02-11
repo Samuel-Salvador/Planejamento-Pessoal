@@ -1,6 +1,7 @@
 package com.planejamentopessoal.app.entities;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -8,30 +9,37 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Table(name="transaction")
 @Entity
 public class Transaction implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	private String nome;
 	private LocalDate data;
+
 	private Double preco;
 	private Integer parcelas;
 	private Integer parcelaAtual;
 	private String categoria;
 	
+	private Integer mes;
+	
 	public Transaction() {		
 	}
 
-	public Transaction(Long id, String nome, LocalDate data, Double preco,Integer parcelaAtual, Integer parcelas, String categoria) {
+	public Transaction(Long id, String nome, LocalDate data,Integer mes, Double preco,Integer parcelaAtual, Integer parcelas, String categoria) {
 		super();
 		Id = id;
 		this.nome = nome;
 		this.data = data;
+		this.mes = mes;
 		this.preco = preco;
 		this.parcelas = parcelas;
 		this.parcelaAtual = parcelaAtual;
@@ -60,6 +68,16 @@ public class Transaction implements Serializable{
 
 	public void setData(LocalDate data) {
 		this.data = data;
+	}
+
+	
+
+	public Integer getMes() {
+		return mes;
+	}
+
+	public void setMes(Integer mes) {
+		this.mes = mes;
 	}
 
 	public Double getPreco() {

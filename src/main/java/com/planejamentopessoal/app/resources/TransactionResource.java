@@ -37,6 +37,12 @@ public class TransactionResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping(value = "/month/{month}")
+	public ResponseEntity<List<Transaction>> findByMonth(@PathVariable Integer month){
+		List<Transaction> list = service.findByMonth(month);
+		return ResponseEntity.ok().body(list);
+	}
+	
 	@PostMapping
 	public List<ResponseEntity<Transaction>> insert(@RequestBody Transaction obj){
 		System.out.println(obj.getNome());

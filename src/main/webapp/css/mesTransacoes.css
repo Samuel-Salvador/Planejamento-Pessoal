@@ -1,0 +1,24 @@
+.titulo_mes{
+	font-size: 20px;
+	text-align: center;
+}
+
+.titulo_mes h2{
+	display: inline-block;
+	color: white;
+	
+}
+
+.titulo_mes a{
+	text-decoration: none;
+	color: white;
+	
+}
+
+.seta_esquerda{
+	display: inline;
+}
+
+.seta{
+	margin: 0 10px;
+}

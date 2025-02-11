@@ -21,11 +21,12 @@ public class TestConfig implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Transaction t1 = new Transaction(null, "Gasolina",LocalDate.now() , 14.5,1, 2, "Posto");
-		Transaction t2 = new Transaction(null, "Etanol",LocalDate.now() , 25.0,1, 1, "Posto");
-		Transaction t3 = new Transaction(null, "Etanois",LocalDate.now() , 25.0,1, 1, "Posto");
+		Transaction t1 = new Transaction(null, "Gasolina",LocalDate.now(),LocalDate.now().getMonthValue(), 14.5,1, 2, "Posto");
+		Transaction t2 = new Transaction(null, "Etanol",LocalDate.now() ,LocalDate.now().getMonthValue(), 25.0,1, 1, "Posto");
+		Transaction t3 = new Transaction(null, "Etanois",LocalDate.now() ,LocalDate.now().getMonthValue(), 25.0,1, 1, "Posto");
+		Transaction t4 = new Transaction(null, "Perdigão",LocalDate.of(2025, 3, 27) ,LocalDate.of(2025, 3, 27).getMonthValue(), 25.0,1, 1, "Posto");
 
-		transactionRepository.saveAll(Arrays.asList(t1,t2,t3));
+		transactionRepository.saveAll(Arrays.asList(t1,t2,t3,t4));
 		
 	}
 	

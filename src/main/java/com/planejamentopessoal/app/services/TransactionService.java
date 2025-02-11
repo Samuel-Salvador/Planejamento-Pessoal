@@ -20,15 +20,21 @@ public class TransactionService {
 		return repository.findAll();
 	}
 	
+	public List<Transaction> findByMonth(Integer month){
+
+		return repository.findByMonth(month);
+	}
 	public Transaction findById(Long id) {
 		Optional<Transaction> obj = repository.findById(id);
 		
-		return obj.get();
-				
+		return obj.get();			
 	}
 	
 	public List<Transaction> insert(Transaction obj) {
 		List<Transaction> objList = new ArrayList<>();
+		if(obj.getData().getDayOfMonth()<6) {
+			obj.setMes(obj.getData().getMonthValue()-1);
+		}else obj.setMes(obj.getData().getMonthValue());
 		if(obj.getParcelas()==1) {
 			obj.setParcelaAtual(1);
 			objList.add(obj);
@@ -38,6 +44,7 @@ public class TransactionService {
 					(null,
 					obj.getNome(),
 					obj.getData(),
+					obj.getData().getMonthValue(),
 					obj.getPreco()/obj.getParcelas(),
 					1,
 					obj.getParcelas(),
@@ -50,6 +57,8 @@ public class TransactionService {
 						(null,
 						obj.getNome(),
 						obj.getData().minusDays(obj.getData().getDayOfMonth()-6).plusMonths(i),
+						obj.getData().minusDays(obj.getData()
+								.getDayOfMonth()-6).plusMonths(i).getMonthValue(),
 						obj.getPreco()/obj.getParcelas(),
 						i+1,
 						obj.getParcelas(),
