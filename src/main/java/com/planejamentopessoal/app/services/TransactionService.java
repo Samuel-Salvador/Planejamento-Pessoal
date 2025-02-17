@@ -20,9 +20,13 @@ public class TransactionService {
 		return repository.findAll();
 	}
 	
-	public List<Transaction> findByMonth(Integer month){
+	public List<Transaction> findByMonth(Integer month, Integer year){
 
-		return repository.findByMonth(month);
+		return repository.findByMonth(month,year);
+	}
+	
+	public List<Transaction> findByCategory(Integer month, Integer year,String category){
+		return repository.findByCategory(month,year,category);
 	}
 	public Transaction findById(Long id) {
 		Optional<Transaction> obj = repository.findById(id);
@@ -34,7 +38,11 @@ public class TransactionService {
 		List<Transaction> objList = new ArrayList<>();
 		if(obj.getData().getDayOfMonth()<6) {
 			obj.setMes(obj.getData().getMonthValue()-1);
-		}else obj.setMes(obj.getData().getMonthValue());
+			obj.setAno(obj.getData().getYear());
+		}else {
+			obj.setMes(obj.getData().getMonthValue());
+			obj.setAno(obj.getData().getYear());
+		}
 		if(obj.getParcelas()==1) {
 			obj.setParcelaAtual(1);
 			objList.add(obj);
@@ -43,8 +51,10 @@ public class TransactionService {
 			Transaction parcela = new Transaction
 					(null,
 					obj.getNome(),
+					obj.getTipo(),
 					obj.getData(),
 					obj.getData().getMonthValue(),
+					obj.getData().getYear(),
 					obj.getPreco()/obj.getParcelas(),
 					1,
 					obj.getParcelas(),
@@ -56,9 +66,11 @@ public class TransactionService {
 				parcela = new Transaction
 						(null,
 						obj.getNome(),
+						obj.getTipo(),
 						obj.getData().minusDays(obj.getData().getDayOfMonth()-6).plusMonths(i),
 						obj.getData().minusDays(obj.getData()
 								.getDayOfMonth()-6).plusMonths(i).getMonthValue(),
+						obj.getData().getYear(),
 						obj.getPreco()/obj.getParcelas(),
 						i+1,
 						obj.getParcelas(),

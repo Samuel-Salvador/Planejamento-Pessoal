@@ -1,105 +1,133 @@
-let monthInvoice = 	new Date().getDate()>5 ? 
-						new Date().getMonth()+1 : 
-						new Date().getMonth();
+import * as global from './global.js';
+import { selectionForRemoval , resetRemovalModal } from "./removeModal.js";
+import { modalElementAdd } from './addModal.js';
 
-const url = "http://127.0.0.1:8080/transactions";
-let urlMonthInvoice = url.concat(`/month/${monthInvoice}`);
+let monthInvoice = 	new Date().getDate()>5 ? new Date().getMonth()+1 : new Date().getMonth();
+let yearInvoice = new Date().getFullYear();
 
-const modalConfirmButton = document.querySelector(".modal button");
-const modalElement = document.querySelector(".adicionar_transacao");
-const selectionForRemoval = document.getElementById("selection_transaction");
-const modalRemovalDiv = document.querySelector(".dados_removal");
-const removalButtonConfirm = document.querySelector(".removal_modal_button");
-const removalModal = document.querySelector(".remover_transacao");
+let urlMonthInvoice = global.url.concat(`/date/${monthInvoice}-${yearInvoice}`);
+
 const leftArrow = document.querySelector(".seta_esquerda");
 const rightArrow = document.querySelector(".seta_direita");
-const monthTitle = document.querySelector(".titulo_mes h2 span");
+const monthTitle = document.querySelector(".mes_atual");
+const yearTitle = document.querySelector(".ano_atual");
+const invoiceTotal = document.querySelector(".total span");
+const gasTotal = document.querySelector(".combustivel_ap span");
 
-const dateOptions = {
-	day: 'numeric',
-	month: 'numeric',
-	year: 'numeric'
+// array of all the transactions
+export let transactions = [];
+
+//sets the correct month and year string title
+function setCorrectTitle(){
+	const dataString = "2025-0"+monthInvoice+"-29";
+	const monthString = new Date(dataString)
+						.toLocaleDateString("pt-BR",{"month":"long"});
+					
+	monthTitle.innerHTML = monthString.replace(monthString.charAt(0),
+									monthString.charAt(0).toUpperCase());
+	
+	yearTitle.innerHTML = yearInvoice;	
 }
 
-let transactions = [];
+//sums the price of each transaction and return the total
+function setTotal(body){
+	if(body.length){
+		const arrayPrecos = body.map((i)=>i.preco);
+		return arrayPrecos.reduce((acumulador,atual)=>acumulador+atual)
+			.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+	}else{
+		return "R$ 0,00"}
+}
 
-function cleanTransactions(){
+//sets the total of gas spent in that month
+function setTotalGasSpent(){
+	fetch(urlMonthInvoice.concat(`/category/Posto`))
+		.then((r) => r.json())
+		.then((body) =>{
+			gasTotal.innerHTML = setTotal(body);
+	})
+}
+
+function clearTransactions(){
 	document.getElementById("transacoes_nome").innerHTML =
 		`<p class="transacoes_titulo">Nome</p>`;
 	document.getElementById("transacoes_data").innerHTML =	
 		`<p class="transacoes_titulo">Data</p>`;
+	document.getElementById("transacoes_tipo").innerHTML =	
+		`<p class="transacoes_titulo">Tipo</p>`;
 	document.getElementById("transacoes_categoria").innerHTML =	
 		`<p class="transacoes_titulo">Categoria</p>`;
 	document.getElementById("transacoes_parcelas").innerHTML =
 		`<p class="transacoes_titulo">Parcelas</p>`;
 	document.getElementById("transacoes_preco").innerHTML =	
 		`<p class="transacoes_titulo">Preço</p>`;
+	
 		
 	selectionForRemoval.innerHTML=``;
 }
 
-
-function addFromDb(body, i) {
-
-	document.getElementById("transacoes_nome")
-		.innerHTML += `<div class="linha">${body[i].nome}</div>`;
-		
-  	document.getElementById("transacoes_data")
-  		.innerHTML += `<div class="linha">
-		${formattedDate(body[i].data)}</div>`;
-		
-	document.getElementById("transacoes_categoria")
-		.innerHTML += `<div class="linha">
-		${body[i].categoria}</div>`;
-		
-	document.getElementById("transacoes_parcelas")
-		.innerHTML += `<div class="linha">
-		${body[i].parcelaAtual+"/"
-		+body[i].parcelas}</div>`;	
-		
-  	document.getElementById("transacoes_preco")
-  		.innerHTML += 
-		`<div class="linha">${(body[i].preco)
-		.toLocaleString("pt-BR",
-  		{style: 'currency', currency: 'BRL'})}</div>`;
-		
-	const option = document.createElement("option");
-	option.setAttribute("date-data",`${formattedDate(body[i].data)}`);
-	option.setAttribute("preco-data",`${body[i].preco}`)
-	option.innerHTML = `${body[i].nome}`;
-	selectionForRemoval.appendChild(option);
-}
-
-//verifies if there's no empty values in the forms
-function formValidated(validation) {
-  if (validation == "") {
-    alert("Todos os campos precisam ser preenchidos!");
-    return false;
-  }else return true;
-}
-
-//corrects the timezone and set date to dd/MM/yyyy
-function formattedDate(date){
+//adds the month transactions to the transactions tab and sets the total for that month
+function addTransactionsFromDb() {
 	
-	const dateFormatted = new Date(new Date(date).getTime() 
-		+ Math.abs(new Date(date).getTimezoneOffset()*60000))
-		.toLocaleString("pt-BR",dateOptions);
-	
-	return dateFormatted;
+	fetch(urlMonthInvoice)
+	    	.then((r) => r.json())
+	    	.then((body) => {
+				
+	      		for (let i = 0; i < body.length; i++) {
+					document.getElementById("transacoes_nome")
+							.innerHTML += `<div class="linha">${body[i].nome}</div>`;
+							
+					document.getElementById("transacoes_data")
+					  		.innerHTML += `<div class="linha">
+							${global.formattedDate(body[i].data)}</div>`;
+							
+					document.getElementById("transacoes_tipo")
+							.innerHTML += `<div class="linha">
+							${body[i].tipo}</div>`;
+							
+					document.getElementById("transacoes_categoria")
+							.innerHTML += `<div class="linha">
+							${body[i].categoria}</div>`;
+							
+					document.getElementById("transacoes_parcelas")
+							.innerHTML += `<div class="linha">
+							${body[i].parcelaAtual+"/"
+							+body[i].parcelas}</div>`;	
+							
+					document.getElementById("transacoes_preco")
+					  		.innerHTML += 
+							`<div class="linha">${(body[i].preco)
+							.toLocaleString("pt-BR",
+					  		{style: 'currency', currency: 'BRL'})}</div>`;
+							
+						const option = document.createElement("option");
+						option.setAttribute("date-data",
+											`${global.formattedDate(body[i].data)}`);
+						option.setAttribute("preco-data",`${body[i].preco}`)
+						option.innerHTML = `${body[i].nome}`;
+						selectionForRemoval.appendChild(option);
+					
+	     		}
+				 
+				invoiceTotal.innerHTML = setTotal(body);		
+	   		});
 }
 
-function httpPostTransaction(){
+export function httpPostTransaction(){
 	const formValueNome = document.forms.transaction.nome.value;
 	const formValueData = document.forms.transaction.data.value;
 	const formValuePreco = document.forms.transaction.preco.value;
 	const formValueParcelas = document.forms.transaction.parcelas.value;
 	const formValueCategoria = document.forms.transaction.categoria.value;
+	const formValueTipo = document.forms.transaction.tipo.value;
 
-	if(	formValidated(formValueNome) &&
-		formValidated(formValueData) &&
-		formValidated(formValuePreco) &&
-		formValidated(formValueParcelas) &&
-		formValidated(formValueCategoria)){
+	console.log(formValueData);
+	if(	global.formValidated(formValueNome) &&
+		global.formValidated(formValueData) &&
+		global.formValidated(formValuePreco) &&
+		global.formValidated(formValueParcelas) &&
+		global.formValidated(formValueCategoria) &&
+		global.formValidated(formValueTipo)){
 			const options = {
 					method: "POST",
 					headers: {
@@ -110,149 +138,72 @@ function httpPostTransaction(){
 						"data": "${formValueData}",
 					    "preco": "${formValuePreco}",
 					    "parcelas": "${formValueParcelas}",
-					    "categoria": "${formValueCategoria}"
+					    "categoria": "${formValueCategoria}",
+						"tipo": "${formValueTipo}"
 					    }`,
 					};
-			fetch(url, options).then(() => location.reload(true));
-			modalElement.classList.remove("ativar");
+			fetch(global.url, options).then(() => location.reload(true));
+			modalElementAdd.classList.remove("flex");
 	}
-	
 }
 
 export default function initFetch() {
+	setCorrectTitle();
 	
-	
-  	fetch(urlMonthInvoice)
-    	.then((r) => r.json())
-    	.then((body) => {
-			
-			//adds transactions to the array
+	//adds all transactions to the array
+	fetch(global.url)
+		.then((r)=>r.json())
+		.then((body)=>{
 			transactions=transactions.concat(body);
-			
-			//adds the transactions to the main frame
-      		for (let i = 0; i < body.length; i++) {
-        		addFromDb(body, i);
-     		 }
-		
-   })
-	
-	
-	modalConfirmButton.addEventListener('click', () => {
-		httpPostTransaction();
 	});
-	
-	modalElement.addEventListener('keydown', (event) => {
-		if(event.keyCode === 13){
-			httpPostTransaction();
-		}
-		
-	
-	});
-	
-	let removalIdDB=0;
-	let removalCorrectArrayIndex=0;
-	
-	//checks the <select> tab for the removal in the removal modal
-	selectionForRemoval.addEventListener('change',()=>{
-		
-		const removalButton = document.querySelector(".removal_modal_button");
-		removalButton.classList.add("block");
-		
-		for(let i=0;i<transactions.length;i++){
-			
-			//Gets the correct id in DB and the array index for removal
-			if(	selectionForRemoval.value == transactions[i].nome &&
-				selectionForRemoval.options[selectionForRemoval.selectedIndex]
-				.getAttribute("date-data") == formattedDate(transactions[i].data) &&
-				selectionForRemoval.options[selectionForRemoval.selectedIndex]
-				.getAttribute("preco-data") == transactions[i].preco){
-					removalIdDB=transactions[i].id;
-					removalCorrectArrayIndex = i;
-			}
-		}
-			
-		//adds the data from the selected transaction in the removal modal
-		modalRemovalDiv.innerHTML=`<div class="dados_removal_h3 margin">
-			<h3>Dados da transação a ser removida: </h3></div>
-			<div>Nome: ${transactions[removalCorrectArrayIndex].nome}<br>
-			Data: ${formattedDate(transactions[removalCorrectArrayIndex].data)}<br>
-			Categoria: ${transactions[removalCorrectArrayIndex].categoria}<br>
-			Parcelas: ${transactions[removalCorrectArrayIndex].parcelaAtual+"/"
-				+transactions[removalCorrectArrayIndex].parcelas}<br>
-			Preço: ${transactions[removalCorrectArrayIndex].preco.toLocaleString("pt-BR",
-				{style: 'currency', currency: 'BRL'})}<br>
-			</div>`;
-		
-	});
-	
-	
-	
-	removalButtonConfirm.addEventListener('click',()=>{
-			
-		fetch(url+"/"+removalIdDB,{method: "DELETE"})
-		.then(location.reload(true));
-		removalModal.classList.remove("ativar");
-	})
-	
-	let dataString;
 
+	addTransactionsFromDb();
+	setTotalGasSpent();
+	
+	//changes to the previous month
 	leftArrow.addEventListener("click",(event)=>{
 		event.preventDefault();
 		
-		monthInvoice--;
+		if(monthInvoice>1){
+			monthInvoice--;
+		} else
+		if(monthInvoice==1) {
+			yearInvoice--;
+			monthInvoice=12;
+		}
+	
+		urlMonthInvoice = global.url.concat(`/date/${monthInvoice}-${yearInvoice}`);
+		clearTransactions();
 		
-		dataString = "2025-0"+monthInvoice+"-29";
-		const monthString = new Date(dataString)
-							.toLocaleDateString("pt-BR",{"month":"long"});
-				
-		const monthStringCammelCase = monthString.replace(monthString.charAt(0),	
-												monthString.charAt(0).toUpperCase());
-		
-		monthTitle.innerHTML = monthStringCammelCase;
+		setCorrectTitle();
 												
-		urlMonthInvoice = url.concat(`/month/${monthInvoice}`);
-		cleanTransactions();
-		
-		fetch(urlMonthInvoice)
-		    .then((r) => r.json())
-		    .then((body) => {
-				for (let i = 0; i < body.length; i++) {
-		        	addFromDb(body, i);
-		     	}	
-		})
-		
+		addTransactionsFromDb();
+
+		resetRemovalModal();
+		setTotalGasSpent();
 		
 	})
 	
+	//changes to the next month
 	rightArrow.addEventListener("click",(event)=>{
 		event.preventDefault();
 				
-		monthInvoice++;
+		if(monthInvoice<12){
+			monthInvoice++;
+		}else 
+		if(monthInvoice==12){
+			yearInvoice++;
+			monthInvoice=1;
+		}
 		
-		dataString = "2025-0"+monthInvoice+"-29";
-		const monthString = new Date(dataString)
-								.toLocaleDateString("pt-BR",{"month":"long"});
+		urlMonthInvoice = global.url.concat(`/date/${monthInvoice}-${yearInvoice}`);
+		clearTransactions();
 		
-		const monthStringCammelCase = monthString.replace(monthString.charAt(0),	
-											monthString.charAt(0).toUpperCase());
-							
-		
-		monthTitle.innerHTML = monthStringCammelCase;
+		setCorrectTitle();
 
-		urlMonthInvoice = url.concat(`/month/${monthInvoice}`);
-		cleanTransactions();
-				
-		fetch(urlMonthInvoice)
-			.then((r) => r.json())
-			.then((body) => {
-				for (let i = 0; i < body.length; i++) {
-					addFromDb(body, i);
-				}	
-		})
+		addTransactionsFromDb();
 		
-		
-					
+		resetRemovalModal();
+		setTotalGasSpent();	
 	})
-	
-	
 }

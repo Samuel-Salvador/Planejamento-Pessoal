@@ -18,28 +18,30 @@ public class Transaction implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	private String nome;
 	private LocalDate data;
-
 	private Double preco;
 	private Integer parcelas;
-	private Integer parcelaAtual;
 	private String categoria;
+	private String tipo;
 	
+	private Integer parcelaAtual;
 	private Integer mes;
+	private Integer ano;
 	
 	public Transaction() {		
 	}
 
-	public Transaction(Long id, String nome, LocalDate data,Integer mes, Double preco,Integer parcelaAtual, Integer parcelas, String categoria) {
+	public Transaction(Long id, String nome,String tipo, LocalDate data,Integer mes,Integer ano, Double preco,Integer parcelaAtual, Integer parcelas, String categoria) {
 		super();
 		Id = id;
 		this.nome = nome;
+		this.tipo = tipo;
 		this.data = data;
 		this.mes = mes;
+		this.ano = ano;
 		this.preco = preco;
 		this.parcelas = parcelas;
 		this.parcelaAtual = parcelaAtual;
@@ -61,6 +63,14 @@ public class Transaction implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
 	public LocalDate getData() {
 		return data;
@@ -78,6 +88,16 @@ public class Transaction implements Serializable{
 
 	public void setMes(Integer mes) {
 		this.mes = mes;
+	}
+	
+	
+
+	public Integer getAno() {
+		return ano;
+	}
+
+	public void setAno(Integer ano) {
+		this.ano = ano;
 	}
 
 	public Double getPreco() {

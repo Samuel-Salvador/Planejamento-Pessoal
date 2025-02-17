@@ -1,6 +1,8 @@
 .titulo_mes{
 	font-size: 20px;
 	text-align: center;
+	user-select: none;
+	margin-top: 20px;
 }
 
 .titulo_mes h2{
@@ -12,13 +14,10 @@
 .titulo_mes a{
 	text-decoration: none;
 	color: white;
-	
 }
 
-.seta_esquerda{
-	display: inline;
-}
 
-.seta{
-	margin: 0 10px;
+.container_texto_titulo_mes{
+	display: inline-block;
+	width: 420px;
 }

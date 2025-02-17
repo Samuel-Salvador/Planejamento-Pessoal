@@ -1,0 +1,31 @@
+.container_total {
+	position: absolute;
+	top: 285px;
+	right: 200px;
+	display: flex;
+	gap: 20px;
+	flex-direction: column;
+	text-align: center;
+	font-size: 18px;
+}
+
+.container_total span {
+	display: block;
+	font-size: 22px;
+}
+
+.total{
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+.combustivel_ap{
+	border: 1px solid black;
+	border-radius: 10px;
+	width: 250px;
+}
+
+.dinheiro_armazenado{
+	border: 1px solid black;
+	border-radius: 10px;
+}

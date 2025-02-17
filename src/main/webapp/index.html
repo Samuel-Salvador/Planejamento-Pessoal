@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css?version=51">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -32,7 +32,15 @@
 
     <main>
 		<div class="titulo_mes">
-			<a href="./" class="seta_esquerda seta">←</a><h2>Gastos <span class="mes_atual">Fevereiro</span></h2><a href="./" class="seta_direita seta">→</a>
+			<a href="./" class="seta_esquerda seta">←</a>
+			<div class="container_texto_titulo_mes">
+				<h2>Gastos 
+					<span class="mes_atual"></span>
+					de
+					<span class="ano_atual"></span>
+				</h2>
+			</div>
+			<a href="./" class="seta_direita seta">→</a>
 		</div>
         	<div class="container_transacoes">
             
@@ -45,6 +53,10 @@
                 <p class="transacoes_titulo">Data</p>
 
             </div>
+			<div class="container_transacoes_titulo_lista" id="transacoes_tipo">
+			    <p class="transacoes_titulo">Tipo</p>
+
+			</div>
             <div class="container_transacoes_titulo_lista" id="transacoes_categoria">
                 <p class="transacoes_titulo">Categoria</p>
 
@@ -78,21 +90,39 @@
         <form class="modal" name="transaction">
 			<a class="x_add" href="">X</a>
 			
-			
-            <label for="nome">Nome: </label>
-            <input name="nome" type="text" id="nome" required>
-            <label for="categoria">Categoria: </label>
-            <input name="categoria" type="text" id="categoria">
-
-
-            <label for="data">Data: </label>
-            <input name="data" type="date" id="data" required>
-
-            <label for="parcelas">Parcelas: </label>
-            <input name="parcelas" type="number" id="parcelas" required>
-            <label for="preco">Preço: </label>
-            <input name="preco" type="number" id="preco" required>
-
+			<div class="transaction_add_data">
+	            <label for="nome">Nome: </label>
+	            <input name="nome" type="text" id="nome" required>
+				
+	            <label for="categoria">Categoria: </label>
+	            <input name="categoria" type="text" id="categoria">
+				
+	
+	            <label for="data">Data: </label>
+	            <input name="data" type="date" id="data" required>
+	
+	            <label for="parcelas">Parcelas: </label>
+	            <input name="parcelas" type="number" id="parcelas" required>
+				
+	            <label for="preco">Preço: </label>
+	            <input name="preco" type="number" id="preco" required>
+				<fieldset>
+					<legend>Tipo</legend>
+						
+					<div>
+						<input type="radio" id="credito" name="tipo" value="Crédito">
+						<label for="credito">Crédito</label>
+					</div>
+					<div>
+						<input type="radio" id="debito" name="tipo" value="Débito">
+						<label for="debito">Débito</label>
+					</div>
+					<div>
+						<input type="radio" id="pix" name="tipo" value="Pix">
+						<label for="pix">Pix</label>
+					</div>
+				</fieldset>
+			</div>
             <button type="button">Confirmar</button>
         </form>
 
@@ -103,7 +133,7 @@
 			<a class="x_removal" href="">X</a>
 			<div class="container_selection">
 				<select id="selection_transaction" name="selection">	
-							
+					<option value="" selected disabled hidden>Selecione</option>
 				</select>	
 			</div>
 			
@@ -121,7 +151,17 @@
 		</form>
 	</div>
 
-	
+	<div class="container_total">
+		<div class="total">TOTAL 
+			<span></span>
+		</div>
+		<div class="combustivel_ap">Combustível Apucarana 
+			<span></span>
+		</div>
+		<div class="dinheiro_armazenado"> Na Conta
+			<span></span>
+		</div>
+	</div>
 
     <script type="module" src="./script.js"></script>
 </body>

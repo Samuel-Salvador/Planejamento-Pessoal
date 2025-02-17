@@ -5,3 +5,26 @@ body {
   font-family: "Merriweather";
   height: 100vh;
 }
+
+h1 {
+  font-size: 32px;
+  color: #1e1e1e;
+  margin: 0px;
+  padding: 0px;
+  align-self: center;
+  margin: 0px 20px;
+  text-align: center;
+}
+
+h3{
+	margin: 0px;
+}
+
+.margin_bottom_20{
+	margin-bottom: 20px;
+}
+
+.disabled {
+	pointer-events: none;
+	cursor: default;
+}

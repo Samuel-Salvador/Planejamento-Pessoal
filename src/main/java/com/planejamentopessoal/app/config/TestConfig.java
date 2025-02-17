@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.planejamentopessoal.app.entities.Transaction;
+import com.planejamentopessoal.app.entities.User;
 import com.planejamentopessoal.app.repositories.TransactionRepository;
+import com.planejamentopessoal.app.repositories.UserRepository;
 
 @Configuration
 @Profile("test")
@@ -18,16 +20,20 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private TransactionRepository transactionRepository;
 
+	@Autowired
+	private UserRepository userRepository;
 	@Override
 	public void run(String... args) throws Exception {
+		User samuel = new User(null,"Samuel",LocalDate.of(2001, 6, 29),"samuel20018@gmail.com","samuel20018@hotmail.com",1070.0,350.00);
 		
-		Transaction t1 = new Transaction(null, "Gasolina",LocalDate.now(),LocalDate.now().getMonthValue(), 14.5,1, 2, "Posto");
-		Transaction t2 = new Transaction(null, "Etanol",LocalDate.now() ,LocalDate.now().getMonthValue(), 25.0,1, 1, "Posto");
-		Transaction t3 = new Transaction(null, "Etanois",LocalDate.now() ,LocalDate.now().getMonthValue(), 25.0,1, 1, "Posto");
-		Transaction t4 = new Transaction(null, "Perdigão",LocalDate.of(2025, 3, 27) ,LocalDate.of(2025, 3, 27).getMonthValue(), 25.0,1, 1, "Posto");
+		Transaction t1 = new Transaction(null, "Gasolina","Crédito",LocalDate.now(),LocalDate.now().getMonthValue(),2025, 14.5,1, 2, "Posto");
+		Transaction t2 = new Transaction(null, "Etanol","Crédito",LocalDate.now() ,LocalDate.now().getMonthValue(),2025, 25.0,1, 1, "Posto");
+		Transaction t3 = new Transaction(null, "Etanois","Crédito",LocalDate.now() ,LocalDate.now().getMonthValue(),2025, 25.0,1, 1, "Posto");
+		Transaction t4 = new Transaction(null, "Perdigão","Crédito",LocalDate.of(2025, 3, 27) ,LocalDate.of(2025, 3, 27).getMonthValue(),2025, 25.0,1, 1, "Posto");
 
-		transactionRepository.saveAll(Arrays.asList(t1,t2,t3,t4));
 		
+		transactionRepository.saveAll(Arrays.asList(t1,t2,t3,t4));
+		userRepository.save(samuel);
 	}
 	
 }
