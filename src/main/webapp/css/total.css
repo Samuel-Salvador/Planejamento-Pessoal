@@ -7,25 +7,21 @@
 	flex-direction: column;
 	text-align: center;
 	font-size: 18px;
+	font-family: "Merriweather";
+	
 }
 
 .container_total span {
 	display: block;
 	font-size: 22px;
+	font-weight: bold;
 }
 
 .total{
-	border: 1px solid black;
-	border-radius: 10px;
-}
-
-.combustivel_ap{
-	border: 1px solid black;
+	border: 1px solid var(--cor-2);
+	background-color: var(--cor-1);
+	box-shadow: 0px 0px 3px 1px var(--cor-3);
 	border-radius: 10px;
 	width: 250px;
-}
-
-.dinheiro_armazenado{
-	border: 1px solid black;
-	border-radius: 10px;
+	color: var(--cor-3);
 }

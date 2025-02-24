@@ -148,6 +148,7 @@ export function httpPostTransaction(){
 }
 
 export default function initFetch() {
+			
 	setCorrectTitle();
 	
 	//adds all transactions to the array
@@ -158,7 +159,7 @@ export default function initFetch() {
 	});
 
 	addTransactionsFromDb();
-	setTotalGasSpent();
+	//setTotalGasSpent();
 	
 	//changes to the previous month
 	leftArrow.addEventListener("click",(event)=>{
@@ -180,7 +181,7 @@ export default function initFetch() {
 		addTransactionsFromDb();
 
 		resetRemovalModal();
-		setTotalGasSpent();
+		//setTotalGasSpent();
 		
 	})
 	
@@ -204,6 +205,6 @@ export default function initFetch() {
 		addTransactionsFromDb();
 		
 		resetRemovalModal();
-		setTotalGasSpent();	
+		//setTotalGasSpent();	
 	})
 }

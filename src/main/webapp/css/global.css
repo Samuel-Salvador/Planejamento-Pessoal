@@ -1,20 +1,13 @@
+@import './variables.css';
+
 body {
-  background-color: grey;
+  background-color: var(--cor-0);
   padding: 0px;
   margin: 0px;
-  font-family: "Merriweather";
+  font-family: "DynaPuff";
   height: 100vh;
 }
 
-h1 {
-  font-size: 32px;
-  color: #1e1e1e;
-  margin: 0px;
-  padding: 0px;
-  align-self: center;
-  margin: 0px 20px;
-  text-align: center;
-}
 
 h3{
 	margin: 0px;

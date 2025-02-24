@@ -1,4 +1,4 @@
-export const url = "http://127.0.0.1:8080/transactions";
+export const url = "http://127.0.0.1:3030/transactions";
 
 export const dateOptions = {
 	day: 'numeric',
@@ -22,4 +22,10 @@ export function formattedDate(date){
 		.toLocaleString("pt-BR",dateOptions);
 	
 	return dateFormatted;
+}
+
+export function formattedPrice(price){
+	
+	return price.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+
 }

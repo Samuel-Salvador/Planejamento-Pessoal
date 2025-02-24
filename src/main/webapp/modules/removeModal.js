@@ -1,5 +1,5 @@
 import {transactions} from "./transactionFetchData.js";
-import {url, formattedDate } from "./global.js";
+import {url, formattedDate,formattedPrice } from "./global.js";
 
 const modalRemovalDiv = document.querySelector(".dados_removal");
 const removalButtonConfirm = document.querySelector(".removal_modal_button");
@@ -48,14 +48,20 @@ export function initRemovalModal(){
 		//adds the data from the selected transaction in the removal modal
 		modalRemovalDiv.innerHTML=`<div class="dados_removal_h3 margin_bottom_20">
 			<h3>Dados da transação a ser removida: </h3></div>
-			<div>Nome: ${transactions[removalCorrectArrayIndex].nome}<br>
-			Data: ${formattedDate(transactions[removalCorrectArrayIndex].data)}<br>
-			Tipo: ${transactions[removalCorrectArrayIndex].tipo}<br>
-			Categoria: ${transactions[removalCorrectArrayIndex].categoria}<br>
-			Parcelas: ${transactions[removalCorrectArrayIndex].parcelaAtual+"/"
-				+transactions[removalCorrectArrayIndex].parcelas}<br>
-			Preço: ${transactions[removalCorrectArrayIndex].preco.toLocaleString("pt-BR",
-				{style: 'currency', currency: 'BRL'})}<br>
+			<div>
+			<p class="dados_removal_titulo">Nome:</p> 
+				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].nome}</p><br>
+			<p class="dados_removal_titulo">Data:</p> 
+				<p class="dados_removal_conteudo">${formattedDate(transactions[removalCorrectArrayIndex].data)}</p><br>
+			<p class="dados_removal_titulo">Tipo:</p>  
+				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].tipo}</p><br>
+			<p class="dados_removal_titulo">Categoria:</p> 
+				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].categoria}</p><br>
+			<p class="dados_removal_titulo">Parcelas:</p> 
+				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].parcelaAtual+"/"
+				+transactions[removalCorrectArrayIndex].parcelas}</p><br>
+			<p class="dados_removal_titulo">Preço:</p>
+				<p class="dados_removal_conteudo">${formattedPrice(transactions[removalCorrectArrayIndex].preco)}</p><br>
 			</div>`;
 		
 	});

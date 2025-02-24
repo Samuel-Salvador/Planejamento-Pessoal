@@ -6,12 +6,11 @@
     <meta name="viewport" content="initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="style.css?version=51">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
-
-<body>
+	<body>
     <header class="header">
 
         <div class="nome">
@@ -19,15 +18,20 @@
             <h1>Planejamento<br><span>Pessoal</span></h1>
         </div>
 
-        <nav>
-            <a href="./">Home</a>
-            <a href="./">Transações</a>
-            <a href="./">Calendário</a>
-            <a href="./">Academia</a>
-        </nav>
+		
+		<div class="user_links">
+			<div class="saldo">
+				<p>Saldo</p>
+				<span></span>
+			</div>
+			<nav>
+			    <a href="./">Financeiro</a>
+			    <a href="./">Academia</a>
+			</nav>
+		</div>
+        
 
-        <div class="border"></div>
-
+        
     </header>
 
     <main>
@@ -42,7 +46,8 @@
 			</div>
 			<a href="./" class="seta_direita seta">→</a>
 		</div>
-        	<div class="container_transacoes">
+		
+        <div class="container_transacoes">
             
             <span></span>
 
@@ -79,13 +84,17 @@
 			</div>
         </div>
 		
+		<div class="container_total">
+			<div class="total">TOTAL 
+				<span></span>
+			</div>
+		</div>
 
 		
 	
-			
-
     </main>
-    <div class="adicionar_transacao">
+	
+    <section class="adicionar_transacao">
 		
         <form class="modal" name="transaction">
 			<a class="x_add" href="">X</a>
@@ -126,9 +135,9 @@
             <button type="button">Confirmar</button>
         </form>
 
-    </div>
+    </section>
 	
-	<div class="remover_transacao">	
+	<section class="remover_transacao">	
 		<form class="modal removal_modal" name="removal">
 			<a class="x_removal" href="">X</a>
 			<div class="container_selection">
@@ -139,7 +148,7 @@
 			
 			<div class="dados_removal">
 				<div class="dados_removal_h3">
-					<h3> ← Selecione a transação a ser removida: </h3>
+					<h3> ← Selecione a transação a ser removida </h3>
 									
 				</div>
 				
@@ -149,19 +158,9 @@
 			</div>
 			
 		</form>
-	</div>
+	</section>
 
-	<div class="container_total">
-		<div class="total">TOTAL 
-			<span></span>
-		</div>
-		<div class="combustivel_ap">Combustível Apucarana 
-			<span></span>
-		</div>
-		<div class="dinheiro_armazenado"> Na Conta
-			<span></span>
-		</div>
-	</div>
+	
 
     <script type="module" src="./script.js"></script>
 </body>

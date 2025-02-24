@@ -21,14 +21,14 @@ public class User {
 	private String microsoftData;
 	
 	private Double income;
-	private Double money;
+	private Double balance;
 	
 	public User() {
 		
 	}
 	
 	
-	public User(Long id,String name, LocalDate birthday, String email, String microsoftData, Double income, Double money) {
+	public User(Long id,String name, LocalDate birthday, String email, String microsoftData, Double income, Double balance) {
 		super();
 		this.Id = id;
 		this.name = name;
@@ -36,7 +36,7 @@ public class User {
 		this.email = email;
 		this.microsoftData = microsoftData;
 		this.income = income;
-		this.money = money;
+		this.balance = balance;
 	}
 
 
@@ -70,11 +70,11 @@ public class User {
 	public void setIncome(Double income) {
 		this.income = income;
 	}
-	public Double getMoney() {
-		return money;
+	public Double getbalance() {
+		return balance;
 	}
-	public void setMoney(Double money) {
-		this.money = money;
+	public void setbalance(Double balance) {
+		this.balance = balance;
 	}
 	
 	

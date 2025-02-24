@@ -3,17 +3,18 @@
 	text-align: center;
 	user-select: none;
 	margin-top: 20px;
+	font-family: "DynaPuff";
 }
 
 .titulo_mes h2{
 	display: inline-block;
-	color: white;
+	color: var(--cor-3);
 	
 }
 
 .titulo_mes a{
 	text-decoration: none;
-	color: white;
+	color: var(--cor-3);
 }
 
 
