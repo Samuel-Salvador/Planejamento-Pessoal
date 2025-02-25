@@ -1,0 +1,97 @@
+@import "./global.css";
+
+.login_main{
+	display: flex;
+	height: 100vh;
+	align-items: center;
+	justify-items: center;
+	flex-direction: column;
+}
+
+.login_title_container{
+	justify-items: center;
+}
+
+.login_img{
+	max-width: 125px;
+	max-height: 100%;
+	align-self: center;
+	justify-self: center;
+	margin-top: 75%;
+}
+
+.login_title,.login_signin_title{
+	text-align: center;
+	color: var(--cor-3);
+	
+}
+
+.login_title {
+	margin-top: 0;
+	font-size: 2.2rem;
+}
+
+.login_signin_title{
+	margin-bottom: 30px;
+}
+
+.container_login{
+	margin: 0 auto;
+	max-width: 375px;
+	width: 100%;
+	background-color: var(--cor-1);
+	border: 1px solid var(--cor-2);
+	border-radius: 10px;
+	height: 35%;
+	display: flex;
+	flex-direction: column;
+}
+
+.login_input{
+	margin: 10px 75px;
+	height: 2rem;
+	border-radius: 4px;
+	font-family: "DynaPuff";
+	border: 1px ridge var(--cor-0);
+	outline: none;
+}
+
+.login_button{
+	width: 100px;
+	height: 25px;
+	font-size: 1.1rem;
+	align-self: center;
+	margin-top: 25px;
+	background-color: var(--cor-3);
+	border: 1px solid var(--cor-2);
+	border-radius: 4px;
+	font-family: "DynaPuff";
+	cursor: pointer;
+}
+
+.login_button:hover{
+	animation-name: buttonHover;
+	animation-fill-mode: forwards;
+	animation-duration: 0.5s;
+	
+
+}
+
+.cadastre_se{
+	align-self: center;
+	margin: 40px 0 0 0;
+	font-family: "Merriweather";
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: var(--cor-3);
+	width: fit-content;
+	text-decoration: none;
+}
+
+@keyframes buttonHover{
+	from {background-color: var(--cor-3);}
+	to {background-color: #D9D9D9;}
+}
+
+
+
