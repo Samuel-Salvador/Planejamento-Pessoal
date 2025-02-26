@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planejamento Pessoal - Login</title>
+    <title>Planejamento Pessoal - Cadastro</title>
 	<link rel="stylesheet" type="text/css" href="../style.css"> 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,14 +13,42 @@
 
 <body>
 	<main class="login_main">
-		<div class="header_title_container">
+		<div class="header_title_container register_margin_top">
 			<img class="header_img" src="../img/—Pngtree—flat calendar_4590004.png" alt="">
 			<h1 class="header_title">Planejamento<br><span>Pessoal</span></h1>
 		</div>
-		<h2 class="register_data_title"></h2>
-		<div class="register_data_container">
+		<form class="register_data_container">
+			<h2 class="register_data_title">Cadastro</h2>
 			
-		</div>
+			<label for="nickname">Nome Completo: </label>
+			<input name="nickname" type="text" id="nickname">
+			
+			<div class="register_doublelabel_container">
+				<label for="login">Nome de Usuário: </label>	
+				<label class="birthday_label" for="birthday">Data de Nascimento: </label>
+			</div>
+			<div>
+				<input name="login" type="text" id="login">
+				<input name="birthday" type="date" id="birthday">
+			</div>
+						
+			
+			<label for="email">Email: </label>
+			<input name="email" type="email" id="email">
+			
+			<br>
+			<label for="password">Senha: </label>
+			<input name="password" type="password" id="password">
+			
+			<label for="password_confirm">Confirme a senha: </label>
+			<input name="password_confirm" type="password" id="password_confirm">
+			
+			<div class="register_button_container">
+				<button class="confirmar" type="button">Confirmar</button>
+				<button type="button">Voltar</button>
+			</div>
+			
+		</form>
 	
 	
 	</main>

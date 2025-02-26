@@ -1,14 +1,17 @@
 package com.planejamentopessoal.app.entities;
 
 import java.io.Serializable;
-
 import java.time.LocalDate;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Table(name="transaction")
@@ -21,6 +24,7 @@ public class Transaction implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	private String nome;
+	
 	private LocalDate data;
 	private Double preco;
 	private Integer parcelas;
@@ -31,21 +35,27 @@ public class Transaction implements Serializable{
 	private Integer mes;
 	private Integer ano;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="id_usuario")
+	private User usuario;
+	
 	public Transaction() {		
 	}
 
-	public Transaction(Long id, String nome,String tipo, LocalDate data,Integer mes,Integer ano, Double preco,Integer parcelaAtual, Integer parcelas, String categoria) {
+	public Transaction(Long id, String nome,String tipo, LocalDate data,Integer mes,Integer ano, Double preco,Integer parcelaAtual, Integer parcelas, String categoria,User usuario) {
 		super();
 		Id = id;
 		this.nome = nome;
-		this.tipo = tipo;
 		this.data = data;
 		this.mes = mes;
 		this.ano = ano;
 		this.preco = preco;
-		this.parcelas = parcelas;
 		this.parcelaAtual = parcelaAtual;
+		this.parcelas = parcelas;
 		this.categoria = categoria;
+		this.tipo = tipo;
+		this.usuario = usuario;
 	}
 
 	public Long getId() {
@@ -131,6 +141,16 @@ public class Transaction implements Serializable{
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+
+	
+	
+	public User getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(User usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

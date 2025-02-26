@@ -61,7 +61,7 @@
 
 .container_gerenciamento_transacoes a {
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-3);
 }
 

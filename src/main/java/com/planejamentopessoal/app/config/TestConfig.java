@@ -24,16 +24,16 @@ public class TestConfig implements CommandLineRunner{
 	private UserRepository userRepository;
 	@Override
 	public void run(String... args) throws Exception {
-		User samuel = new User(null,"Samuel",LocalDate.of(2001, 6, 29),"samuel20018@gmail.com","samuel20018@hotmail.com",1070.0,350.00);
+		User samuel = new User(null,"Samuel","Samzin",LocalDate.of(2001, 6, 29),"samuel20018@gmail.com","sss290601");
 		
-		Transaction t1 = new Transaction(null, "Gasolina","Crédito",LocalDate.now(),LocalDate.now().getMonthValue(),2025, 14.5,1, 2, "Posto");
-		Transaction t2 = new Transaction(null, "Etanol","Crédito",LocalDate.now() ,LocalDate.now().getMonthValue(),2025, 25.0,1, 1, "Posto");
-		Transaction t3 = new Transaction(null, "Etanois","Crédito",LocalDate.now() ,LocalDate.now().getMonthValue(),2025, 25.0,1, 1, "Posto");
-		Transaction t4 = new Transaction(null, "Perdigão","Crédito",LocalDate.of(2025, 3, 27) ,LocalDate.of(2025, 3, 27).getMonthValue(),2025, 25.0,1, 1, "Posto");
-
+		Transaction t1 = new Transaction(null, "Gasolina","Crédito",LocalDate.now(),LocalDate.now().getMonthValue(),2025, 14.5,1, 2, "Posto",samuel);
+		Transaction t2 = new Transaction(null, "Etanol","Crédito",LocalDate.now() ,LocalDate.now().getMonthValue(),2025, 25.0,1, 1, "Posto",samuel);
+		Transaction t3 = new Transaction(null, "Etanois","Crédito",LocalDate.now() ,LocalDate.now().getMonthValue(),2025, 25.0,1, 1, "Posto",samuel);
+		Transaction t4 = new Transaction(null, "Perdigão","Crédito",LocalDate.of(2025, 3, 27) ,LocalDate.of(2025, 3, 27).getMonthValue(),2025, 25.0,1, 1, "Posto",samuel);
 		
-		transactionRepository.saveAll(Arrays.asList(t1,t2,t3,t4));
+		
 		userRepository.save(samuel);
+		transactionRepository.saveAll(Arrays.asList(t1,t2,t3,t4));
 	}
 	
 }

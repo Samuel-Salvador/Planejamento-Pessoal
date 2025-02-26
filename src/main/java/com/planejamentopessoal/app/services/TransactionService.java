@@ -58,7 +58,8 @@ public class TransactionService {
 					obj.getPreco()/obj.getParcelas(),
 					1,
 					obj.getParcelas(),
-					obj.getCategoria());
+					obj.getCategoria(),
+					obj.getUsuario());
 			objList.add(parcela);
 			repository.save(parcela);
 			
@@ -74,7 +75,8 @@ public class TransactionService {
 						obj.getPreco()/obj.getParcelas(),
 						i+1,
 						obj.getParcelas(),
-						obj.getCategoria());
+						obj.getCategoria(),
+						obj.getUsuario());
 				objList.add(parcela);
 				repository.save(parcela);
 			}
