@@ -1,7 +1,8 @@
+import {loggedUserId} from "./login.js";
 
+export let transactionUrl = `http://127.0.0.1:3030/transactions/${loggedUserId}`;
+export let userUrl = `http://127.0.0.1:3030/users/${loggedUserId}`;
 
-
-export const url = "http://127.0.0.1:3030/transactions";
 
 export const dateOptions = {
 	day: 'numeric',

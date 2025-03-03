@@ -1,4 +1,4 @@
-.titulo_mes{
+.container_nav_months{
 	font-size: 1.25rem;
 	text-align: center;
 	user-select: none;
@@ -6,19 +6,19 @@
 	font-family: "DynaPuff";
 }
 
-.titulo_mes h2{
+.container_nav_months h2{
 	display: inline-block;
 	color: var(--cor-3);
 	
 }
 
-.titulo_mes a{
+.container_nav_months a{
 	text-decoration: none;
 	color: var(--cor-3);
 }
 
 
-.container_texto_titulo_mes{
+.container_text_nav_months{
 	display: inline-block;
 	width: 420px;
 }

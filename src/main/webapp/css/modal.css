@@ -22,7 +22,7 @@
   text-shadow: 1px 1px 1px black;
 }
 
-.adicionar_transacao, .remover_transacao {
+.add_transaction_modal, .remove_transaction_modal {
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   top: 0;
@@ -37,27 +37,7 @@
   align-items: center;
 }
 
-.dados_removal{
-	color: var(--cor-3);
-	align-content: center;
-}
-
-.removal_modal{
-	gap: 20px;
-}
-
-.dados_removal p{
-	display: inline-block;
-	margin: 3px 5px;
-	
-}
-.dados_removal_titulo{
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-
-}
-
-
-.removal_modal button, .adicionar_transacao button {
+.transaction_add_modal_button, .transaction_removal_modal_button {
 	margin: 0 auto;
 	  border: 1px solid var(--cor-2);
 	  border-radius: 10px;
@@ -70,26 +50,13 @@
 	  font-family: "DynaPuff";
 }
 
-.removal_modal_button{
-	display: none;
-}
-
-.removal_modal button:hover , .adicionar_transacao button:hover {
+.transaction_add_modal_button:hover , .transaction_removal_modal_button:hover {
   background-color: #3a3939;
   cursor: pointer;
 }
 
-.container_selection{
-	align-content: center;
-}
-
-#selection_transaction{
-	background-color: var(--cor-2);
-	color: var(--cor-3);
-	border-radius: 4px;
-	display: inline-block;
-	height: 40px;
-	box-shadow: 0px 0px 5px 0px white;
+.removal_modal_button{
+	display: none;
 }
 
 .transaction_add_data{
@@ -118,12 +85,12 @@
 	color: black;
 }
 
-#nome,#categoria,#parcelas,#preco{
+#name,#category,#installments,#price{
 	width: 95px;	
 	margin-right: 10px;
 }
 
-#data{
+#date{
 	width: 98px;
 }
 
@@ -141,6 +108,39 @@ fieldset {
 	position: absolute;
 	right: 20px;
 	top: 30px;
+}
+
+.container_removal_data{
+	color: var(--cor-3);
+	align-content: center;
+}
+
+.removal_modal{
+	gap: 20px;
+}
+
+.container_removal_data p{
+	display: inline-block;
+	margin: 3px 5px;
+	
+}
+
+.removal_transaction_data_title{
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+}
+
+.container_selection{
+	align-content: center;
+}
+
+#selection_transaction{
+	background-color: var(--cor-2);
+	color: var(--cor-3);
+	border-radius: 4px;
+	display: inline-block;
+	height: 40px;
+	box-shadow: 0px 0px 5px 0px white;
 }
 
 .flex {

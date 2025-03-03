@@ -30,28 +30,20 @@ public class TransactionResource {
 		List<Transaction> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Transaction> findById(@PathVariable Long id){
-		Transaction obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
-	}
-	
-	@GetMapping(value = "/date/{month}-{year}")
-	public ResponseEntity<List<Transaction>> findByMonth(@PathVariable Integer month,@PathVariable Integer year){
-		List<Transaction> list = service.findByMonth(month,year);
+	@GetMapping(value = "/{user_id}/{month}-{year}")
+	public ResponseEntity<List<Transaction>> findByMonth(@PathVariable Long user_id,@PathVariable Integer month,@PathVariable Integer year){
+		List<Transaction> list = service.findByMonth(user_id,month,year);
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@GetMapping(value = "/date/{month}-{year}/category/{category}")
-	public ResponseEntity<List<Transaction>> findByCategory(@PathVariable Integer month,@PathVariable Integer year,@PathVariable String category){
-		List<Transaction> list = service.findByCategory(month,year,category);
+	@GetMapping(value = "/{user_id}/{month}-{year}/{category}")
+	public ResponseEntity<List<Transaction>> findByCategory(@PathVariable Long user_id,@PathVariable Integer month,@PathVariable Integer year,@PathVariable String category){
+		List<Transaction> list = service.findByCategory(user_id,month,year,category);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping
 	public List<ResponseEntity<Transaction>> insert(@RequestBody Transaction obj){
-		System.out.println(obj.getNome());
 		List<Transaction> objList = service.insert(obj);
 		List<ResponseEntity<Transaction>> responseList = new ArrayList<>();
 		for(Transaction transaction: objList) {

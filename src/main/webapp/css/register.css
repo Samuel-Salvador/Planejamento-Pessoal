@@ -59,7 +59,7 @@
 	border: 1px solid var(--cor-3);
 }
 
-.confirmar {
+.confirm {
 	background-color: var(--cor-2);
 	color: var(--cor-3);
 }
@@ -75,4 +75,13 @@
 
 .register_margin_top img{
 	max-width: 135px;
+}
+
+.confirm:hover {
+  background-color: #00959C;
+  cursor: pointer;
+}
+.back:hover{
+	background-color: #D9D9D9;
+	cursor: pointer;
 }

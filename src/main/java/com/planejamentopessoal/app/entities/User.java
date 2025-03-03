@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Table(name="usuarios")
+@Table(name="users")
 @Entity
 public class User {
 
@@ -28,12 +30,16 @@ public class User {
 	private Double income;
 	private Double balance;
 	
-	
-	@OneToMany(mappedBy = "usuario")
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
 	private List<Transaction> transactionList = new ArrayList<>();
 	
 	public User() {
 		
+	}
+	
+	public User(Long id) {
+		Id=id;
 	}
 	
 	public User(Long id, String name, String username, LocalDate birthday, String email, String password) {

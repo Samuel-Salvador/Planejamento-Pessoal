@@ -1,8 +1,8 @@
 package com.planejamentopessoal.app.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,69 +16,57 @@ public class TransactionService {
 	@Autowired
 	private TransactionRepository repository;
 	
-	public List<Transaction> findAll() {
+	public List<Transaction> findAll(){
 		return repository.findAll();
 	}
-	
-	public List<Transaction> findByMonth(Integer month, Integer year){
-
-		return repository.findByMonth(month,year);
-	}
-	
-	public List<Transaction> findByCategory(Integer month, Integer year,String category){
-		return repository.findByCategory(month,year,category);
-	}
-	public Transaction findById(Long id) {
-		Optional<Transaction> obj = repository.findById(id);
+	public List<Transaction> findByMonth(Long user_id,Integer month, Integer year){
 		
-		return obj.get();			
+		LocalDate startDate = LocalDate.of(year, month, 6);
+		LocalDate endDate = LocalDate.of(year, month, 5).plusMonths(1);
+		return repository.findByMonth(user_id,startDate,endDate);
+	}
+	
+	public List<Transaction> findByCategory(Long id,Integer month, Integer year,String category){
+		return repository.findByCategory(id,month,year,category);
 	}
 	
 	public List<Transaction> insert(Transaction obj) {
+		
 		List<Transaction> objList = new ArrayList<>();
-		if(obj.getData().getDayOfMonth()<6) {
-			obj.setMes(obj.getData().getMonthValue()-1);
-			obj.setAno(obj.getData().getYear());
-		}else {
-			obj.setMes(obj.getData().getMonthValue());
-			obj.setAno(obj.getData().getYear());
-		}
-		if(obj.getParcelas()==1) {
-			obj.setParcelaAtual(1);
+		
+		if(obj.getInstallments()==1) {
+			obj.setCurrentInstallment(1);
 			objList.add(obj);
 			repository.save(obj);
 		}else {
-			Transaction parcela = new Transaction
+			Transaction installment = new Transaction
 					(null,
-					obj.getNome(),
-					obj.getTipo(),
-					obj.getData(),
-					obj.getData().getMonthValue(),
-					obj.getData().getYear(),
-					obj.getPreco()/obj.getParcelas(),
+					obj.getName(),
+					obj.getType(),
+					obj.getDate(),
+					obj.getPrice()/obj.getInstallments(),
 					1,
-					obj.getParcelas(),
-					obj.getCategoria(),
-					obj.getUsuario());
-			objList.add(parcela);
-			repository.save(parcela);
+					obj.getInstallments(),
+					obj.getCategory(),
+					obj.getUser());
+			objList.add(installment);
+			repository.save(installment);
 			
-			for(int i =1;i<obj.getParcelas();i++) {
-				parcela = new Transaction
+			for(int i =1;i<obj.getInstallments();i++) {
+				installment = new Transaction
 						(null,
-						obj.getNome(),
-						obj.getTipo(),
-						obj.getData().minusDays(obj.getData().getDayOfMonth()-6).plusMonths(i),
-						obj.getData().minusDays(obj.getData()
-								.getDayOfMonth()-6).plusMonths(i).getMonthValue(),
-						obj.getData().getYear(),
-						obj.getPreco()/obj.getParcelas(),
+						obj.getName(),
+						obj.getType(),
+						(obj.getDate().getDayOfMonth()<6)?
+								obj.getDate().minusDays(obj.getDate().getDayOfMonth()-6).plusMonths(i-1):
+								obj.getDate().minusDays(obj.getDate().getDayOfMonth()-6).plusMonths(i),
+						obj.getPrice()/obj.getInstallments(),
 						i+1,
-						obj.getParcelas(),
-						obj.getCategoria(),
-						obj.getUsuario());
-				objList.add(parcela);
-				repository.save(parcela);
+						obj.getInstallments(),
+						obj.getCategory(),
+						obj.getUser());
+				objList.add(installment);
+				repository.save(installment);
 			}
 		}
 		return objList;

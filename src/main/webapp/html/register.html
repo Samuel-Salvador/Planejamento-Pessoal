@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
@@ -14,14 +14,14 @@
 <body>
 	<main class="login_main">
 		<div class="header_title_container register_margin_top">
-			<img class="header_img" src="../img/—Pngtree—flat calendar_4590004.png" alt="">
+			<img class="header_img" src="../img/Logo.png" alt="Logo">
 			<h1 class="header_title">Planejamento<br><span>Pessoal</span></h1>
 		</div>
-		<form class="register_data_container">
+		<form class="register_data_container" name="register">
 			<h2 class="register_data_title">Cadastro</h2>
 			
-			<label for="nickname">Nome Completo: </label>
-			<input name="nickname" type="text" id="nickname">
+			<label for="fullname">Nome Completo: </label>
+			<input name="fullname" type="text" id="fullname">
 			
 			<div class="register_doublelabel_container">
 				<label for="login">Nome de Usuário: </label>	
@@ -44,14 +44,16 @@
 			<input name="password_confirm" type="password" id="password_confirm">
 			
 			<div class="register_button_container">
-				<button class="confirmar" type="button">Confirmar</button>
-				<button type="button">Voltar</button>
+				<button class="confirm" type="button">Confirmar</button>
+				<button class="back" type="button">Voltar</button>
 			</div>
 			
 		</form>
 	
 	
 	</main>
+	
+	<script type="module" src="../modules/register.js"></script>
 </body>
 
 </html>

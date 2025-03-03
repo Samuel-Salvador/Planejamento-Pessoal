@@ -1,168 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0">
-    <title>Planejamento Pessoal - Financeiro</title>
-    <link rel="stylesheet" type="text/css" href="style.css?version=51">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planejamento Pessoal - Login</title>
+	<link rel="stylesheet" type="text/css" href="../style.css"> 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
-	<body>
-    <header class="header">
 
-        <div class="header_title_container">
-            <img class="header_img" src="img/—Pngtree—flat calendar_4590004.png" alt="">
-            <h1 class="header_title">Planejamento<br><span>Pessoal</span></h1>
-        </div>
-
-		
-		<div class="user_links">
-			<div class="saldo">
-				<p>Saldo</p>
-				<span></span>
-			</div>
-			<nav>
-			    <a href="./html/login.html">Financeiro</a>
-			    <a href="./">Academia</a>
-			</nav>
+<body>
+	<main class="login_main">
+		<div class="login_title_container">
+			<img class="login_img" src="./img/Logo.png" alt="">
+		    <h1 class="login_title">Planejamento<br><span>Pessoal</span></h1>
 		</div>
-        
-
-        
-    </header>
-
-    <main>
-		<div class="titulo_mes">
-			<a href="./" class="seta_esquerda seta">←</a>
-			<div class="container_texto_titulo_mes">
-				<h2>Gastos 
-					<span class="mes_atual"></span>
-					de
-					<span class="ano_atual"></span>
-				</h2>
+		<form class="container_login" name="login">
+			<h2 class="login_signin_title">Entrar</h2>
+			<input class="login_input" name="user_name" type="text" id="user_name" placeholder="Nome de Usuário">
+			<input class="login_input" name="password" type="password" id="password" placeholder="Senha">
+			<div class="container_checkbox_login">
+				<input class="login_input_checkbox" name="remember" type="checkbox" id="remember">
+				<label class="remember_label" for="remember">Lembre-se de mim</label>			
 			</div>
-			<a href="./" class="seta_direita seta">→</a>
-		</div>
-		
-        <div class="container_transacoes">
-            
-            <span></span>
-
-            <div class="container_transacoes_titulo_lista" id="transacoes_nome">
-                <p class="transacoes_titulo">Nome</p>
-            </div>
-            <div class="container_transacoes_titulo_lista" id="transacoes_data">
-                <p class="transacoes_titulo">Data</p>
-
-            </div>
-			<div class="container_transacoes_titulo_lista" id="transacoes_tipo">
-			    <p class="transacoes_titulo">Tipo</p>
-
-			</div>
-            <div class="container_transacoes_titulo_lista" id="transacoes_categoria">
-                <p class="transacoes_titulo">Categoria</p>
-
-            </div>
-
-
-            <div class="container_transacoes_titulo_lista" id="transacoes_parcelas">
-                <p class="transacoes_titulo">Parcelas</p>
-
-            </div>
-            <div class="container_transacoes_titulo_lista" id="transacoes_preco">
-                <p class="transacoes_titulo">Preço</p>
-            </div>
-			
-			<div class="container_gerenciamento_transacoes container_adicionar">
-				<a class="botao_adicionar_transicao" href="">+ Adicionar</a>
-			</div>
-			<div class="container_gerenciamento_transacoes container_remover">
-				<a class="botao_remover_transicao">Remover</a>			
-			</div>
-        </div>
-		
-		<div class="container_total">
-			<div class="total">TOTAL 
-				<span></span>
-			</div>
-		</div>
-
-		
-	
-    </main>
-	
-    <section class="adicionar_transacao">
-		
-        <form class="modal" name="transaction">
-			<a class="x_add" href="">X</a>
-			
-			<div class="transaction_add_data">
-	            <label for="nome">Nome: </label>
-	            <input name="nome" type="text" id="nome" required>
-				
-	            <label for="categoria">Categoria: </label>
-	            <input name="categoria" type="text" id="categoria">
-				
-	
-	            <label for="data">Data: </label>
-	            <input name="data" type="date" id="data" required>
-	
-	            <label for="parcelas">Parcelas: </label>
-	            <input name="parcelas" type="number" id="parcelas" required>
-				
-	            <label for="preco">Preço: </label>
-	            <input name="preco" type="number" id="preco" required>
-				<fieldset>
-					<legend>Tipo</legend>
-						
-					<div>
-						<input type="radio" id="credito" name="tipo" value="Crédito">
-						<label for="credito">Crédito</label>
-					</div>
-					<div>
-						<input type="radio" id="debito" name="tipo" value="Débito">
-						<label for="debito">Débito</label>
-					</div>
-					<div>
-						<input type="radio" id="pix" name="tipo" value="Pix">
-						<label for="pix">Pix</label>
-					</div>
-				</fieldset>
-			</div>
-            <button type="button">Confirmar</button>
-        </form>
-
-    </section>
-	
-	<section class="remover_transacao">	
-		<form class="modal removal_modal" name="removal">
-			<a class="x_removal" href="">X</a>
-			<div class="container_selection">
-				<select id="selection_transaction" name="selection">	
-					<option value="" selected disabled hidden>Selecione</option>
-				</select>	
-			</div>
-			
-			<div class="dados_removal">
-				<div class="dados_removal_h3">
-					<h3> ← Selecione a transação a ser removida </h3>
-									
-				</div>
-				
-			</div>	
-			<div class="removal_modal_button">
-				<button  type="button">Confirmar</button>
-			</div>
-			
+			<button class="login_button" type="button">Entrar</button>
+			<a href="./html/register.html" class="login_register_anchor">Cadastre-se</a>
 		</form>
-	</section>
-
+		
+	</main>
 	
-
-    <script type="module" src="./script.js"></script>
+	<script type="module" src="./modules/login.js"></script>
 </body>
 
 </html>

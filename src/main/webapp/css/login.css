@@ -42,7 +42,8 @@
 	background-color: var(--cor-1);
 	border: 1px solid var(--cor-2);
 	border-radius: 10px;
-	height: 35%;
+	max-height: 335px;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 }
@@ -54,6 +55,22 @@
 	font-family: "DynaPuff";
 	border: 1px ridge var(--cor-0);
 	outline: none;
+}
+.container_checkbox_login{
+	display: flex;
+	gap: 5px;
+	align-self: center;
+	user-select: none;
+}
+
+.login_input_checkbox{
+	accent-color:var(--cor-2);
+	
+}
+.remember_label{
+	font-size: 0.8rem;
+	align-self: center;
+	color: var(--cor-3);
 }
 
 .login_button{
@@ -70,16 +87,12 @@
 }
 
 .login_button:hover{
-	animation-name: buttonHover;
-	animation-fill-mode: forwards;
-	animation-duration: 0.5s;
-	
-
+	background-color: #D9D9D9;
 }
 
-.cadastre_se{
+.login_register_anchor{
 	align-self: center;
-	margin: 40px 0 0 0;
+	margin: 40px 0 20px 0;
 	font-family: "Merriweather";
 	font-size: 0.8rem;
 	font-weight: bold;
@@ -88,10 +101,9 @@
 	text-decoration: none;
 }
 
-@keyframes buttonHover{
-	from {background-color: var(--cor-3);}
-	to {background-color: #D9D9D9;}
+.login_register_anchor:hover{
+	text-decoration: underline;
+	
 }
-
 
 

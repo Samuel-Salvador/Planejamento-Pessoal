@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Planejamento Pessoal - Financeiro</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+	<body>
+    <header class="header">
+
+        <div class="header_title_container">
+            <img class="header_img" src="../img/Logo.png" alt="Logo">
+            <h1 class="header_title">Planejamento<br><span>Pessoal</span></h1>
+        </div>
+
+		
+		<div class="user_links">
+			<div class="balance">
+				<p>Saldo</p>
+				<span></span>
+			</div>
+			<nav>
+			    <a href="finance.html">Financeiro</a>
+			    <a href="./">Academia</a>
+			</nav>
+		</div>
+        
+
+        
+    </header>
+
+    <main>
+		<div class="container_nav_months">
+			<a href="./" class="left_arrow arrow">←</a>
+			<div class="container_text_nav_months">
+				<h2>Gastos 
+					<span class="current_month"></span>
+					de
+					<span class="current_year"></span>
+				</h2>
+			</div>
+			<a href="./" class="right_arrow arrow">→</a>
+		</div>
+		
+        <div class="container_transactions">
+            
+            <span></span>
+
+            <div class="container_transactions_column" id="transactions_column_name">
+                <p class="transactions_column_title">Nome</p>
+            </div>
+            <div class="container_transactions_column" id="transactions_column_date">
+                <p class="transactions_column_title">Data</p>
+
+            </div>
+			<div class="container_transactions_column" id="transactions_column_type">
+			    <p class="transactions_column_title">Tipo</p>
+
+			</div>
+            <div class="container_transactions_column" id="transactions_column_category">
+                <p class="transactions_column_title">Categoria</p>
+
+            </div>
+
+
+            <div class="container_transactions_column" id="transactions_column_installments">
+                <p class="transactions_column_title">Parcelas</p>
+
+            </div>
+            <div class="container_transactions_column" id="transactions_column_price">
+                <p class="transactions_column_title">Preço</p>
+            </div>
+			
+			<div class="container_management_transactions container_add">
+				<a class="add_transaction_button">+ Adicionar</a>
+			</div>
+			<div class="container_management_transactions container_remove">
+				<a class="remove_transaction_button">Remover</a>			
+			</div>
+        </div>
+		
+		<div class="container_total">
+			<div class="total">TOTAL FATURA 
+				<span></span>
+			</div>
+		</div>
+
+		
+	
+    </main>
+	
+    <section class="add_transaction_modal">
+		
+        <form class="modal" name="transaction_add_form">
+			<a class="x_add" href="">X</a>
+			
+			<div class="transaction_add_data">
+	            <label for="name">Nome: </label>
+	            <input name="name" type="text" id="name" required>
+				
+	            <label for="category">Categoria: </label>
+	            <input name="category" type="text" id="category">
+				
+	
+	            <label for="date">Data: </label>
+	            <input name="date" type="date" id="date" required>
+	
+	            <label for="installments">Parcelas: </label>
+	            <input name="installments" type="number" id="installments" required>
+				
+	            <label for="price">Preço: </label>
+	            <input name="price" type="number" id="price" required>
+				<fieldset>
+					<legend>Tipo</legend>
+						
+					<div>
+						<input type="radio" id="credit" name="type" value="Crédito">
+						<label for="credit">Crédito</label>
+					</div>
+					<div>
+						<input type="radio" id="debit" name="type" value="Débito">
+						<label for="debit">Débito</label>
+					</div>
+					<div>
+						<input type="radio" id="pix" name="type" value="Pix">
+						<label for="pix">Pix</label>
+					</div>
+				</fieldset>
+			</div>
+            <button type="button" class="transaction_add_modal_button">Confirmar</button>
+        </form>
+
+    </section>
+	
+	<section class="remove_transaction_modal">	
+		<form class="modal removal_modal" name="transaction_remove_form">
+			<a class="close_modal" href="">X</a>
+			<div class="container_selection">
+				<select id="selection_transaction" name="selection">	
+					<option value="" selected disabled hidden>Selecione</option>
+				</select>	
+			</div>
+			
+			<div class="container_removal_data">
+				<div class="removal_data_msg">
+					<h3> ← Selecione a transação a ser removida </h3>
+									
+				</div>
+				
+			</div>	
+			<div class="removal_modal_button">
+				<button class="transaction_removal_modal_button" type="button">Confirmar</button>
+			</div>
+			
+		</form>
+	</section>
+
+	
+
+    <script type="module" src="../script.js"></script>
+</body>
+
+</html>

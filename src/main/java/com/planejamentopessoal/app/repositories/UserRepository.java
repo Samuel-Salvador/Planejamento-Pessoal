@@ -6,4 +6,5 @@ import com.planejamentopessoal.app.entities.User;
 
 public interface UserRepository extends JpaRepository<User,Long> {
 
+	
 }

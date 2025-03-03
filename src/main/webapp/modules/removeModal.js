@@ -1,79 +1,120 @@
-import {transactions} from "./transactionFetchData.js";
-import {url, formattedDate,formattedPrice } from "./global.js";
+import {transactionsArray,setTotal} from "./finance.js";
+import {transactionUrl, formattedDate,formattedPrice } from "./global.js";
 
-const modalRemovalDiv = document.querySelector(".dados_removal");
+const removalModal = document.querySelector(".remove_transaction_modal");
+const closeModal = document.querySelector(".close_modal");
+
+const containerRemovalData = document.querySelector(".container_removal_data");
+const selectionForRemoval = document.getElementById("selection_transaction");
+
 const removalButtonConfirm = document.querySelector(".removal_modal_button");
-const removalModal = document.querySelector(".remover_transacao");
-export const selectionForRemoval = document.getElementById("selection_transaction");
-
 
 let removalIdDB=0;
 let removalCorrectArrayIndex=0;
 
+export function openRemovalModal(){
+	removalModal.classList.add("flex");
+}
+
+function closeRemovalModal(event){
+	event.preventDefault();
+	removalModal.classList.remove("flex");
+}
+
+function clickOutsideModal(event){
+	if(event.target==this){
+		closeRemovalModal(event);
+	}	
+}
+
 // sets the data in removal modal to default
 export function resetRemovalModal(){
-	modalRemovalDiv.innerHTML = `<div class="dados_removal_h3">
+	containerRemovalData.innerHTML = `<div class="removal_data_msg">
 									<h3> ← Selecione a transação a ser removida: </h3>
 								</div>`;
 										
-	removalButtonConfirm.classList.remove("block");
-			
-	selectionForRemoval.innerHTML+= `<option value="" selected disabled hidden>
-									Selecione</option>`;
-			
+	removalButtonConfirm.classList.remove("block");	
+	
+	selectionForRemoval.selectedIndex = 0;	
+}
+
+export function addOptionToSelectForRemovalElement(transaction){
+	const option = document.createElement("option");
+	option.setAttribute("date-data",
+		`${formattedDate(transaction.date)}`);
+	option.setAttribute("price-data",`${transaction.price}`)
+	option.innerHTML = `${transaction.name}`;
+	selectionForRemoval.appendChild(option);
+}
+
+export function clearSelectElement(){
+	selectionForRemoval.innerHTML=	`<option value="" selected disabled hidden>
+										Selecione</option>`;
+}
+	
+
+function removeFromDOMSelectedTransaction(){
+	for(let i=0;i<6;i++){
+		const transactionColumn = document.querySelectorAll(".container_transactions_column")[i];
+		transactionColumn.removeChild(transactionColumn.children[removalCorrectArrayIndex+1]);
+	}
+	selectionForRemoval.removeChild(selectionForRemoval.options[selectionForRemoval.selectedIndex]);
+	
+	transactionsArray.splice(removalCorrectArrayIndex,1);
+	
+	setTotal(transactionsArray);
+	
+	resetRemovalModal();
 }
 
 export function initRemovalModal(){
 
+	closeModal.addEventListener("click",closeRemovalModal);
+	removalModal.addEventListener("click",clickOutsideModal);
+		
 	//checks the <select> tab for the removal in the removal modal
 	selectionForRemoval.addEventListener('change',()=>{
 		
-		const removalButton = document.querySelector(".removal_modal_button");
-		removalButton.classList.add("block");
-		
-		for(let i=0;i<transactions.length;i++){
+	const removalButton = document.querySelector(".removal_modal_button");
+	removalButton.classList.add("block");
 
-			//Gets the correct id in DB and the array index for removal
-			if(	selectionForRemoval.value == transactions[i].nome &&
-				selectionForRemoval.options[selectionForRemoval.selectedIndex]
-				.getAttribute("date-data") == formattedDate(transactions[i].data) &&
-				selectionForRemoval.options[selectionForRemoval.selectedIndex]
-				.getAttribute("preco-data") == transactions[i].preco){
-					removalIdDB=transactions[i].id;
-					removalCorrectArrayIndex = i;
-					
+	for(let i=0;i<transactionsArray.length;i++){
+
+		//Gets the correct id in DB and the array index for removal
+		if(	selectionForRemoval.value == transactionsArray[i].name &&
+			selectionForRemoval.options[selectionForRemoval.selectedIndex].getAttribute("date-data") == formattedDate(transactionsArray[i].date) &&
+			selectionForRemoval.options[selectionForRemoval.selectedIndex].getAttribute("price-data") == transactionsArray[i].price){
+					removalIdDB=transactionsArray[i].id;
+					removalCorrectArrayIndex = i;	
 			}
 		}
-			
+		
 		//adds the data from the selected transaction in the removal modal
-		modalRemovalDiv.innerHTML=`<div class="dados_removal_h3 margin_bottom_20">
+		containerRemovalData.innerHTML=`<div class="removal_data_msg margin_bottom_20">
 			<h3>Dados da transação a ser removida: </h3></div>
 			<div>
-			<p class="dados_removal_titulo">Nome:</p> 
-				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].nome}</p><br>
-			<p class="dados_removal_titulo">Data:</p> 
-				<p class="dados_removal_conteudo">${formattedDate(transactions[removalCorrectArrayIndex].data)}</p><br>
-			<p class="dados_removal_titulo">Tipo:</p>  
-				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].tipo}</p><br>
-			<p class="dados_removal_titulo">Categoria:</p> 
-				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].categoria}</p><br>
-			<p class="dados_removal_titulo">Parcelas:</p> 
-				<p class="dados_removal_conteudo">${transactions[removalCorrectArrayIndex].parcelaAtual+"/"
-				+transactions[removalCorrectArrayIndex].parcelas}</p><br>
-			<p class="dados_removal_titulo">Preço:</p>
-				<p class="dados_removal_conteudo">${formattedPrice(transactions[removalCorrectArrayIndex].preco)}</p><br>
+			<p class="removal_transaction_data_title">Nome:</p> 
+				<p class="removal_transaction_data_content">${transactionsArray[removalCorrectArrayIndex].name}</p><br>
+			<p class="removal_transaction_data_title">Data:</p> 
+				<p class="removal_transaction_data_content">${formattedDate(transactionsArray[removalCorrectArrayIndex].date)}</p><br>
+			<p class="removal_transaction_data_title">Tipo:</p>  
+				<p class="removal_transaction_data_content">${transactionsArray[removalCorrectArrayIndex].type}</p><br>
+			<p class="removal_transaction_data_title">Categoria:</p> 
+				<p class="removal_transaction_data_content">${transactionsArray[removalCorrectArrayIndex].category}</p><br>
+			<p class="removal_transaction_data_title">Parcelas:</p> 
+				<p class="removal_transaction_data_content">${transactionsArray[removalCorrectArrayIndex].currentInstallment+"/"
+				+transactionsArray[removalCorrectArrayIndex].installments}</p><br>
+			<p class="removal_transaction_data_title">Preço:</p>
+				<p class="removal_transaction_data_content">${formattedPrice(transactionsArray[removalCorrectArrayIndex].price)}</p><br>
 			</div>`;
-		
-	});
+		});
 
 
 	//http DELETE
-	removalButtonConfirm.addEventListener('click',()=>{
+	removalButtonConfirm.addEventListener('click',(event)=>{
 			
-		fetch(url+"/"+removalIdDB,{method: "DELETE"})
-		.then(location.reload(true));
-		removalModal.classList.remove("flex");
-	})
+		fetch(transactionUrl.substring(0,transactionUrl.length-2)+"/"+removalIdDB,{method: "DELETE"})
+			.then(removeFromDOMSelectedTransaction());
+		closeRemovalModal(event);
+	})	
 }	
-	
-	

@@ -1,4 +1,4 @@
-.container_transacoes {
+.container_transactions {
   background-color: var(--cor-1);
   display: grid;
   width: 40%;
@@ -14,7 +14,7 @@
   
 }
 
-.container_transacoes span {
+.container_transactions span {
   position: absolute;
   content: "";
   width: 100%;
@@ -24,18 +24,18 @@
   top: 50px;
 }
 
-.container_transacoes_titulo_lista {
+.container_transactions_column {
 	width:100%;
   	text-align: center;
   	border-right: 1px dotted var(--cor-2);
 	font-family: "Merriweather";
 
 }
-.container_transacoes_titulo_lista:last-child {
+.container_transactions_column:last-child {
   border-right: none;
 }
 
-.linha {
+.transaction {
   text-align: center;
   align-content: center;
   width: 100%;
@@ -44,11 +44,11 @@
   font-family: "Merriweather";
 }
 
-.linha:last-of-type{
+.transaction:last-of-type{
 	border-bottom: none;
 }
 
-.container_gerenciamento_transacoes {
+.container_management_transactions {
   position: absolute;
   padding: 5px;
   bottom: -40px;
@@ -59,32 +59,32 @@
   
 }
 
-.container_gerenciamento_transacoes a {
+.container_management_transactions a {
   text-decoration: none;
   font-size: 0.875rem;
   color: var(--cor-3);
 }
 
-.container_adicionar{
+.container_add{
 	background-color: var(--cor-2);
 	right: 0px;
 	border: 1px solid var(--cor-3);
 }
-.container_remover{
+.container_remove{
 	background-color: var(--cor-3);
 	right: 110px;
 	
 }
 
-.container_remover a{
+.container_remove a{
 	color: var(--cor-0);
 }
 
-.container_adicionar:hover {
+.container_add:hover {
   background-color: #00959C;
   cursor: pointer;
 }
-.container_remover:hover{
+.container_remove:hover{
 	background-color: #D9D9D9;
 	cursor: pointer;
 }

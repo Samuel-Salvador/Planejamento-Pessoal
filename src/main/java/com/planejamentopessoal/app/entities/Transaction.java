@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,39 +21,34 @@ public class Transaction implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	private String nome;
+	private String name;
 	
-	private LocalDate data;
-	private Double preco;
-	private Integer parcelas;
-	private String categoria;
-	private String tipo;
+	private LocalDate date;
+	private Double price;
+	private Integer installments;
+	private String category;
+	private String type;
 	
-	private Integer parcelaAtual;
-	private Integer mes;
-	private Integer ano;
-	
-	@JsonIgnore
+	private Integer currentInstallment;
+
 	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private User usuario;
+	@JoinColumn(name="id_usuario",nullable = false)
+	private User user;
 	
 	public Transaction() {		
 	}
 
-	public Transaction(Long id, String nome,String tipo, LocalDate data,Integer mes,Integer ano, Double preco,Integer parcelaAtual, Integer parcelas, String categoria,User usuario) {
+	public Transaction(Long id, String name,String type, LocalDate date, Double price,Integer currentInstallment, Integer installments, String category,User user) {
 		super();
 		Id = id;
-		this.nome = nome;
-		this.data = data;
-		this.mes = mes;
-		this.ano = ano;
-		this.preco = preco;
-		this.parcelaAtual = parcelaAtual;
-		this.parcelas = parcelas;
-		this.categoria = categoria;
-		this.tipo = tipo;
-		this.usuario = usuario;
+		this.name = name;
+		this.date = date;
+		this.price = price;
+		this.currentInstallment = currentInstallment;
+		this.installments = installments;
+		this.category = category;
+		this.type = type;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -66,91 +59,71 @@ public class Transaction implements Serializable{
 		Id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
-	
-
-	public Integer getMes() {
-		return mes;
-	}
-
-	public void setMes(Integer mes) {
-		this.mes = mes;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	
-
-	public Integer getAno() {
-		return ano;
+	public String getType() {
+		return type;
 	}
 
-	public void setAno(Integer ano) {
-		this.ano = ano;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	
-	public Integer getParcelaAtual() {
-		return parcelaAtual;
+	public Integer getCurrentInstallment() {
+		return currentInstallment;
 	}
 
-	public void setParcelaAtual(Integer parcelaAtual) {
-		this.parcelaAtual = parcelaAtual;
+	public void setCurrentInstallment(Integer currentInstallment) {
+		this.currentInstallment = currentInstallment;
 	}
 
-	public Integer getParcelas() {
-		return parcelas;
+	public Integer getInstallments() {
+		return installments;
 	}
 
-	public void setParcelas(Integer parcelas) {
-		this.parcelas = parcelas;
+	public void setInstallments(Integer installments) {
+		this.installments = installments;
 	}
 
-	public String getCategoria() {
-		return categoria;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	
 	
-	public User getUsuario() {
-		return usuario;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsuario(User usuario) {
-		this.usuario = usuario;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
