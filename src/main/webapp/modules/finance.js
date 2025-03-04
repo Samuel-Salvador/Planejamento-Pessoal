@@ -30,37 +30,56 @@ function setCorrectTitle(){
 	yearTitle.innerHTML = yearInvoice;	
 }
 
-//sums the price of each transaction and  modifies the total_div dynamically
+//sums the price of each transaction and  modifies the invoiceTotal dynamically
 export function setTotal(monthTransactions){
 	
+	//verifies if there's at least one transaction 
 	if(monthTransactions.length){
-		
 		const arrayPrice = monthTransactions.map((transaction)=>transaction.price);
-		let previousTotal = Number(invoiceTotal.innerText.replace(/^\D+/g, '').replace(',','.'));
+		const lastTwoDigitsPreviousTotal = invoiceTotal.innerText.charAt(invoiceTotal.innerText.length-1)+invoiceTotal.innerText.charAt(invoiceTotal.innerText.length-2);
+		let previousTotal = invoiceTotal.innerText;
+		
+		//if previousTotal != 0 i need to transform it's string in a number to sum it later on
+		if(previousTotal){
+			previousTotal = previousTotal.slice(0,previousTotal.length-3);
+			previousTotal = Number(previousTotal.replace(/\D/g,'')+'.'+lastTwoDigitsPreviousTotal);
+		}else{
+			//if not, i need to transform it in the number 0 (it's a string).
+			previousTotal = Number(previousTotal);
+		}
+		
 		const nextTotal = arrayPrice.reduce((accumulator,current)=>accumulator+current);
-
+		const increment = Math.ceil(Math.abs(nextTotal-previousTotal)/100);
+		
+		//modifies the invoiceTotal in the DOM several times until it reaches the correct new Total
 		if(previousTotal<nextTotal){
-			const timer = setInterval(()=>{
-				previousTotal+=1;
+			const changeNumber = setInterval(()=>{
+				previousTotal+=increment;
 				invoiceTotal.innerHTML = previousTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
 				if(previousTotal>nextTotal){
 					invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});								
-					clearInterval(timer);
+					clearInterval(changeNumber);
 				}	
-			},0);
+			},5);
 			
 		}if(previousTotal>nextTotal){
-			const timer = setInterval(()=>{
-				previousTotal-=1;
+			const changeNumber = setInterval(()=>{
+				previousTotal-=increment;
 				invoiceTotal.innerHTML = previousTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
 				if(previousTotal<nextTotal){
 					invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});				
-					clearInterval(timer);
+					clearInterval(changeNumber);
 				}		
-			},0);
+			},5);
 		}	
 	}else{
-		invoiceTotal.innerHTML = "R$ 0,00"}
+		//if there's no transactions in the month
+		invoiceTotal.innerHTML = "R$ 0,00";
+	}
+}
+
+function resetTotal(){
+	invoiceTotal.innerHTML = "";
 }
 
 function clearAllTransactions(){
@@ -153,6 +172,7 @@ export default function initFinance() {
 	
 		urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}-${yearInvoice}`);
 		clearAllTransactions();
+		resetTotal();
 		
 		setCorrectTitle();
 												
@@ -175,7 +195,8 @@ export default function initFinance() {
 		}
 		
 		urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}-${yearInvoice}`);
-		clearAllTransactions()
+		clearAllTransactions();
+		resetTotal();
 		
 		setCorrectTitle();
 
