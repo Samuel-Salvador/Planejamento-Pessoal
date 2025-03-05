@@ -1,6 +1,7 @@
 import * as global from './global.js';
 import * as removeTransaction from "./removeModal.js";
-import {openAdditionModal} from "./addModal.js";
+import { openAdditionModal} from "./addModal.js";
+import {openRemovalModal} from "./removeModal.js";
 
 let monthInvoice = 	new Date().getDate()>5 ? new Date().getMonth()+1 : new Date().getMonth();
 let yearInvoice = new Date().getFullYear();
@@ -158,64 +159,66 @@ export default function initFinance() {
 	setCorrectTitle();
 	addAllTransactions();
 
-	//changes to the previous month
-	leftArrow.addEventListener("click",(event)=>{
-		event.preventDefault();
-		
-		if(monthInvoice>1){
-			monthInvoice--;
-		} else
-		if(monthInvoice==1) {
-			yearInvoice--;
-			monthInvoice=12;
-		}
+	global.userClickEvents.forEach((userEvent)=>{
+			
 	
-		urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}-${yearInvoice}`);
-		clearAllTransactions();
-		resetTotal();
+		//changes to the previous month
+		leftArrow.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			
+			if(monthInvoice>1){
+				monthInvoice--;
+			} else
+			if(monthInvoice==1) {
+				yearInvoice--;
+				monthInvoice=12;
+			}
 		
-		setCorrectTitle();
-												
-		addAllTransactions();
-
-		removeTransaction.resetRemovalModal();
+			urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}-${yearInvoice}`);
+			clearAllTransactions();
+			resetTotal();
+			
+			setCorrectTitle();
+													
+			addAllTransactions();
+	
+			removeTransaction.resetRemovalModal();
+			
+		})
 		
+		//changes to the next month
+		rightArrow.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+					
+			if(monthInvoice<12){
+				monthInvoice++;
+			}else 
+			if(monthInvoice==12){
+				yearInvoice++;
+				monthInvoice=1;
+			}
+			
+			urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}-${yearInvoice}`);
+			clearAllTransactions();
+			resetTotal();
+			
+			setCorrectTitle();
+	
+			addAllTransactions();
+			
+			removeTransaction.resetRemovalModal();	
+		})
+		
+		//opens add transaction modal
+		addTransactionButton.addEventListener(userEvent, (event) => {
+		    event.preventDefault();
+			openAdditionModal();
+		});
+		
+		//opens remove transaction modal
+		removeTransactionButton.addEventListener(userEvent, (event) => {
+			event.preventDefault();
+			openRemovalModal();
+		});	
 	})
-	
-	//changes to the next month
-	rightArrow.addEventListener("click",(event)=>{
-		event.preventDefault();
-				
-		if(monthInvoice<12){
-			monthInvoice++;
-		}else 
-		if(monthInvoice==12){
-			yearInvoice++;
-			monthInvoice=1;
-		}
-		
-		urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}-${yearInvoice}`);
-		clearAllTransactions();
-		resetTotal();
-		
-		setCorrectTitle();
-
-		addAllTransactions();
-		
-		removeTransaction.resetRemovalModal();	
-	})
-	
-	//opens add transaction modal
-	addTransactionButton.addEventListener("click", (event) => {
-	    event.preventDefault();
-		openAdditionModal();
-	});
-	
-	//opens remove transaction modal
-	removeTransactionButton.addEventListener("click", (event) => {
-		event.preventDefault();
-		removeTransaction.openRemovalModal();
-	});
-	
-	
 }

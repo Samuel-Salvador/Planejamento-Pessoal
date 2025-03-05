@@ -10,6 +10,8 @@ export const dateOptions = {
 	year: 'numeric'
 }
 
+export const userClickEvents = ['touchstart','click'];
+
 //verifies if there's no empty values in the forms
 export function formValidated(validation) {
   if (validation == "") {

@@ -1,8 +1,8 @@
 import {transactionsArray,setTotal} from "./finance.js";
-import {transactionUrl, formattedDate,formattedPrice } from "./global.js";
+import {transactionUrl, formattedDate,formattedPrice,userClickEvents } from "./global.js";
 
-const removalModal = document.querySelector(".remove_transaction_modal");
-const closeModal = document.querySelector(".close_modal");
+const removalModal = document.querySelector(".remove_transaction_modal_section");
+const closeModal = document.querySelector(".x_removal");
 
 const containerRemovalData = document.querySelector(".container_removal_data");
 const selectionForRemoval = document.getElementById("selection_transaction");
@@ -68,9 +68,20 @@ function removeFromDOMSelectedTransaction(){
 }
 
 export function initRemovalModal(){
+	
+	userClickEvents.forEach((userEvent)=>{
+			
+		closeModal.addEventListener(userEvent,closeRemovalModal);
+		removalModal.addEventListener(userEvent,clickOutsideModal);
+		
+		//http DELETE
+		removalButtonConfirm.addEventListener(userEvent,(event)=>{
+				fetch(transactionUrl.substring(0,transactionUrl.length-2)+"/"+removalIdDB,{method: "DELETE"})
+					.then(removeFromDOMSelectedTransaction());
+				closeRemovalModal(event);
+			})	
+	})
 
-	closeModal.addEventListener("click",closeRemovalModal);
-	removalModal.addEventListener("click",clickOutsideModal);
 		
 	//checks the <select> tab for the removal in the removal modal
 	selectionForRemoval.addEventListener('change',()=>{
@@ -110,11 +121,5 @@ export function initRemovalModal(){
 		});
 
 
-	//http DELETE
-	removalButtonConfirm.addEventListener('click',(event)=>{
-			
-		fetch(transactionUrl.substring(0,transactionUrl.length-2)+"/"+removalIdDB,{method: "DELETE"})
-			.then(removeFromDOMSelectedTransaction());
-		closeRemovalModal(event);
-	})	
+	
 }	

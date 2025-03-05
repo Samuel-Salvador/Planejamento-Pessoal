@@ -1,8 +1,8 @@
-import {formValidated} from "./global.js";
+import {userClickEvents,formValidated} from "./global.js";
 import {urlMonthInvoice,addTransaction,setTotal,transactionsArray} from "./finance.js";
 import { loggedUserId } from "./login.js";
 
-const addTransactionModal = document.querySelector(".add_transaction_modal");
+const addTransactionModal = document.querySelector(".add_transaction_modal_section");
 const closeModalButton = document.querySelector(".x_add");
 const modalConfirmButton = document.querySelector(".transaction_add_modal_button");
 
@@ -74,11 +74,12 @@ function httpPostTransaction(){
 
 export function initModal() {
   	
-	closeModalButton.addEventListener("click",closeAdditionModal);
-	addTransactionModal.addEventListener("click",clickOutsideModal);
+	userClickEvents.forEach((userEvent)=>{
+		closeModalButton.addEventListener(userEvent,closeAdditionModal);
+		addTransactionModal.addEventListener(userEvent,clickOutsideModal);
+		modalConfirmButton.addEventListener(userEvent,httpPostTransaction);
+	})
 	
-	modalConfirmButton.addEventListener('click',httpPostTransaction);
-		
 	addTransactionModal.addEventListener('keydown', (event) => {
 		if(event.key === "Enter"){
 			httpPostTransaction();

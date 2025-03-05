@@ -1,4 +1,6 @@
 import outsideClick from "./outsideClick.js";
+import {openSettingsModal} from "./settingsModal.js";
+import {userClickEvents} from "./global.js";
 
 export default function initDropdownMenu(){
 	const userNameDiv = document.querySelector(".container_user_name");
@@ -6,18 +8,17 @@ export default function initDropdownMenu(){
 	const settingsDropdown = document.querySelector(".settings_dropdown");
 	const signOutDropdown = document.querySelector(".logout");
 	
-
-	const userEvents = ['touchstart','click'];
-	userEvents.forEach(userEvent =>{
+	userClickEvents.forEach(userEvent =>{
 		userNameDiv.addEventListener(userEvent, handleClickDropdownMenu);
 		signOutDropdown.addEventListener(userEvent,handleClickSignOut);
+		settingsDropdown.addEventListener(userEvent,openSettingsModal);
 	})
 	
 	function handleClickDropdownMenu(event){
 		event.preventDefault();
 		this.classList.add('active');
 		
-		outsideClick(this, userEvents, ()=>this.classList.remove('active'));
+		outsideClick(this, userClickEvents, ()=>this.classList.remove('active'));
 	}
 	
 	function handleClickSignOut(event){

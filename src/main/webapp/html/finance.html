@@ -102,10 +102,10 @@
 	
     </main>
 	
-    <section class="add_transaction_modal">
+    <section class="add_transaction_modal_section">
 		
         <form class="modal" name="transaction_add_form">
-			<a class="x_add" href="">X</a>
+			<a class="x_add x" href="">X</a>
 			
 			<div class="transaction_add_data">
 	            <label for="name">Nome: </label>
@@ -145,9 +145,9 @@
 
     </section>
 	
-	<section class="remove_transaction_modal">	
+	<section class="remove_transaction_modal_section">	
 		<form class="modal removal_modal" name="transaction_remove_form">
-			<a class="close_modal" href="">X</a>
+			<a class="x_removal x" href="">X</a>
 			<div class="container_selection">
 				<select id="selection_transaction" name="selection">	
 					<option value="" selected disabled hidden>Selecione</option>
@@ -167,7 +167,54 @@
 			
 		</form>
 	</section>
-
+	
+	<section class="user_settings_modal_section">
+		<div class="modal user_settings_modal">
+			<div class="container_settings_menu">
+				<h3 class="settings_menu_title">Menu</h3>
+				<ul class="settings_menu_list">
+					<li class="settings_menu_list_item">Dados <img class="active_option" src="../img/arrow_right.png"></li>
+					<li class="settings_menu_list_item delete_account" delete_account>Excluir Conta</li>
+				</ul>
+				<span class="settings_divisor"></span>
+			</div>
+			<div class="container_settings_inner_content">
+				<form class="settings_account_data">
+					<h3 class="settings_account_data_title">Dados do usuário</h3>
+					<a class="x_settings x" href="">X</a>
+					<div class="container_fullname_settings">
+						<label for="fullname">Nome: </label>
+						<input name="fullname" type="text" id="user_settings_fullname_input" disabled>
+					</div>
+					<div class="container_username_settings">
+						<label for="username">Nome de Usuário: </label>
+						<input name="username" type="text" id="user_settings_username_input"  disabled>
+					</div>
+					<div class="container_birthday_settings">
+						<label for="birthday">Data de Nascimento: </label>
+						<input name="birthday" type="text" id="user_settings_birthday_input" disabled>
+					</div>
+					<div class="container_email_settings">
+						<label for="email">Email: </label>
+						<input name="email" type="email" id="user_settings_email_input" disabled>
+					</div>			
+					<div class="container_password_settings">
+						<label for="password">Senha: </label>
+						<input name="password" type="password" id="user_settings_password_input" placeholder="••••••••••••"  disabled>
+						<img id="img_visibility_off" class="settings_password_visibility" src="../img/visibility_off.png">
+					</div>
+					<div class="container_income_balance_settings">
+						<label for="income" id="user_settings_income_label">Salário: </label>
+						<input name="income" type="number" id="user_settings_income_input">
+						<label for="balance" id="user_settings_balance_label">Saldo: </label>
+						<input name="balance" type="number" id="user_settings_balance_input">
+					</div>
+					
+					<button class="settings_modal_button" type="button">Salvar</button>
+				</form>
+			</div>
+		</div>
+	</section>
 	
 
     <script type="module" src="../script.js"></script>

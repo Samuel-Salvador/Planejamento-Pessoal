@@ -9,7 +9,7 @@
   display: flex;
 }
 
-.modal a {
+.x {
   position: absolute;
   top: -15px;
   right: -10px;
@@ -22,7 +22,9 @@
   text-shadow: 1px 1px 1px black;
 }
 
-.add_transaction_modal, .remove_transaction_modal {
+.add_transaction_modal_section, 
+.remove_transaction_modal_section, 
+.user_settings_modal_section{
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   top: 0;
@@ -37,20 +39,24 @@
   align-items: center;
 }
 
-.transaction_add_modal_button, .transaction_removal_modal_button {
+.transaction_add_modal_button, 
+.transaction_removal_modal_button, 
+.settings_modal_button{
 	margin: 0 auto;
-	  border: 1px solid var(--cor-2);
-	  border-radius: 10px;
-	  color: var(--cor-3);
-	  background-color: var(--cor-0);
-	  position: absolute;
-	  bottom: 20px;
-	  right: 20px;
-	  padding: 5px 10px;
-	  font-family: "DynaPuff";
+	border: 1px solid var(--cor-2);
+	border-radius: 10px;
+	color: var(--cor-3);
+	background-color: var(--cor-0);
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+	padding: 5px 10px;
+	font-family: "DynaPuff";
 }
 
-.transaction_add_modal_button:hover , .transaction_removal_modal_button:hover {
+.transaction_add_modal_button:hover , 
+.transaction_removal_modal_button:hover ,
+.settings_modal_button:hover{
   background-color: #3a3939;
   cursor: pointer;
 }
