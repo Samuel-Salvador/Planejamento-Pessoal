@@ -3,7 +3,7 @@
 	text-align: center;
 	user-select: none;
 	margin-top: 20px;
-	font-family: "DynaPuff";
+	font-family: var(--font-0);
 }
 
 .container_nav_months h2{

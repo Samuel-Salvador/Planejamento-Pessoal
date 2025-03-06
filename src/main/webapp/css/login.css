@@ -52,7 +52,7 @@
 	margin: 10px 75px;
 	height: 2rem;
 	border-radius: 4px;
-	font-family: "DynaPuff";
+	font-family: var(--font-0);
 	border: 1px ridge var(--cor-0);
 	outline: none;
 }
@@ -82,7 +82,7 @@
 	background-color: var(--cor-3);
 	border: 1px solid var(--cor-2);
 	border-radius: 4px;
-	font-family: "DynaPuff";
+	font-family: var(--font-0);
 	cursor: pointer;
 }
 
@@ -93,7 +93,7 @@
 .login_register_anchor{
 	align-self: center;
 	margin: 40px 0 20px 0;
-	font-family: "Merriweather";
+	font-family: var(--font-1);
 	font-size: 0.8rem;
 	font-weight: bold;
 	color: var(--cor-3);
@@ -104,6 +104,15 @@
 .login_register_anchor:hover{
 	text-decoration: underline;
 	
+}
+
+.login_error{
+	outline: 1px solid red;
+	outline-color: red;
+}
+
+.login_error:focus{
+	outline: none;
 }
 
 

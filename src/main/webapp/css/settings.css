@@ -1,6 +1,6 @@
 .user_settings_modal{
 	padding: 40px 40px 40px 0;
-	height: calc(inherit + 40px);
+	height: 180px;
 }
 
 .container_settings_menu{
@@ -75,7 +75,7 @@
 }
 
 .delete_account_question{
-	font-family: "Merriweather";
+	font-family: var(--font-1);
 }
 
 .delete_account_question span{
@@ -129,4 +129,34 @@
 .settings_password_visibility:hover{
 	cursor: pointer;
 }
+
+.update_user_msg{
+	font-family: var(--font-1);
+	font-size: 0.8rem;
+	margin: 0 0 0 40px;
+}
+
+.failed_update{
+	color: #c21807;
+	text-shadow: -1px 0 var(--cor-0), 0 1px var(--cor-0), 1px 0 var(--cor-0), 0 -1px var(--cor-0);
+
+}
+
+.successful_update{
+	color: #568203;
+	text-shadow: -1px 0 var(--cor-0), 0 1px var(--cor-0), 1px 0 var(--cor-0), 0 -1px var(--cor-0);
+	margin-top: 8px;
+}
+
+.settings_modal_button[disabled]{
+	background-color: #14181d;
+	color: #bebebe;
+}
+
+.settings_modal_button[disabled]:hover{
+	background-color: #14181d;
+	color: #bebebe;
+	cursor: default;
+}
+
 

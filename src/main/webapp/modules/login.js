@@ -1,11 +1,20 @@
 export let loggedUserId = sessionStorage.userId;
 
+
+
 if(location.toString()=="http://127.0.0.1:3030/"){
+	const userNameElement = document.forms.login.user_name;
+	const userPasswordElement = document.forms.login.password;
+								
 	if(localStorage.userId==null){
 		
 		const loginButton = document.querySelector(".login_button");
-			
-		loginButton.addEventListener("click",login);
+		
+		['click','touchstart'].forEach((userEvent)=>{
+			loginButton.addEventListener(userEvent,login);
+			userNameElement.addEventListener(userEvent,()=>removeOutline(userNameElement));
+			userPasswordElement.addEventListener(userEvent,()=>removeOutline(userPasswordElement));
+		})
 		
 		document.addEventListener("keydown",(event)=>{
 			if(event.key==="Enter"){
@@ -34,8 +43,15 @@ if(location.toString()=="http://127.0.0.1:3030/"){
 						sessionStorage.userId = body[i].id;
 						loggedUserId = body[i].id;
 						location.assign("http://127.0.0.1:3030/html/finance.html");
+					}else{	
+						userNameElement.setAttribute("class","login_input login_error");
+						userPasswordElement.setAttribute("class","login_input login_error");
 					}
 				}
 			})
+	}
+	
+	function removeOutline(element){
+		element.setAttribute("class","login_input");
 	}
 }

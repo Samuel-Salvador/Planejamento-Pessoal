@@ -28,4 +28,19 @@ public class UserService {
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
+	
+	public User update(Long id, User obj) {
+		User entity = repository.getReferenceById(id);
+		updateData(entity,obj);
+		return repository.save(entity);
+	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
+
+	private void updateData(User entity, User obj) {
+		entity.setBalance(obj.getBalance());
+		entity.setIncome(obj.getIncome());	
+	}
 }

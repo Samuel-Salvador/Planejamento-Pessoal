@@ -4,7 +4,7 @@ body {
   background-color: var(--cor-0);
   padding: 0px;
   margin: 0px;
-  font-family: "DynaPuff";
+  font-family: var(--font-0);
   height: 100%;
 }
 

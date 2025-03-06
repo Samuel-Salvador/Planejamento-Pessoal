@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="icon" type="image/x-icon" href="../img/favicon.ico">
 	<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 	<body>
@@ -22,11 +23,14 @@
 		<div class="user_links">
 			<nav>
 			    <a href="finance.html">Financeiro</a>
-			    <a href="./">Academia</a>
+			    <a href="">Academia</a>
 			</nav>
-			<div class="balance">
-				<p>Saldo</p>
-				<span></span>
+			<div class="container_balance">
+				<div class="balance">
+					<p>Saldo</p>
+					<span></span>
+				</div>
+				<img class="balance_visibility_img" src="../img/visibility_on.png">
 			</div>
 			<div class="container_user_name">
 				<p class="user_name"></p>
@@ -88,7 +92,7 @@
 				<a class="add_transaction_button">+</a>
 			</div>
 			<div class="container_management_transactions container_remove">
-				<a class="remove_transaction_button">-</a>			
+				<a class="remove_transaction_button"><img class="delete_transaction_img" src="../img/delete.png"></a>			
 			</div>
         </div>
 		
@@ -108,35 +112,35 @@
 			<a class="x_add x" href="">X</a>
 			
 			<div class="transaction_add_data">
-	            <label for="name">Nome: </label>
-	            <input name="name" type="text" id="name" required>
+	            <label for="transaction_name">Nome: </label>
+	            <input name="name" type="text" id="transaction_name" required autocomplete="off">
 				
-	            <label for="category">Categoria: </label>
-	            <input name="category" type="text" id="category">
+	            <label for="transaction_category">Categoria: </label>
+	            <input name="category" type="text" id="transaction_category">
 				
 	
-	            <label for="date">Data: </label>
-	            <input name="date" type="date" id="date" required>
+	            <label for="transaction_date">Data: </label>
+	            <input name="date" type="date" id="transaction_date" required>
 	
-	            <label for="installments">Parcelas: </label>
-	            <input name="installments" type="number" id="installments" required>
+	            <label for="transaction_installments">Parcelas: </label>
+	            <input name="installments" type="number" id="transaction_installments" required>
 				
-	            <label for="price">Preço: </label>
-	            <input name="price" type="number" id="price" required>
+	            <label for="transaction_price">Preço: </label>
+	            <input name="price" type="number" id="transaction_price" required>
 				<fieldset>
 					<legend>Tipo</legend>
 						
 					<div>
-						<input type="radio" id="credit" name="type" value="Crédito">
-						<label for="credit">Crédito</label>
+						<input type="radio" id="transaction_credit" name="type" value="Crédito">
+						<label for="transaction_credit">Crédito</label>
 					</div>
 					<div>
-						<input type="radio" id="debit" name="type" value="Débito">
-						<label for="debit">Débito</label>
+						<input type="radio" id="transaction_debit" name="type" value="Débito">
+						<label for="transaction_debit">Débito</label>
 					</div>
 					<div>
-						<input type="radio" id="pix" name="type" value="Pix">
-						<label for="pix">Pix</label>
+						<input type="radio" id="transaction_pix" name="type" value="Pix">
+						<label for="transaction_pix">Pix</label>
 					</div>
 				</fieldset>
 			</div>
@@ -179,34 +183,34 @@
 				<span class="settings_divisor"></span>
 			</div>
 			<div class="container_settings_inner_content">
-				<form class="settings_account_data">
+				<form name="settings_account_data" class="settings_account_data">
 					<h3 class="settings_account_data_title">Dados do usuário</h3>
 					<a class="x_settings x" href="">X</a>
 					<div class="container_fullname_settings">
-						<label for="fullname">Nome: </label>
-						<input name="fullname" type="text" id="user_settings_fullname_input" disabled>
+						<label for="user_settings_fullname_input">Nome: </label>
+						<input name="fullname" type="text" id="user_settings_fullname_input" disabled >
 					</div>
 					<div class="container_username_settings">
-						<label for="username">Nome de Usuário: </label>
-						<input name="username" type="text" id="user_settings_username_input"  disabled>
+						<label for="user_settings_username_input">Nome de Usuário: </label>
+						<input name="username" type="text" id="user_settings_username_input" disabled autocomplete="off">
 					</div>
 					<div class="container_birthday_settings">
-						<label for="birthday">Data de Nascimento: </label>
+						<label for="user_settings_birthday_input">Data de Nascimento: </label>
 						<input name="birthday" type="text" id="user_settings_birthday_input" disabled>
 					</div>
 					<div class="container_email_settings">
-						<label for="email">Email: </label>
-						<input name="email" type="email" id="user_settings_email_input" disabled>
+						<label for="user_settings_email_input">Email: </label>
+						<input name="email" type="email" id="user_settings_email_input" disabled autocomplete="off">
 					</div>			
 					<div class="container_password_settings">
-						<label for="password">Senha: </label>
+						<label for="user_settings_password_input">Senha: </label>
 						<input name="password" type="password" id="user_settings_password_input" placeholder="••••••••••••"  disabled>
 						<img id="img_visibility_off" class="settings_password_visibility" src="../img/visibility_off.png">
 					</div>
 					<div class="container_income_balance_settings">
-						<label for="income" id="user_settings_income_label">Salário: </label>
+						<label for="user_settings_income_input" id="user_settings_income_label">Salário: </label>
 						<input name="income" type="number" id="user_settings_income_input">
-						<label for="balance" id="user_settings_balance_label">Saldo: </label>
+						<label for="user_settings_balance_input" id="user_settings_balance_label">Saldo: </label>
 						<input name="balance" type="number" id="user_settings_balance_input">
 					</div>
 					

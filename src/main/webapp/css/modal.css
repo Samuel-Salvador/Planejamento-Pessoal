@@ -51,7 +51,7 @@
 	bottom: 10px;
 	right: 20px;
 	padding: 5px 10px;
-	font-family: "DynaPuff";
+	font-family: var(--font-0);
 }
 
 .transaction_add_modal_button:hover , 
@@ -82,7 +82,7 @@
 	border:1px solid var(--cor-3); 
 	color: var(--cor-3);
 	display: inline-block;
-	font-family: "Merriweather";
+	font-family: var(--font-1);
 	font-size: 0.8rem;
 }
 .transaction_add_data input:focus{
@@ -91,12 +91,15 @@
 	color: black;
 }
 
-#name,#category,#installments,#price{
+#transaction_name,
+#transaction_category,
+#transaction_installments,
+#transaction_price{
 	width: 95px;	
 	margin-right: 10px;
 }
 
-#date{
+#transaction_date{
 	width: 98px;
 }
 
