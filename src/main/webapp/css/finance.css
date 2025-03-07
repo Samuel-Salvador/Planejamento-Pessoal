@@ -11,10 +11,9 @@
   color: var(--cor-3);
   position: relative;
   gap: 0px;
-  
 }
 
-.container_transactions span {
+.container_transactions .divisor {
   position: absolute;
   content: "";
   width: 100%;

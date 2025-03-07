@@ -12,7 +12,8 @@ const leftArrow = document.querySelector(".left_arrow");
 const rightArrow = document.querySelector(".right_arrow");
 const monthTitle = document.querySelector(".current_month");
 const yearTitle = document.querySelector(".current_year");
-const invoiceTotal = document.querySelector(".total span");
+export const invoiceTotal = document.querySelector(".total span");
+export let invoiceNumber = global.getNumberOutOfCurrencyString(invoiceTotal.innerText);
 
 const removeTransactionButton = document.querySelector(".container_remove");
 const addTransactionButton = document.querySelector(".container_add");
@@ -37,38 +38,29 @@ export function setTotal(monthTransactions){
 	//verifies if there's at least one transaction 
 	if(monthTransactions.length){
 		const arrayPrice = monthTransactions.map((transaction)=>transaction.price);
-		const lastTwoDigitsPreviousTotal = invoiceTotal.innerText.charAt(invoiceTotal.innerText.length-1)+invoiceTotal.innerText.charAt(invoiceTotal.innerText.length-2);
-		let previousTotal = invoiceTotal.innerText;
-		
-		//if previousTotal != 0 i need to transform it's string in a number to sum it later on
-		if(previousTotal){
-			previousTotal = previousTotal.slice(0,previousTotal.length-3);
-			previousTotal = Number(previousTotal.replace(/\D/g,'')+'.'+lastTwoDigitsPreviousTotal);
-		}else{
-			//if not, i need to transform it in the number 0 (it's a string).
-			previousTotal = Number(previousTotal);
-		}
 		
 		const nextTotal = arrayPrice.reduce((accumulator,current)=>accumulator+current);
-		const increment = Math.ceil(Math.abs(nextTotal-previousTotal)/100);
-		
+		const increment = Math.ceil(Math.abs(nextTotal-invoiceNumber)/100)+1;
+		console.log(increment);
 		//modifies the invoiceTotal in the DOM several times until it reaches the correct new Total
-		if(previousTotal<nextTotal){
+		if(invoiceNumber<nextTotal){
 			const changeNumber = setInterval(()=>{
-				previousTotal+=increment;
-				invoiceTotal.innerHTML = previousTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
-				if(previousTotal>nextTotal){
+				invoiceNumber+=increment;
+				invoiceTotal.innerHTML = invoiceNumber.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+				if(invoiceNumber>nextTotal){
 					invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});								
+					invoiceNumber = nextTotal;
 					clearInterval(changeNumber);
 				}	
 			},5);
 			
-		}if(previousTotal>nextTotal){
+		}if(invoiceNumber>nextTotal){
 			const changeNumber = setInterval(()=>{
-				previousTotal-=increment;
-				invoiceTotal.innerHTML = previousTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
-				if(previousTotal<nextTotal){
+				invoiceNumber-=increment;
+				invoiceTotal.innerHTML = invoiceNumber.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+				if(invoiceNumber<nextTotal){
 					invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});				
+					invoiceNumber = nextTotal;
 					clearInterval(changeNumber);
 				}		
 			},5);

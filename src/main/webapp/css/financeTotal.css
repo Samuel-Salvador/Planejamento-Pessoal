@@ -1,7 +1,7 @@
 .container_total {
 	position: absolute;
-	top: 280px;
-	right: 200px;
+	top: 0px;
+	right: -350px;
 	display: flex;
 	gap: 20px;
 	flex-direction: column;

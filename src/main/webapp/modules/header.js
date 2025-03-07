@@ -1,11 +1,18 @@
 import * as global from './global.js';
+import {dataSettingBalanceInput} from './settingsModal.js';
+import {invoiceNumber} from './finance.js';
 
 const balanceSPAN = document.querySelector(".balance span");
+const balanceContainer = document.querySelector(".balance");
+const balanceManagementContainer = balanceContainer.querySelector(".balance_management_list");
+
+const plusIncomeElement = balanceManagementContainer.querySelector(".plus_income");
+const minusInvoiceElement = balanceManagementContainer.querySelector(".minus_invoice");
 
 export let userData = {};
 
 export async function initHeader(){
-	
+
 	const userName = document.querySelector(".user_name");
 	const balanceVisibilityImg = document.querySelector(".balance_visibility_img");
 	
@@ -15,8 +22,11 @@ export async function initHeader(){
 	updateBalanceHeader();
 	
 	global.userClickEvents.forEach((userEvent)=>{
-		balanceVisibilityImg.addEventListener(userEvent,changeVisibilityBalance);	
-		})
+		balanceVisibilityImg.addEventListener(userEvent,changeVisibilityBalance);
+		balanceContainer.addEventListener(userEvent,toggleBalanceManagementContainer);
+		plusIncomeElement.addEventListener(userEvent,depositIncome);
+		minusInvoiceElement.addEventListener(userEvent,payInvoice);
+	})
 }
 
 export async function fetchUser(){
@@ -24,7 +34,6 @@ export async function fetchUser(){
 }
 
 export async function updateBalanceHeader(){
-	
 	
 	await fetchUser();
 	
@@ -38,8 +47,8 @@ export async function updateBalanceHeader(){
 function changeVisibilityBalance(){
 	
 	const containerBalance = document.querySelector(".container_balance");
-	const currentImg = containerBalance.querySelector("img");
-		
+	const currentImg = containerBalance.querySelector(".balance_visibility_img");	
+	
 	const visibilityOn = document.createElement("img");
 	visibilityOn.setAttribute("src","../img/visibility_on.png");
 	visibilityOn.setAttribute("class","balance_visibility_img");
@@ -63,7 +72,39 @@ function changeVisibilityBalance(){
 		containerBalance.removeChild(currentImg);
 		containerBalance.appendChild(visibilityOn);
 		balanceSPAN.innerHTML = global.formattedPrice(userData.balance);
-	}
-		
-		
+	}	
+}
+
+function toggleBalanceManagementContainer(){
+	balanceManagementContainer.classList.toggle("flex");
+}
+
+async function depositIncome(){
+	await fetchUser();
+	const newBalance = userData.balance+userData.income;
+	const options={	method: "PUT",
+					headers:{	
+								"Content-Type": "application/json; charset=utf-8",
+							},
+					body: JSON.stringify({	balance: newBalance}),
+					};
+	fetch(global.userUrl,options);
+	updateBalanceHeader();
+	dataSettingBalanceInput.setAttribute("placeholder",newBalance.toFixed(2));
+}
+
+async function payInvoice(){
+	await fetchUser();
+
+	const newBalance = userData.balance-invoiceNumber;
+	const options= {method: "PUT",
+					headers:{	
+								"Content-Type": "application/json; charset=utf-8",
+							},
+					body: JSON.stringify({	balance: newBalance}),
+					};
+	fetch(global.userUrl,options);
+	updateBalanceHeader();
+	dataSettingBalanceInput.setAttribute("placeholder",newBalance.toFixed(2));
+
 }

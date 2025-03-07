@@ -40,7 +40,14 @@ public class UserService {
 	}
 
 	private void updateData(User entity, User obj) {
-		entity.setBalance(obj.getBalance());
-		entity.setIncome(obj.getIncome());	
+		if(obj.getBalance()==null) {
+			entity.setIncome(obj.getIncome());
+		}else if(obj.getIncome()==null) {
+			entity.setBalance(obj.getBalance());
+		} else {
+			entity.setBalance(obj.getBalance());
+			entity.setIncome(obj.getIncome());
+		}
+			
 	}
 }

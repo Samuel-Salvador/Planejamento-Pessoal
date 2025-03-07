@@ -39,23 +39,51 @@
 	gap: 30px;
 }
 
+.user_links nav{
+	position: relative;
+}
+
+.user_links nav .divisor{
+	content: "";
+	height: 75px;
+	width: 1px;
+	background-color: var(--cor-0);
+	display: block;
+	position: absolute;
+	top: -25px;
+	right: -5px;
+}
+
 .container_balance{
 	display: flex;
 	justify-content:end;
 	width: 150px;
+	gap: 5px;
 	
 }
 
+
 .balance{
 	text-align: center;
+	padding: 2px 5px;
+	border: 1px solid transparent;
+	position: relative;
+	user-select: none;
+}
+
+.balance:hover:not(:has(.balance_management_list:hover)){
+	border: 1px solid var(--cor-0);
+	box-shadow: 0 0 5px rgba(0,0,0,.05), 2px 2px 5px rgba(0,0,0,.1);
+	border-radius: 10px;
+	cursor: pointer;
 }
 
 
 .balance p {
-	
 	color: var(--cor-3);
 	margin: 0;
 	font-size: 1.1rem;
+	
 }
 
 .balance span{
@@ -64,6 +92,54 @@
 	text-shadow: 0px 0px 2px  black;
 }
 
+.balance_management_list{
+	list-style: none;
+	position: absolute;
+	bottom: -50px;
+	left: 0;
+	right: 0;
+	align-items: center;
+	width: fit-content;
+	margin:  0 auto;
+	padding: 0;
+	display: none;
+	gap: 2px;
+}
+.balance_management_item{
+	text-wrap: nowrap;
+	text-align: center;
+	font-size: 0.6rem;
+	padding: 4px 2px;
+	border: 1px solid var(--cor-0);
+	border-radius: 10px;
+	width: 44px;
+	height: 36px;
+	color: var(--cor-3);
+	font-family: var(--font-1)
+}
+.balance_management_item img{
+	max-width: 100%;
+	height: 20px;
+	display: block;
+	justify-self: center;
+}
+
+.plus_income{
+	background-color: #1a652a;
+}
+.plus_income:hover{
+	background-color: #145021;
+	cursor: pointer;
+}
+
+.minus_invoice{
+	background-color: #c21807;
+}
+
+.minus_invoice:hover{
+	background-color: #9b1305;
+	cursor: pointer;
+}
 .balance_visibility_img{
 	max-width: 100%;
 	height: 24px;

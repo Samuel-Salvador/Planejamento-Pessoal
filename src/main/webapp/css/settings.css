@@ -110,6 +110,8 @@
 #user_settings_income_input{
 	width: 60px;
 	margin: 5px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 }
 #user_settings_balance_label{
 	margin-left: 5px;

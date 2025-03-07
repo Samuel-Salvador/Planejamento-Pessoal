@@ -51,6 +51,8 @@ public class User {
 		this.birthday = birthday;
 		this.email = email;
 		this.password = password;
+		this.income = 0.0;
+		this.balance = 0.0;
 	}
 
 

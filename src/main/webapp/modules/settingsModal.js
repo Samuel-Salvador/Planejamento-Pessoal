@@ -6,7 +6,7 @@ const settingsInnerContentElement = document.querySelector(".container_settings_
 const settingsInnerContentUserData = document.querySelector(".container_settings_inner_content").innerHTML;
 
 let dataSettingIncomeInput = document.getElementById("user_settings_income_input");
-let dataSettingBalanceInput = document.getElementById("user_settings_balance_input");
+export let dataSettingBalanceInput = document.getElementById("user_settings_balance_input");
 
 export function openSettingsModal(){
 	settingsModal.classList.add("flex");
@@ -202,9 +202,3 @@ async function handleSaveButton(saveDataButton){
 					accountDataFormElement.removeChild(updateUserMsg);
 			},5000);
 }
-
-function deleteUserAccount(){
-	
-}
-
-
