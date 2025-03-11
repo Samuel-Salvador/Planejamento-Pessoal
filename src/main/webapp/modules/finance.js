@@ -41,10 +41,11 @@ export function setTotal(monthTransactions){
 		
 		const nextTotal = arrayPrice.reduce((accumulator,current)=>accumulator+current);
 		const increment = Math.ceil(Math.abs(nextTotal-invoiceNumber)/100)+1;
-		console.log(increment);
+		
 		//modifies the invoiceTotal in the DOM several times until it reaches the correct new Total
 		if(invoiceNumber<nextTotal){
 			const changeNumber = setInterval(()=>{
+				
 				invoiceNumber+=increment;
 				invoiceTotal.innerHTML = invoiceNumber.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
 				if(invoiceNumber>nextTotal){
@@ -55,6 +56,7 @@ export function setTotal(monthTransactions){
 			},5);
 			
 		}if(invoiceNumber>nextTotal){
+			
 			const changeNumber = setInterval(()=>{
 				invoiceNumber-=increment;
 				invoiceTotal.innerHTML = invoiceNumber.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
@@ -64,7 +66,9 @@ export function setTotal(monthTransactions){
 					clearInterval(changeNumber);
 				}		
 			},5);
-		}	
+		}if(invoiceNumber==nextTotal){
+			invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+		}
 	}else{
 		//if there's no transactions in the month
 		invoiceTotal.innerHTML = "R$ 0,00";

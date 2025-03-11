@@ -27,15 +27,16 @@ public class TestConfig implements CommandLineRunner{
 		User samuel = new User(null,"Samuel","Samzin",LocalDate.of(2001, 6, 29),"samuel20018@gmail.com","sss290601");
 		User gabi = new User(null,"Gabriela","Gabi",LocalDate.of(2001, 6, 29),"samuel20018@gmail.com","sss290601");
 		
-		Transaction t1 = new Transaction(null, "Gasolina","Crédito",LocalDate.now(), 14.5,1, 2, "Posto",samuel);
-		Transaction t2 = new Transaction(null, "Etanol","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",samuel);
-		Transaction t3 = new Transaction(null, "Etanois","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",samuel);
-		Transaction t4 = new Transaction(null, "Perdigão","Crédito",LocalDate.of(2025, 3, 27) , 25.0,1, 1, "Posto",samuel);
+		Transaction t1 = new Transaction(null, "Gasolina","Crédito",LocalDate.now(), 14.5,1, 2, "Posto",samuel,"Everyday");
+		Transaction t2 = new Transaction(null, "Etanol","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",samuel,"Everyday");
+		Transaction t3 = new Transaction(null, "Etanois","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",samuel,"Everyday");
+		Transaction t4 = new Transaction(null, "Perdigão","Crédito",LocalDate.of(2025, 3, 27) , 25.0,1, 1, "Posto",samuel,"Everyday");
 		
-		Transaction t5 = new Transaction(null, "aaa","Crédito",LocalDate.now(), 14.5,1, 2, "Posto",gabi);
-		Transaction t6= new Transaction(null, "bbbl","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",gabi);
-		Transaction t7 = new Transaction(null, "ccc","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",gabi);
+		Transaction t5 = new Transaction(null, "aaa","Crédito",LocalDate.now(), 14.5,1, 2, "Posto",gabi,"Everyday");
+		Transaction t6= new Transaction(null, "bbbl","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",gabi,"Everyday");
+		Transaction t7 = new Transaction(null, "ccc","Crédito",LocalDate.now() , 25.0,1, 1, "Posto",gabi,"Everyday");
 		
+		samuel.getTransactionGroups().add("Viagem Santa-Catarina");
 		
 		userRepository.save(samuel);
 		userRepository.save(gabi);

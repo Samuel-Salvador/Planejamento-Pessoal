@@ -48,7 +48,8 @@ public class TransactionService {
 					1,
 					obj.getInstallments(),
 					obj.getCategory(),
-					obj.getUser());
+					obj.getUser(),
+					obj.getGroup());
 			objList.add(installment);
 			repository.save(installment);
 			
@@ -64,7 +65,8 @@ public class TransactionService {
 						i+1,
 						obj.getInstallments(),
 						obj.getCategory(),
-						obj.getUser());
+						obj.getUser(),
+						obj.getGroup());
 				objList.add(installment);
 				repository.save(installment);
 			}

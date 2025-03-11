@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,8 @@ public class Transaction implements Serializable{
 	private Integer installments;
 	private String category;
 	private String type;
+	@Column(name="group_name")
+	private String group;
 	
 	private Integer currentInstallment;
 
@@ -38,7 +41,9 @@ public class Transaction implements Serializable{
 	public Transaction() {		
 	}
 
-	public Transaction(Long id, String name,String type, LocalDate date, Double price,Integer currentInstallment, Integer installments, String category,User user) {
+	public Transaction(Long id, String name,String type, LocalDate date,
+			Double price,Integer currentInstallment, Integer installments, 
+			String category,User user , String group) {
 		super();
 		Id = id;
 		this.name = name;
@@ -49,7 +54,9 @@ public class Transaction implements Serializable{
 		this.category = category;
 		this.type = type;
 		this.user = user;
+		this.group = group;
 	}
+	
 
 	public Long getId() {
 		return Id;
@@ -67,13 +74,7 @@ public class Transaction implements Serializable{
 		this.name = name;
 	}
 	
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 
 	public LocalDate getDate() {
 		return date;
@@ -90,16 +91,7 @@ public class Transaction implements Serializable{
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-
 	
-	public Integer getCurrentInstallment() {
-		return currentInstallment;
-	}
-
-	public void setCurrentInstallment(Integer currentInstallment) {
-		this.currentInstallment = currentInstallment;
-	}
-
 	public Integer getInstallments() {
 		return installments;
 	}
@@ -107,6 +99,9 @@ public class Transaction implements Serializable{
 	public void setInstallments(Integer installments) {
 		this.installments = installments;
 	}
+	
+	
+	
 
 	public String getCategory() {
 		return category;
@@ -116,7 +111,29 @@ public class Transaction implements Serializable{
 		this.category = category;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 	
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public Integer getCurrentInstallment() {
+		return currentInstallment;
+	}
+
+	public void setCurrentInstallment(Integer currentInstallment) {
+		this.currentInstallment = currentInstallment;
+	}
 	
 	public User getUser() {
 		return user;
@@ -125,7 +142,7 @@ public class Transaction implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(Id);

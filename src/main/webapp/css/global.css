@@ -1,4 +1,13 @@
-@import './variables.css';
+:root {
+	--cor-0: #222831;
+	--cor-1: #393E46;
+	--cor-2: #00ADB5;
+	--cor-3: #EEEEEE;
+	
+	--font-0: "DynaPuff";
+	--font-1: "Merriweather";
+}
+
 
 body {
   background-color: var(--cor-0);

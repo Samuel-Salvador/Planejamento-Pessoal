@@ -8,12 +8,16 @@ const settingsInnerContentUserData = document.querySelector(".container_settings
 let dataSettingIncomeInput = document.getElementById("user_settings_income_input");
 export let dataSettingBalanceInput = document.getElementById("user_settings_balance_input");
 
+let rightArrowImg = document.querySelector(".active_option_img");
+let parentElementImg = rightArrowImg.parentElement;
+
 export function openSettingsModal(){
 	settingsModal.classList.add("flex");
 }
 
 function closeSettinsModal(event){
 	event.preventDefault();
+	resetTransactionGroupInputValue();
 	settingsModal.classList.remove("flex");
 }
 
@@ -22,6 +26,12 @@ function clickOutsideModal(event){
 		closeSettinsModal(event);
 	}	
 }
+
+function changeVisibilityDropdownMenu(parentElement,dropdownMenu){
+	dropdownMenu.classList.toggle("active");
+	parentElement.classList.toggle("active_option");
+}
+
 
 function changeVisibilityPassword(){
 	
@@ -58,17 +68,95 @@ function changeVisibilityPassword(){
 	
 }
 
+function resetTransactionGroupInputValue(){
+	document.forms.transaction_group_form.transaction_group.value='';
+}
+
+async function handleAddTransactionGroupButton(){
+	await fetchUser();
+	
+	const financeGroupInput = document.forms.transaction_group_form.transaction_group.value;
+	const arrayTransactionGroups = userData.transactionGroups.concat(financeGroupInput);
+	console.log(arrayTransactionGroups);
+	
+	const options = {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+		},
+		body: JSON.stringify({transactionGroups: arrayTransactionGroups})
+	}
+	fetch(userUrl,options);
+	addTransactionGroupToDom(financeGroupInput);
+	resetTransactionGroupInputValue();
+}
+
+async function handleRemoveTransactionGroupButton(){
+	await fetchUser();
+		
+	const financeGroupInput = document.forms.transaction_group_form.transaction_group.value;
+	const arrayTransactionGroups = userData.transactionGroups;
+	
+	if(arrayTransactionGroups.some((item)=>item==financeGroupInput)){
+		const indexForRemoval = arrayTransactionGroups.indexOf(financeGroupInput);
+		arrayTransactionGroups.splice(indexForRemoval,1);
+		
+	}
+	
+	const options = {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json; charset=utf-8",
+		},
+		body: JSON.stringify({transactionGroups: arrayTransactionGroups})
+	}
+	fetch(userUrl,options);
+	removeTransactionGroupFromDOM(financeGroupInput);
+	resetTransactionGroupInputValue();
+}
+
+function addTransactionGroupToDom(transactionGroup){
+	const transactionGroupDOMList = document.querySelector(".settings_finance_group_data_list");
+	const newTransactionGroup = document.createElement("li");
+	newTransactionGroup.setAttribute("class","settings_finance_group_data_item");
+	newTransactionGroup.innerHTML = transactionGroup;
+	transactionGroupDOMList.appendChild(newTransactionGroup);
+	
+}
+
+function removeTransactionGroupFromDOM(transactionGroup){
+	const transactionGroupDOMList = document.querySelector(".settings_finance_group_data_list");
+	const transactionForRemoval = transactionGroupDOMList.querySelectorAll(".settings_finance_group_data_item");
+	
+	for(let i=0;i<transactionForRemoval.length;i++){
+		if(transactionForRemoval[i].innerHTML==transactionGroup){
+			transactionGroupDOMList.removeChild(transactionForRemoval[i]);
+			break;
+		}
+	}
+}
+
 export async function initSettingsModal(){
 	
 	const closeModalButton = document.querySelector(".x_settings");
+	const menuList = document.querySelector(".settings_menu_list");
 	const menuItems = document.querySelectorAll(".settings_menu_list_item");
 	
+	const financeItemMenuSettings = document.querySelector(".finance_item");
+	const dropdownMenuFinance = menuList.querySelector(".dropdown-menu");
+	const financeInnerMenuItems = document.querySelectorAll(".finance_menu_list_item");
+	
+	const allMenuItems = Array.from(menuItems).concat(Array.from(financeInnerMenuItems));
 	
 	userClickEvents.forEach((userEvent)=>{
 		closeModalButton.addEventListener(userEvent,closeSettinsModal);
 		settingsModal.addEventListener(userEvent,clickOutsideModal);
+		financeItemMenuSettings.addEventListener(userEvent,()=>{
+			changeVisibilityDropdownMenu(financeItemMenuSettings,dropdownMenuFinance);
+		});
 		
-		menuItems.forEach((menuItem)=>menuItem.addEventListener(userEvent,()=>{
+		
+		allMenuItems.forEach((menuItem)=>menuItem.addEventListener(userEvent,()=>{
 			changeCurrentMenuItem(menuItem);
 		}));
 	})
@@ -76,13 +164,24 @@ export async function initSettingsModal(){
 	
 }
 
-function changeCurrentMenuItem(menuItem){
+async function changeCurrentMenuItem(menuItem){
 	
-	const rightArrowImg = document.querySelector(".active_option");
-	const parentElementImg = rightArrowImg.parentElement;
 	
-	parentElementImg.removeChild(rightArrowImg);
-	menuItem.appendChild(rightArrowImg);
+	if(document.querySelector(".active_option_img")){
+		rightArrowImg = document.querySelector(".active_option_img");
+		parentElementImg = rightArrowImg.parentElement;
+		parentElementImg.removeChild(rightArrowImg);
+	}
+	
+	let isDropdownMenu = false;
+	for(let i=0;i<menuItem.classList.length;i++){
+		if(menuItem.classList[i]=="finance_item"){
+			isDropdownMenu = true;
+		}
+	}
+	if(!isDropdownMenu){
+		menuItem.appendChild(rightArrowImg);
+	}
 	
 	const settingsInnerContentDeleteAccount = 
 	`<div class="settings_delete_account_data">
@@ -93,8 +192,22 @@ function changeCurrentMenuItem(menuItem){
 		<button class="settings_modal_button delete_account_button" type="button">Excluir</button>
 	</div>`;
 	
+	const settingsInnerContentFinanceGroup = 
+		`<div class="settings_finance_group">
+			<h3 class="settings_finance_group_title">Grupos de transações</h3>
+			<a class="x_settings x" href="">X</a>
+			<ul class="settings_finance_group_data_list">
+				
+			</ul>
+			<form name="transaction_group_form">
+				<input name="transaction_group" type="text" id="transaction_group_input" placeholder="Ex.: Viagem Rio de Janeiro 2014">
+			</form>
+			
+			<button class="settings_modal_button remove_transaction_group_button" type="button">Remover</button>
+			<button class="settings_modal_button add_transaction_group_button" type="button">Adicionar</button>
+		</div>`;
 	
-	if(menuItem.hasAttribute("delete_account")){
+	if(menuItem.getAttribute("data-content")=="delete_account"){
 		settingsInnerContentElement.innerHTML = settingsInnerContentDeleteAccount;
 		
 		const deleteAccountButton = document.querySelector(".delete_account_button");
@@ -106,9 +219,29 @@ function changeCurrentMenuItem(menuItem){
 			})
 		})
 		
-	} else{
+	}
+	if(menuItem.getAttribute("data-content")=="account_data"){
 		settingsInnerContentElement.innerHTML = settingsInnerContentUserData;
 		changePlaceholdersUserData();
+	}
+	if(menuItem.getAttribute("data-content")=="finance_group"){
+		settingsInnerContentElement.innerHTML = settingsInnerContentFinanceGroup;
+		resetTransactionGroupInputValue();
+		
+		await fetchUser();
+		const arrayTransactionGroups = userData.transactionGroups;
+			
+		arrayTransactionGroups.forEach((transactionGroup)=>{
+			addTransactionGroupToDom(transactionGroup);
+		});
+		
+		const addFinanceGroupButton = document.querySelector(".add_transaction_group_button");
+		const removeFinanceGroupButton = document.querySelector(".remove_transaction_group_button");
+		
+		userClickEvents.forEach((userEvent)=>{
+			addFinanceGroupButton.addEventListener(userEvent,()=>handleAddTransactionGroupButton());
+			removeFinanceGroupButton.addEventListener(userEvent,()=>handleRemoveTransactionGroupButton());
+		})
 	}
 	 
 }

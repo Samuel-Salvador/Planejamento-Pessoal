@@ -11,7 +11,7 @@ if(location.toString()=="http://127.0.0.1:3030/"){
 		const loginButton = document.querySelector(".login_button");
 		
 		['click','touchstart'].forEach((userEvent)=>{
-			loginButton.addEventListener(userEvent,login);
+			loginButton.addEventListener(userEvent,(event)=>login(event));
 			userNameElement.addEventListener(userEvent,()=>removeOutline(userNameElement));
 			userPasswordElement.addEventListener(userEvent,()=>removeOutline(userPasswordElement));
 		})
@@ -26,29 +26,33 @@ if(location.toString()=="http://127.0.0.1:3030/"){
 		location.assign("http://127.0.0.1:3030/html/finance.html");
 	}
 	
-	function login(){
+	async function login(event){
+		event.preventDefault();
 		const userName = document.forms.login.user_name.value;
 		const userPassword = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
 		
-		fetch("http://127.0.0.1:3030/users")
-			.then((r)=>r.json())
-			.then((body)=>{
-				for(let i=0;i<body.length;i++){
-					if(	body[i].username === userName &&
-						body[i].password === userPassword){
-							if(rememberCheckBox){
-								localStorage.userId = body[i].id;
-							}
-						sessionStorage.userId = body[i].id;
-						loggedUserId = body[i].id;
-						location.assign("http://127.0.0.1:3030/html/finance.html");
-					}else{	
-						userNameElement.setAttribute("class","login_input login_error");
-						userPasswordElement.setAttribute("class","login_input login_error");
+		const responseUsers = await fetch("http://127.0.0.1:3030/users");
+		const usersJSON = await responseUsers.json();
+		
+		console.log(usersJSON);
+			
+		for(let i=0;i<usersJSON.length;i++){
+			if(	usersJSON[i].username === userName &&
+				usersJSON[i].password === userPassword){
+					if(rememberCheckBox){
+						localStorage.userId = usersJSON[i].id;
 					}
-				}
-			})
+				sessionStorage.userId = usersJSON[i].id;
+				loggedUserId = usersJSON[i].id;
+				location.assign("http://127.0.0.1:3030/html/finance.html");
+				removeOutline(userNameElement);
+				removeOutline(userPasswordElement);
+			}else{	
+				userNameElement.setAttribute("class","login_input login_error");
+				userPasswordElement.setAttribute("class","login_input login_error");
+			}
+		}
 	}
 	
 	function removeOutline(element){

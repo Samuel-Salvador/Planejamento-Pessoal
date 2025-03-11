@@ -9,7 +9,8 @@
 }
 
 .container_user_name.active .img_arrow_drop_down,
-.container_user_name:hover .img_arrow_drop_down{
+.container_user_name:hover .img_arrow_drop_down,
+.settings_menu_list_item.active_option .img_arrow_drop_down{
 	animation: rotating .2s forwards;
 }
 
@@ -34,17 +35,20 @@
 }
 
 .dropdown-menu{
-	position: absolute;
-	top:28px;
-	right: 0px;
 	margin: 0;
 	padding: 0;
-	justify-items: end;
 	display:none;
 	
 }
 
-.dropdown-menu::before{
+.dropdown-menu_user{
+	position: absolute;
+	top:28px;
+	right: 0px;
+	justify-items: end;
+}
+
+.dropdown-menu_user::before{
 	content:"";
 	display: block;
 	position: absolute;
@@ -57,7 +61,7 @@
 	right:2px;
 }
 
-.dropdown-menu li{
+.dropdown-menu_user li{
 	padding: 3px;
 	display: flex;
 	list-style: none;
@@ -70,10 +74,11 @@
 	border-radius: 4px;
 	color: #000;
 }
-.dropdown-menu li:first-child{
+
+.dropdown-menu_user:first-child{
 	border-bottom: none;
 }
-.dropdown-menu li:hover{
+.dropdown-menu_user li:hover{
 	color:#b3b3b3;
 }
 

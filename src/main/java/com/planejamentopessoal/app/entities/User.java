@@ -28,8 +28,10 @@ public class User {
 	private String email;
 	private String password;
 	
-	private Double income;
-	private Double balance;
+	private Double income=0.0;
+	private Double balance=0.0;
+	
+	private List<String> transactionGroups = new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
@@ -51,10 +53,11 @@ public class User {
 		this.birthday = birthday;
 		this.email = email;
 		this.password = password;
-		this.income = 0.0;
-		this.balance = 0.0;
 	}
 
+	public Long getId() {
+		return Id;
+	}
 
 	public String getName() {
 		return name;
@@ -112,8 +115,13 @@ public class User {
 		this.balance = balance;
 	}
 
-	public Long getId() {
-		return Id;
+	
+	public void setTransactionGroups(List<String> transactionGroups) {
+		this.transactionGroups = transactionGroups;
+	}
+
+	public List<String> getTransactionGroups() {
+		return transactionGroups;
 	}
 
 	public List<Transaction> getTransactionList() {

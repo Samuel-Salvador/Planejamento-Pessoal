@@ -42,7 +42,7 @@
 			<div class="container_user_name">
 				<p class="user_name"></p>
 				<img class="img_arrow_drop_down" src="../img/arrow_drop_down.png">
-				<ul class="dropdown-menu">
+				<ul class="dropdown-menu dropdown-menu_user">
 					<li class="settings_dropdown"><img src="../img/settings.png"><a>Configurações</a></li>
 					<li class="logout"><img src="../img/logout.png"><a>Sair</a></li>
 				</ul>
@@ -185,8 +185,12 @@
 			<div class="container_settings_menu">
 				<h3 class="settings_menu_title">Menu</h3>
 				<ul class="settings_menu_list">
-					<li class="settings_menu_list_item">Dados <img class="active_option" src="../img/arrow_right.png"></li>
-					<li class="settings_menu_list_item delete_account" delete_account>Excluir Conta</li>
+					<li class="settings_menu_list_item" data-content="account_data">Dados <img class="active_option_img" src="../img/arrow_right.png"></li>
+					<li class="settings_menu_list_item finance_item">Financeiro <img class="settings_menu_img_dropdown img_arrow_drop_down" src="../img/arrow_drop_down.png"></li>
+					<ul class="dropdown-menu finance_menu_list">
+						<li class="finance_menu_list_item" data-content="finance_group"><a>Grupos</a></li>
+					</ul>	
+					<li class="settings_menu_list_item delete_account" data-content="delete_account">Excluir Conta</li>
 				</ul>
 				<span class="settings_divisor"></span>
 			</div>

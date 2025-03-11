@@ -57,7 +57,7 @@
 .transaction_add_modal_button:hover , 
 .transaction_removal_modal_button:hover ,
 .settings_modal_button:hover{
-  background-color: #3a3939;
+  background-color: #1b2027;
   cursor: pointer;
 }
 

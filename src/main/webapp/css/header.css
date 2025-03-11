@@ -117,11 +117,13 @@
 	color: var(--cor-3);
 	font-family: var(--font-1)
 }
+
 .balance_management_item img{
 	max-width: 100%;
 	height: 20px;
 	display: block;
 	justify-self: center;
+	
 }
 
 .plus_income{
@@ -145,6 +147,10 @@
 	height: 24px;
 	align-self: center;
 	margin-left: 8px;
+}
+
+.balance_visibility_img:hover{
+	cursor: pointer;
 }
 
 nav a {
