@@ -17,7 +17,6 @@ export function openSettingsModal(){
 
 function closeSettinsModal(event){
 	event.preventDefault();
-	resetTransactionGroupInputValue();
 	settingsModal.classList.remove("flex");
 }
 
@@ -77,7 +76,6 @@ async function handleAddTransactionGroupButton(){
 	
 	const financeGroupInput = document.forms.transaction_group_form.transaction_group.value;
 	const arrayTransactionGroups = userData.transactionGroups.concat(financeGroupInput);
-	console.log(arrayTransactionGroups);
 	
 	const options = {
 		method: "PUT",
