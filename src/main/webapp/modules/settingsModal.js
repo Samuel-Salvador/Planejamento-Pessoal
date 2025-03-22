@@ -1,5 +1,7 @@
 import {userClickEvents,formattedDate,userUrl} from "./global.js";
 import {userData,fetchUser,updateBalanceHeader} from "./header.js";
+import { addModalTransactionGroupSelect, createOptionSelectionGroup } from "./addModal.js";
+import { financeTransactionGroupSelect } from "./finance.js";
 
 const settingsModal = document.querySelector(".user_settings_modal_section");
 const settingsInnerContentElement = document.querySelector(".container_settings_inner_content");
@@ -10,7 +12,7 @@ export let dataSettingBalanceInput = document.getElementById("user_settings_bala
 
 let rightArrowImg = document.querySelector(".active_option_img");
 let parentElementImg = rightArrowImg.parentElement;
-
+let closeModalButton = document.querySelector(".x_settings");
 export function openSettingsModal(){
 	settingsModal.classList.add("flex");
 }
@@ -85,7 +87,10 @@ async function handleAddTransactionGroupButton(){
 		body: JSON.stringify({transactionGroups: arrayTransactionGroups})
 	}
 	fetch(userUrl,options);
+	await fetchUser();
 	addTransactionGroupToDom(financeGroupInput);
+	createOptionSelectionGroup(userData.transactionGroups.length-1,addModalTransactionGroupSelect);
+	createOptionSelectionGroup(userData.transactionGroups.length-1,financeTransactionGroupSelect);
 	resetTransactionGroupInputValue();
 }
 
@@ -136,7 +141,7 @@ function removeTransactionGroupFromDOM(transactionGroup){
 
 export async function initSettingsModal(){
 	
-	const closeModalButton = document.querySelector(".x_settings");
+	
 	const menuList = document.querySelector(".settings_menu_list");
 	const menuItems = document.querySelectorAll(".settings_menu_list_item");
 	
@@ -163,7 +168,6 @@ export async function initSettingsModal(){
 }
 
 async function changeCurrentMenuItem(menuItem){
-	
 	
 	if(document.querySelector(".active_option_img")){
 		rightArrowImg = document.querySelector(".active_option_img");
@@ -201,29 +205,46 @@ async function changeCurrentMenuItem(menuItem){
 				<input name="transaction_group" type="text" id="transaction_group_input" placeholder="Ex.: Viagem Rio de Janeiro 2014">
 			</form>
 			
-			<button class="settings_modal_button remove_transaction_group_button" type="button">Remover</button>
-			<button class="settings_modal_button add_transaction_group_button" type="button">Adicionar</button>
+			<button type="button" class="settings_modal_button remove_transaction_group_button">Remover</button>
+			<button type="button" class="settings_modal_button add_transaction_group_button">Adicionar</button>
 		</div>`;
 	
 	if(menuItem.getAttribute("data-content")=="delete_account"){
 		settingsInnerContentElement.innerHTML = settingsInnerContentDeleteAccount;
 		
 		const deleteAccountButton = document.querySelector(".delete_account_button");
+		closeModalButton = document.querySelector(".x_settings");
 		
 		userClickEvents.forEach((userEvent)=>{
 			deleteAccountButton.addEventListener(userEvent,()=>{
 				location.assign("http://127.0.0.1:3030");
 				fetch(userUrl,{method: "DELETE"});
 			})
+			
+			closeModalButton.addEventListener(userEvent,(event)=>{
+				closeSettinsModal(event);
+			});
 		})
 		
 	}
 	if(menuItem.getAttribute("data-content")=="account_data"){
 		settingsInnerContentElement.innerHTML = settingsInnerContentUserData;
+		closeModalButton = document.querySelector(".x_settings");
 		changePlaceholdersUserData();
+		
+		userClickEvents.forEach((userEvent)=>{
+			closeModalButton.addEventListener(userEvent,(event)=>{
+				closeSettinsModal(event);
+			});
+		})
+		
 	}
 	if(menuItem.getAttribute("data-content")=="finance_group"){
+		
 		settingsInnerContentElement.innerHTML = settingsInnerContentFinanceGroup;
+		
+		const financeGroupDiv = document.querySelector(".settings_finance_group");
+		closeModalButton = document.querySelector(".x_settings");
 		resetTransactionGroupInputValue();
 		
 		await fetchUser();
@@ -237,8 +258,23 @@ async function changeCurrentMenuItem(menuItem){
 		const removeFinanceGroupButton = document.querySelector(".remove_transaction_group_button");
 		
 		userClickEvents.forEach((userEvent)=>{
-			addFinanceGroupButton.addEventListener(userEvent,()=>handleAddTransactionGroupButton());
-			removeFinanceGroupButton.addEventListener(userEvent,()=>handleRemoveTransactionGroupButton());
+			addFinanceGroupButton.addEventListener(userEvent,()=>{
+				handleAddTransactionGroupButton();
+			});
+			removeFinanceGroupButton.addEventListener(userEvent,()=>{
+				handleRemoveTransactionGroupButton();
+			});
+			closeModalButton.addEventListener(userEvent,(event)=>{
+				closeSettinsModal(event);
+			});
+		})
+		
+		financeGroupDiv.addEventListener('keydown',(event)=>{
+			if(event.key=="Enter"){
+				event.preventDefault();
+				
+				handleAddTransactionGroupButton();
+			}
 		})
 	}
 	 

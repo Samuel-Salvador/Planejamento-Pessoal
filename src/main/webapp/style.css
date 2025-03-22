@@ -4,7 +4,8 @@
 @import './css/modal.css';
 @import './css/finance.css';
 @import './css/financeMonthNav.css';
-@import './css/financeTotal.css';
+@import './css/financeLeftSidePanel.css';
+@import './css/financeRightSidePanel.css';
 @import './css/login.css';
 @import './css/register.css';
 @import './css/settings.css';

@@ -59,6 +59,7 @@
 	justify-content:end;
 	width: 150px;
 	gap: 5px;
+	position: relative;
 	
 }
 
@@ -67,7 +68,7 @@
 	text-align: center;
 	padding: 2px 5px;
 	border: 1px solid transparent;
-	position: relative;
+	
 	user-select: none;
 }
 

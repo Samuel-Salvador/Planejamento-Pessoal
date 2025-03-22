@@ -30,15 +30,21 @@ public class TransactionResource {
 		List<Transaction> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	@GetMapping(value = "/{user_id}/{month}-{year}")
+	@GetMapping(value = "/{user_id}/{month}/{year}")
 	public ResponseEntity<List<Transaction>> findByMonth(@PathVariable Long user_id,@PathVariable Integer month,@PathVariable Integer year){
 		List<Transaction> list = service.findByMonth(user_id,month,year);
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@GetMapping(value = "/{user_id}/{month}-{year}/{category}")
+	@GetMapping(value = "/{user_id}/{month}/{year}/{category}")
 	public ResponseEntity<List<Transaction>> findByCategory(@PathVariable Long user_id,@PathVariable Integer month,@PathVariable Integer year,@PathVariable String category){
 		List<Transaction> list = service.findByCategory(user_id,month,year,category);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/{user_id}/{transactionGroup}")
+	public ResponseEntity<List<Transaction>> findByTrnsactionGroup(@PathVariable Long user_id, @PathVariable String transactionGroup){
+		List<Transaction> list = service.findByTransactionGroup(user_id,transactionGroup);
 		return ResponseEntity.ok().body(list);
 	}
 	

@@ -1,4 +1,4 @@
-.container_total {
+.right_side_panel {
 	position: absolute;
 	top: 0px;
 	right: -350px;
@@ -17,7 +17,7 @@
 	font-weight: bold;
 }
 
-.total{
+.container_total{
 	border: 1px solid var(--cor-2);
 	background-color: var(--cor-1);
 	box-shadow: 0px 0px 3px 1px var(--cor-3);

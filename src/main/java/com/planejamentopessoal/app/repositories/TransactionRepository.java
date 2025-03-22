@@ -15,4 +15,7 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long>{
 	
 	@Query(value = "SELECT * FROM transaction WHERE id_usuario=? AND mes=? AND ano=? AND categoria=?", nativeQuery = true)
 	List<Transaction> findByCategory(Long user_id,Integer month,Integer year,String category);
+
+	@Query(value = "SELECT * FROM transaction WHERE id_usuario=? AND group_name=?", nativeQuery = true)
+	List<Transaction> findByGroup(Long user_id, String transactionGroup);
 }

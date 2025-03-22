@@ -77,4 +77,7 @@ public class TransactionService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	public List<Transaction> findByTransactionGroup(Long user_id, String transactionGroup) {
+		return repository.findByGroup(user_id, transactionGroup);
+	}
 }

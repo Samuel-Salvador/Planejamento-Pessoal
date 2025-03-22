@@ -26,6 +26,7 @@ public class UserService {
 	}
 	
 	public User insert(User obj) {
+		obj.getTransactionGroups().add("Dia a dia");
 		return repository.save(obj);
 	}
 	

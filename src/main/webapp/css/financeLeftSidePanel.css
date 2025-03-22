@@ -1,0 +1,22 @@
+.left_side_panel {
+	position:absolute;
+	left: -250px;
+	padding: 10px;
+	background-color: var(--cor-1);
+	border-radius: 10px;
+	border: 1px solid #b3b3b3;
+}
+
+
+.transaction_group_selection{
+	display: flex;
+	flex-direction: column;
+}
+
+.transaction_group_selection h4{
+	color: var(--cor-3);
+}
+
+.left_side_panel select{
+	align-self: center;
+}

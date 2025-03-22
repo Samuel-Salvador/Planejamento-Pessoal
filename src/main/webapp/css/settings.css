@@ -73,7 +73,9 @@
 .container_settings_inner_content h3{
 	margin: 0 0 20px 40px;
 	color: var(--cor-3);
-	border-bottom: 1px solid var(--cor-2)
+	text-decoration: underline;
+	text-decoration-color: var(--cor-2);
+	text-decoration-thickness: 1px;
 }
 
 .settings_account_data label,
@@ -157,9 +159,9 @@
 	border-radius: 4px;
 	margin: 0 0 10px 40px;
 	padding: 0;
-	display: grid;
-	gap: 8px;
-	grid-template-columns: 1fr 1fr 1fr; 
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 	overflow-y: auto;
 	scrollbar-color: var(--cor-0) var(--cor-1);
 	scrollbar-width:thin;

@@ -21,12 +21,12 @@
 
 		
 		<div class="user_links">
+			<!-- 
 			<nav>
 			    <a href="finance.html">Financeiro</a>
-			    <a href="">Academia</a>
 				<div class="divisor"></div>
 			</nav>
-			
+			-->
 			<div class="container_balance">
 				<div class="balance">
 					<p>Saldo</p>
@@ -36,7 +36,7 @@
 						<li class="balance_management_item minus_invoice"><img src="../img/pay_bill.png">-Fatura</li>
 					</ul>
 				</div>
-				<img class="balance_visibility_img" src="../img/visibility_on.png">
+				<img img_visibility_on class="balance_visibility_img" src="../img/visibility_on.png">
 			</div>
 			
 			<div class="container_user_name">
@@ -102,9 +102,22 @@
 				<a class="remove_transaction_button"><img class="delete_transaction_img" src="../img/delete.png"></a>			
 			</div>
 			
-			<div class="container_total">
-				<div class="total">TOTAL FATURA 
-					<span></span>
+			<div class="left_side_panel">
+				<div class="transaction_group_selection">
+					<h4>Filtro</h4>
+									
+					<select id="transaction_group_main" name="group">	
+									
+					</select>
+				</div>
+			</div>
+			
+			<div class="right_side_panel">
+				
+				<div class="container_total">
+					<div class="total">TOTAL FATURA 
+						<span></span>
+					</div>
 				</div>
 			</div>
         </div>
@@ -116,9 +129,10 @@
 	
     <section class="add_transaction_modal_section">
 		
-        <form class="modal" name="transaction_add_form">
+        <form class="modal add_modal" name="transaction_add_form">
 			<a class="x_add x" href="">X</a>
 			
+			<h3>Adicionar Transação</h3>
 			<div class="transaction_add_data">
 	            <label for="transaction_name">Nome: </label>
 	            <input name="name" type="text" id="transaction_name" required autocomplete="off">
@@ -135,6 +149,9 @@
 				
 	            <label for="transaction_price">Preço: </label>
 	            <input name="price" type="number" id="transaction_price" required>
+				
+				
+				
 				<fieldset>
 					<legend>Tipo</legend>
 						
@@ -151,6 +168,9 @@
 						<label for="transaction_pix">Pix</label>
 					</div>
 				</fieldset>
+				<select id="transaction_group" name="group">	
+					
+				</select>	
 			</div>
             <button type="button" class="transaction_add_modal_button">Confirmar</button>
         </form>
@@ -168,7 +188,7 @@
 			
 			<div class="container_removal_data">
 				<div class="removal_data_msg">
-					<h3> ← Selecione a transação a ser removida </h3>
+					<span>←</span><h3>Selecione a transação a ser removida </h3>
 									
 				</div>
 				
@@ -195,9 +215,10 @@
 				<span class="settings_divisor"></span>
 			</div>
 			<div class="container_settings_inner_content">
+				<a class="x_settings x" href="">X</a>
 				<form name="settings_account_data" class="settings_account_data">
 					<h3 class="settings_account_data_title">Dados do usuário</h3>
-					<a class="x_settings x" href="">X</a>
+					
 					<div class="container_fullname_settings">
 						<label for="user_settings_fullname_input">Nome: </label>
 						<input name="fullname" type="text" id="user_settings_fullname_input" disabled >

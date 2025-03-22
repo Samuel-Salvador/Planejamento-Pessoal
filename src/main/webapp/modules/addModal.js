@@ -1,10 +1,13 @@
 import {userClickEvents,formValidated} from "./global.js";
 import {urlMonthInvoice,addTransaction,setTotal,transactionsArray} from "./finance.js";
 import { loggedUserId } from "./login.js";
+import { fetchUser, userData } from "./header.js";
 
 const addTransactionModal = document.querySelector(".add_transaction_modal_section");
 const closeModalButton = document.querySelector(".x_add");
 const modalConfirmButton = document.querySelector(".transaction_add_modal_button");
+
+export const addModalTransactionGroupSelect = document.getElementById("transaction_group");
 
 export function openAdditionModal(){
 	addTransactionModal.classList.add("flex");
@@ -46,6 +49,7 @@ function httpPostTransaction(){
 	const formValueInstallments = document.forms.transaction_add_form.installments.value;
 	const formValueCategory = document.forms.transaction_add_form.category.value;
 	const formValueType = document.forms.transaction_add_form.type.value;
+	const formValueGroup = document.forms.transaction_add_form.group.value;
 
 	if(	formValidated(formValueName) &&
 		formValidated(formValueDate) &&
@@ -64,6 +68,7 @@ function httpPostTransaction(){
 									    installments: formValueInstallments,
 									    category: formValueCategory,
 									    type: formValueType,
+										group: formValueGroup,
 										user: loggedUserId}),
 				};
 				postAndAddLastTransactionToArray(options);
@@ -72,8 +77,17 @@ function httpPostTransaction(){
 	}
 }
 
-export function initModal() {
-  	
+export function createOptionSelectionGroup(i,element){
+	
+	const selectionGroupNewOption = document.createElement("option");
+	
+	selectionGroupNewOption.innerHTML = userData.transactionGroups[i];
+	element.appendChild(selectionGroupNewOption);
+	
+}
+
+export async function initModal() {
+
 	userClickEvents.forEach((userEvent)=>{
 		closeModalButton.addEventListener(userEvent,closeAdditionModal);
 		addTransactionModal.addEventListener(userEvent,clickOutsideModal);
@@ -84,5 +98,17 @@ export function initModal() {
 		if(event.key === "Enter"){
 			httpPostTransaction();
 		}
-	});		
+	});
+	
+	
+	
+	await fetchUser();
+	for(let i=0;i<userData.transactionGroups.length;i++){
+		
+		createOptionSelectionGroup(i,addModalTransactionGroupSelect);
+	}
+	
+	
+	
+			
 }
