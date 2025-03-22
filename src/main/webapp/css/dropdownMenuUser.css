@@ -68,7 +68,7 @@
 	background-color: #393E55;
 	align-items: center;
 	gap: 3px;
-	justify-content: center;
+	justify-content: start;
 	width:100%;
 	border: 1px solid #14181d;
 	border-radius: 4px;

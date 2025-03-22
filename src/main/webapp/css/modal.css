@@ -150,6 +150,7 @@ fieldset {
 	display: inline-block;
 	height: 40px;
 	box-shadow: 0px 0px 5px 0px white;
+	font-family: var(--font-1);
 }
 
 .flex {

@@ -84,6 +84,7 @@
 	border-radius: 4px;
 	font-family: var(--font-0);
 	cursor: pointer;
+	color: #1e1e1e;
 }
 
 .login_button:hover{
