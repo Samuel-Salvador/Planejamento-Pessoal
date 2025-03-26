@@ -91,6 +91,7 @@ async function depositIncome(){
 	fetch(global.userUrl,options);
 	updateBalanceHeader();
 	dataSettingBalanceInput.setAttribute("placeholder",newBalance.toFixed(2));
+	console.log(options);
 }
 
 async function payInvoice(){

@@ -18,7 +18,7 @@ if(location.toString()=="http://127.0.0.1:3030/"){
 		
 		document.addEventListener("keydown",(event)=>{
 			if(event.key==="Enter"){
-				login();
+				login(event);
 			}
 		})
 	}else{

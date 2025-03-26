@@ -9,6 +9,7 @@ const settingsInnerContentUserData = document.querySelector(".container_settings
 
 let dataSettingIncomeInput = document.getElementById("user_settings_income_input");
 export let dataSettingBalanceInput = document.getElementById("user_settings_balance_input");
+const invoiceClosingDateInput = document.getElementById("user_settings_invoice_closingdate_input");
 
 let rightArrowImg = document.querySelector(".active_option_img");
 let parentElementImg = rightArrowImg.parentElement;
@@ -26,6 +27,16 @@ function clickOutsideModal(event){
 	if(event.target==this){
 		closeSettinsModal(event);
 	}	
+}
+
+function populateInvoiceDueDate(){
+	
+	for(let i=1;i<=31;i++){
+		const option = document.createElement("option");
+		option.innerHTML=i;
+		option.setAttribute("value",i);
+		invoiceClosingDateInput.appendChild(option);
+	}
 }
 
 function changeVisibilityDropdownMenu(parentElement,dropdownMenu){
@@ -99,22 +110,37 @@ async function handleRemoveTransactionGroupButton(){
 		
 	const financeGroupInput = document.forms.transaction_group_form.transaction_group.value;
 	const arrayTransactionGroups = userData.transactionGroups;
+	const financeGroupFormElement = document.querySelector(".settings_finance_group");
+	const updateUserMsg = document.createElement("p");
 	
-	if(arrayTransactionGroups.some((item)=>item==financeGroupInput)){
+	
+	if(financeGroupInput=="Dia a dia" || !arrayTransactionGroups.some((item)=>item==financeGroupInput)){
+		
+		
+		
+		updateUserMsg.innerHTML = `Não é possível remover este grupo, certifique-se que ele existe ou é diferente do grupo padrão.`;
+		updateUserMsg.setAttribute("class","update_user_msg failed_update");
+		
+		financeGroupFormElement.appendChild(updateUserMsg);
+	}else{
+	
 		const indexForRemoval = arrayTransactionGroups.indexOf(financeGroupInput);
 		arrayTransactionGroups.splice(indexForRemoval,1);
-		
+
+		const options = {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+			},
+			body: JSON.stringify({transactionGroups: arrayTransactionGroups})
+		}
+		fetch(userUrl,options);
+		removeTransactionGroupFromDOM(financeGroupInput);
 	}
-	
-	const options = {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json; charset=utf-8",
-		},
-		body: JSON.stringify({transactionGroups: arrayTransactionGroups})
-	}
-	fetch(userUrl,options);
-	removeTransactionGroupFromDOM(financeGroupInput);
+	setTimeout(()=>{
+					if(financeGroupFormElement.contains(updateUserMsg))
+						financeGroupFormElement.removeChild(updateUserMsg);
+				},5000);
 	resetTransactionGroupInputValue();
 }
 
@@ -140,7 +166,7 @@ function removeTransactionGroupFromDOM(transactionGroup){
 }
 
 export async function initSettingsModal(){
-	
+	populateInvoiceDueDate();
 	
 	const menuList = document.querySelector(".settings_menu_list");
 	const menuItems = document.querySelectorAll(".settings_menu_list_item");
@@ -301,6 +327,7 @@ async function changePlaceholdersUserData(){
 	dataSettingEmailInput.setAttribute("placeholder",userData.email);
 	dataSettingIncomeInput.setAttribute("placeholder",userData.income);
 	dataSettingBalanceInput.setAttribute("placeholder",userData.balance);
+	invoiceClosingDateInput.selectedIndex = userData.invoiceClosingDate-1;
 	
 	userClickEvents.forEach((userEvent)=>{
 		passwordVisibility.addEventListener(userEvent,changeVisibilityPassword);
@@ -311,31 +338,58 @@ async function changePlaceholdersUserData(){
 async function handleSaveButton(saveDataButton){
 	const incomeFormValue = document.forms.settings_account_data.income.value;
 	const balanceFormValue = document.forms.settings_account_data.balance.value;
+	const invoiceClosingDateValue = invoiceClosingDateInput.selectedIndex+1;
 	
 	let options = {};
+	
 	if(incomeFormValue && balanceFormValue){
 		options={	method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
 					body: JSON.stringify({	income: incomeFormValue,
-											balance: balanceFormValue}),
-				};
-	}else if(incomeFormValue){
-		options={	method: "PUT",
-					headers:{	
-								"Content-Type": "application/json; charset=utf-8",
-							},
-					body: JSON.stringify({income: incomeFormValue}),
-				};
-	}else if(balanceFormValue){
-		options={	method: "PUT",
-					headers:{	
-								"Content-Type": "application/json; charset=utf-8",
-							},
-					body: JSON.stringify({balance: balanceFormValue}),
+											balance: balanceFormValue,
+											invoiceClosingDate: invoiceClosingDateValue,
+											transactionGroups: userData.transactionGroups
+					}),
 				};
 	}
+	
+	if(incomeFormValue && !balanceFormValue){
+		options={	method: "PUT",
+					headers:{	
+								"Content-Type": "application/json; charset=utf-8",
+							},
+					body: JSON.stringify({	income: incomeFormValue,
+											invoiceClosingDate: invoiceClosingDateValue,
+											transactionGroups: userData.transactionGroups
+					}),
+				};
+	}
+	
+	if(balanceFormValue && !incomeFormValue){
+		options={	method: "PUT",
+					headers:{	
+								"Content-Type": "application/json; charset=utf-8",
+							},
+					body: JSON.stringify({	balance: balanceFormValue,
+											invoiceClosingDate: invoiceClosingDateValue,
+											transactionGroups: userData.transactionGroups
+					}),
+				};
+	}
+	
+	if(!incomeFormValue && !balanceFormValue){
+		options={	method: "PUT",
+					headers:{	
+								"Content-Type": "application/json; charset=utf-8",
+							},
+					body: JSON.stringify({	invoiceClosingDate: invoiceClosingDateValue,
+											transactionGroups: userData.transactionGroups
+					}),
+				};
+	}
+	
 	
 	const updateUserMsg = document.createElement("p");
 	
@@ -350,7 +404,7 @@ async function handleSaveButton(saveDataButton){
 		dataSettingBalanceInput.setAttribute("placeholder",userData.balance);	
 		saveDataButton.disabled = true;
 	}else{
-		updateUserMsg.innerHTML = `Erro ao Salvar dados, um ou mais<br>campos devem ser preenchidos!`
+		updateUserMsg.innerHTML = `Erro ao Salvar dados, um ou mais<br>campos devem ser modificados!`
 		updateUserMsg.setAttribute("class","update_user_msg failed_update");
 	}
 	

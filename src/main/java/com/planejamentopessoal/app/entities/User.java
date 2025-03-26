@@ -30,6 +30,7 @@ public class User {
 	
 	private Double income=0.0;
 	private Double balance=0.0;
+	private Integer invoiceClosingDate = 1;
 	
 	private List<String> transactionGroups = new ArrayList<>();
 	
@@ -116,6 +117,15 @@ public class User {
 	}
 
 	
+	
+	public Integer getInvoiceClosingDate() {
+		return invoiceClosingDate;
+	}
+
+	public void setInvoiceClosingDate(Integer invoiceClosingDate) {
+		this.invoiceClosingDate = invoiceClosingDate;
+	}
+
 	public void setTransactionGroups(List<String> transactionGroups) {
 		this.transactionGroups = transactionGroups;
 	}

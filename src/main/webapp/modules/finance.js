@@ -4,7 +4,8 @@ import { createOptionSelectionGroup, openAdditionModal} from "./addModal.js";
 import {openRemovalModal} from "./removeModal.js";
 import { fetchUser, userData } from './header.js';
 
-let monthInvoice = 	new Date().getDate()>5 ? new Date().getMonth()+1 : new Date().getMonth();
+await fetchUser();
+let monthInvoice = 	new Date().getDate()>userData.invoiceClosingDate ? new Date().getMonth()+1 : new Date().getMonth();
 let yearInvoice = new Date().getFullYear();
 
 export let urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
@@ -13,13 +14,17 @@ const leftArrow = document.querySelector(".left_arrow");
 const rightArrow = document.querySelector(".right_arrow");
 let monthTitle = document.querySelector(".current_month");
 let yearTitle = document.querySelector(".current_year");
-export const invoiceTotal = document.querySelector(".total span");
+
+export const invoiceTotal = document.querySelector(".credit_card_total span");
 export let invoiceNumber = global.getNumberOutOfCurrencyString(invoiceTotal.innerText);
+const totalExpenses = document.querySelector(".not_credit_card_total span");
 
 const removeTransactionButton = document.querySelector(".container_remove");
 const addTransactionButton = document.querySelector(".container_add");
 
 export const financeTransactionGroupSelect = document.getElementById("transaction_group_main");
+const containerCreditTotal = document.querySelector(".credit_card_total");
+const containerNonCreditTotal = document.querySelector(".not_credit_card_total");
 
 export let transactionsArray = [];
 
@@ -53,10 +58,7 @@ function setCorrectTitle(){
 		document.querySelector(".current_group").innerHTML = financeTransactionGroupSelect.value;
 		leftArrow.setAttribute("hidden",true);
 		rightArrow.setAttribute("hidden",true);
-	}
-	
-	
-		
+	}	
 }
 
 //sums the price of each transaction and  modifies the invoiceTotal dynamically
@@ -64,42 +66,34 @@ export function setTotal(monthTransactions){
 	
 	//verifies if there's at least one transaction 
 	if(monthTransactions.length){
-		const arrayPrice = monthTransactions.map((transaction)=>transaction.price);
 		
-		const nextTotal = arrayPrice.reduce((accumulator,current)=>accumulator+current);
-		const increment = Math.ceil(Math.abs(nextTotal-invoiceNumber)/100)+1;
-		console.log(monthTransactions,nextTotal);
+		const arrayNotCreditPrice = [];
+		const arrayCreditPrice = [];
+		monthTransactions.map((transaction)=>{
+			if(transaction.type=="Crédito"){
+				arrayCreditPrice.push(transaction.price);
+			}else{
+				arrayNotCreditPrice.push(transaction.price);
+			}
+		});
 		
-		//modifies the invoiceTotal in the DOM several times until it reaches the correct new Total
-		if(invoiceNumber<nextTotal){
-			const changeNumber = setInterval(()=>{
-				
-				invoiceNumber+=increment;
-				invoiceTotal.innerHTML = invoiceNumber.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
-				if(invoiceNumber>nextTotal){
-					invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});								
-					invoiceNumber = nextTotal;
-					clearInterval(changeNumber);
-				}	
-			},5);
-			
-		}if(invoiceNumber>nextTotal){
-			
-			const changeNumber = setInterval(()=>{
-				invoiceNumber-=increment;
-				invoiceTotal.innerHTML = invoiceNumber.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
-				if(invoiceNumber<nextTotal){
-					invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});				
-					invoiceNumber = nextTotal;
-					clearInterval(changeNumber);
-				}		
-			},5);
-		}if(invoiceNumber==nextTotal){
-			invoiceTotal.innerHTML = nextTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
-		}
+		const nextInvoiceTotal = arrayCreditPrice.reduce((accumulator,current)=>accumulator+current);
+		const nextNonCreditTotal = arrayNotCreditPrice.reduce((accumulator,current)=>accumulator+current);
+		
+		if(!arrayCreditPrice.length){
+			containerCreditTotal.setAttribute("hidden",true);
+		}else {containerCreditTotal.removeAttribute("hidden",true);}
+		
+		
+		if(!arrayNotCreditPrice.length){
+			containerNonCreditTotal.setAttribute("hidden",true);
+		}else {containerNonCreditTotal.removeAttribute("hidden",true);}
+		
+		totalExpenses.innerHTML = nextNonCreditTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+		invoiceTotal.innerHTML = nextInvoiceTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
 	}else{
-		//if there's no transactions in the month
-		invoiceTotal.innerHTML = "R$ 0,00";
+		containerNonCreditTotal.setAttribute("hidden",true);
+		containerCreditTotal.setAttribute("hidden",true);
 	}
 }
 

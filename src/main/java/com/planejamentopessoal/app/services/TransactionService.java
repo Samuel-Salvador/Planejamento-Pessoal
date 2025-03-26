@@ -1,5 +1,6 @@
 package com.planejamentopessoal.app.services;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.planejamentopessoal.app.entities.Transaction;
+import com.planejamentopessoal.app.entities.User;
 import com.planejamentopessoal.app.repositories.TransactionRepository;
 
 @Service
@@ -16,13 +18,28 @@ public class TransactionService {
 	@Autowired
 	private TransactionRepository repository;
 	
+	@Autowired
+	private UserService userService;
+	
 	public List<Transaction> findAll(){
 		return repository.findAll();
 	}
 	public List<Transaction> findByMonth(Long user_id,Integer month, Integer year){
+		User obj = userService.findById(user_id);
+		LocalDate startDate,endDate;
 		
-		LocalDate startDate = LocalDate.of(year, month, 6);
-		LocalDate endDate = LocalDate.of(year, month, 5).plusMonths(1);
+		
+		try{
+			startDate = LocalDate.of(year, month, obj.getInvoiceClosingDate());
+			endDate = LocalDate.of(year, month, obj.getInvoiceClosingDate()).plusMonths(1).minusDays(1);
+			
+		}catch(DateTimeException e) {
+				
+				startDate = LocalDate.of(year,month,LocalDate.of(year, month, 1).getMonth().minLength());
+				endDate = LocalDate.of(year,month,LocalDate.of(year, month, 1).getMonth().minLength()).plusMonths(1).minusDays(1);
+				
+			}
+		
 		return repository.findByMonth(user_id,startDate,endDate);
 	}
 	

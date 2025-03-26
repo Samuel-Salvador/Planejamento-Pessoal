@@ -115,7 +115,12 @@
 			<div class="right_side_panel">
 				
 				<div class="container_total">
-					<div class="total">TOTAL FATURA 
+					<div class="credit_card_total">
+						<p>TOTAL FATURA</p> 
+						<span></span>
+					</div>
+					<div class="not_credit_card_total">
+						<p>TOTAL DÉBITOS</p>
 						<span></span>
 					</div>
 				</div>
@@ -245,6 +250,10 @@
 						<input name="income" type="number" id="user_settings_income_input">
 						<label for="user_settings_balance_input" id="user_settings_balance_label">Saldo: </label>
 						<input name="balance" type="number" id="user_settings_balance_input">
+						<label for="user_settings_invoice_closingdate_input" id="user_settings_invoice_closingdate_label">Dia fechamento da fatura: </label>
+						<select id="user_settings_invoice_closingdate_input">
+						    
+						</select>
 					</div>
 					
 					<button class="settings_modal_button" type="button">Salvar</button>

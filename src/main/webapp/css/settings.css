@@ -1,6 +1,6 @@
 .user_settings_modal{
 	padding: 40px 40px 40px 0;
-	height: 190px;
+	height: 215px;
 }
 
 .container_settings_menu{
@@ -104,7 +104,8 @@
 	background-color: #9b1305;
 	
 }
-.settings_account_data input{
+.settings_account_data input,
+.settings_account_data select{
 	user-select: text;
 	font-family: var(--font-1);
 
@@ -135,6 +136,10 @@
 	margin-left: 5px;
 }
 
+#user_settings_invoice_date_input{
+	width: 100px;
+}
+
 .container_password_settings{
 	display:flex;
 }
@@ -149,6 +154,8 @@
 .settings_password_visibility:hover{
 	cursor: pointer;
 }
+
+
 
 
 .settings_finance_group_data_list{

@@ -32,7 +32,32 @@ public class UserService {
 	
 	public User update(Long id, User obj) {
 		User entity = repository.getReferenceById(id);
-		updateData(entity,obj);
+		
+		
+		entity.setTransactionGroups(obj.getTransactionGroups());
+		
+		if(	obj.getBalance()!=entity.getBalance() && 
+			obj.getIncome()!=entity.getIncome() &&
+			obj.getIncome()!=0 &&
+			obj.getBalance()!=0) {
+			
+			entity.setBalance(obj.getBalance());
+			entity.setIncome(obj.getIncome());
+		}
+		
+		if(obj.getBalance()!=entity.getBalance() && obj.getIncome()==0) {
+			entity.setBalance(obj.getBalance());
+		}
+		
+		if(obj.getIncome()!=entity.getIncome() && obj.getBalance()==0) {
+			entity.setIncome(obj.getIncome());
+			
+		}
+		
+		if(obj.getInvoiceClosingDate()!=entity.getInvoiceClosingDate()) {
+			entity.setInvoiceClosingDate(obj.getInvoiceClosingDate());
+		}
+		
 		return repository.save(entity);
 	}
 	
@@ -40,17 +65,4 @@ public class UserService {
 		repository.deleteById(id);
 	}
 
-	private void updateData(User entity, User obj) {
-			
-			entity.setTransactionGroups(obj.getTransactionGroups());
-			
-			if(obj.getBalance()==null) {
-				entity.setIncome(obj.getIncome());
-			}else if(obj.getIncome()==null) {
-				entity.setBalance(obj.getBalance());
-			} else {
-				entity.setBalance(obj.getBalance());
-				entity.setIncome(obj.getIncome());
-			}	
-	}
 }
