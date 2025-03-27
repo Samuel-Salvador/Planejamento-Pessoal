@@ -86,7 +86,10 @@ async function depositIncome(){
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
-					body: JSON.stringify({	balance: newBalance}),
+					body: JSON.stringify({	
+						balance: newBalance,
+						transactionGroups: userData.transactionGroups
+					}),
 					};
 	fetch(global.userUrl,options);
 	updateBalanceHeader();
@@ -98,11 +101,16 @@ async function payInvoice(){
 	await fetchUser();
 
 	const newBalance = userData.balance-invoiceNumber;
+	console.log(invoiceNumber)
 	const options= {method: "PUT",
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
-					body: JSON.stringify({	balance: newBalance}),
+					body: JSON.stringify({	
+						balance: newBalance,
+						transactionGroups: userData.transactionGroups
+						
+					}),
 					};
 	fetch(global.userUrl,options);
 	updateBalanceHeader();

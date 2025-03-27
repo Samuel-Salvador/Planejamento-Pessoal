@@ -77,20 +77,28 @@ export function setTotal(monthTransactions){
 			}
 		});
 		
-		const nextInvoiceTotal = arrayCreditPrice.reduce((accumulator,current)=>accumulator+current);
-		const nextNonCreditTotal = arrayNotCreditPrice.reduce((accumulator,current)=>accumulator+current);
+		let nextInvoiceTotal;
+		let nextNonCreditTotal;
+		console.log(arrayNotCreditPrice);
 		
 		if(!arrayCreditPrice.length){
 			containerCreditTotal.setAttribute("hidden",true);
-		}else {containerCreditTotal.removeAttribute("hidden",true);}
+		}else {
+			containerCreditTotal.removeAttribute("hidden",true);
+			nextInvoiceTotal = arrayCreditPrice.reduce((accumulator,current)=>accumulator+current);
+			invoiceNumber = nextInvoiceTotal;
+			invoiceTotal.innerHTML = nextInvoiceTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+		}
 		
 		
 		if(!arrayNotCreditPrice.length){
 			containerNonCreditTotal.setAttribute("hidden",true);
-		}else {containerNonCreditTotal.removeAttribute("hidden",true);}
+		}else {
+			containerNonCreditTotal.removeAttribute("hidden",true);
+			nextNonCreditTotal = arrayNotCreditPrice.reduce((accumulator,current)=>accumulator+current);
+			totalExpenses.innerHTML = nextNonCreditTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
+		}
 		
-		totalExpenses.innerHTML = nextNonCreditTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
-		invoiceTotal.innerHTML = nextInvoiceTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
 	}else{
 		containerNonCreditTotal.setAttribute("hidden",true);
 		containerCreditTotal.setAttribute("hidden",true);
