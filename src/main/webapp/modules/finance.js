@@ -4,6 +4,7 @@ import { createOptionSelectionGroup, openAdditionModal} from "./addModal.js";
 import {openRemovalModal} from "./removeModal.js";
 import { fetchUser, userData } from './header.js';
 
+
 await fetchUser();
 let monthInvoice = 	new Date().getDate()>userData.invoiceClosingDate ? new Date().getMonth()+1 : new Date().getMonth();
 let yearInvoice = new Date().getFullYear();
@@ -25,6 +26,8 @@ const addTransactionButton = document.querySelector(".container_add");
 export const financeTransactionGroupSelect = document.getElementById("transaction_group_main");
 const containerCreditTotal = document.querySelector(".credit_card_total");
 const containerNonCreditTotal = document.querySelector(".not_credit_card_total");
+
+const chartContainer = document.querySelector(".container_chart");
 
 export let transactionsArray = [];
 
@@ -79,7 +82,6 @@ export function setTotal(monthTransactions){
 		
 		let nextInvoiceTotal;
 		let nextNonCreditTotal;
-		console.log(arrayNotCreditPrice);
 		
 		if(!arrayCreditPrice.length){
 			containerCreditTotal.setAttribute("hidden",true);
@@ -130,8 +132,93 @@ function clearAllTransactions(){
 	
 	removeTransaction.clearSelectElement();
 	transactionsArray = [];		
+	removeChart();
 }
 
+export async function setUpChart(){
+	let chartData = {	type: 'doughnut',
+	    				data: {
+	      					labels: [],
+	      					datasets: [{
+	        					label: '',
+	        					data: [],
+	        					borderWidth: 1
+	      					}]
+	   					 },
+	    				options: {
+	      					scales: {
+	        					y: {
+	          						beginAtZero: true,
+									grid: {
+										display: false
+									},
+									ticks:{
+										display: false
+									},
+									border:{
+										display: false
+									}
+	        					}
+	      					},
+							plugins: {
+								tooltip: {
+										callbacks: {
+											label: function (tooltipItem) {
+											       	let value = tooltipItem.raw;
+											        return `${tooltipItem.dataset.label}: R$ ${value.toFixed(2)}`;
+										}
+											
+									}
+							}
+	    				}
+					}
+				}
+
+	await fetchUser();
+	let seenCategoriesArray = [];
+	let currentCategory;
+	let newArray = [];
+	let categoryQnt=0;
+	
+	for(let i=0;i<=categoryQnt;i++){
+		transactionsArray.forEach((transaction)=>{
+			if(seenCategoriesArray.some((category)=>category==transaction.category)){
+				if(currentCategory == transaction.category){
+					newArray.push(transaction.price);
+				}
+			}else{
+				if(!currentCategory){
+					seenCategoriesArray.push(transaction.category);
+					currentCategory = transaction.category;
+					newArray.push(transaction.price);
+					categoryQnt++;
+				}	
+			}
+		})
+		
+		if(newArray.length){
+			chartData.data.labels.push(currentCategory);
+			let reducedArray = newArray.reduce((acc,curr)=>curr+acc);
+			chartData.data.datasets[0].data.push(reducedArray);
+		}
+		currentCategory = undefined;
+		newArray = [];	
+	}
+
+	removeChart();
+	const chart = document.createElement("canvas");
+	chart.setAttribute("id","category_chart");
+	chartContainer.appendChild(chart);
+	new Chart(chart,chartData);
+}
+
+function removeChart(){
+	if(document.getElementById("category_chart")){
+		if(chartContainer.hasChildNodes()){
+			chartContainer.removeChild(document.getElementById("category_chart"));
+		}
+	}
+}
 
 
 export function addTransaction(transaction){
@@ -163,7 +250,8 @@ export function addTransaction(transaction){
 	
 	removeTransaction.addOptionToSelectForRemovalElement(transaction);
 	
-	transactionsArray.push(transaction);		
+	transactionsArray.push(transaction);
+	setUpChart();		
 }
 
 //adds the month transactions to the transactions tab and sets the total for that month
@@ -185,6 +273,7 @@ async function addGroupTransactionsToFilter(){
 	
 	
 	await fetchUser();
+	await setUpChart();
 	for(let i=0;i<userData.transactionGroups.length;i++){
 		
 		createOptionSelectionGroup(i,financeTransactionGroupSelect);
@@ -192,10 +281,10 @@ async function addGroupTransactionsToFilter(){
 }
 
 export default function initFinance() {
-			
+	
 	setCorrectTitle();
 	addAllTransactions();
-
+	
 	addGroupTransactionsToFilter();
 	
 	global.userClickEvents.forEach((userEvent)=>{
