@@ -68,71 +68,66 @@
 		
         <div class="container_transactions">
             
-            <span class="divisor"></span>
-
-            <div class="container_transactions_column" id="transactions_column_name">
-                <p class="transactions_column_title">Nome</p>
-            </div>
-            <div class="container_transactions_column" id="transactions_column_date">
-                <p class="transactions_column_title">Data</p>
-
-            </div>
+		    <span class="divisor"></span>
+				
+		    <div class="container_transactions_column" id="transactions_column_name">
+		    	<p class="transactions_column_title">Nome</p>
+		    </div>
+		    <div class="container_transactions_column" id="transactions_column_date">
+		    <p class="transactions_column_title">Data</p>
+		
+		    </div>
 			<div class="container_transactions_column" id="transactions_column_type">
-			    <p class="transactions_column_title">Tipo</p>
-
+				<p class="transactions_column_title">Tipo</p>
+		
 			</div>
-            <div class="container_transactions_column" id="transactions_column_category">
-                <p class="transactions_column_title">Categoria</p>
-
-            </div>
-
-
-            <div class="container_transactions_column" id="transactions_column_installments">
-                <p class="transactions_column_title">Parcelas</p>
-
-            </div>
-            <div class="container_transactions_column" id="transactions_column_price">
-                <p class="transactions_column_title">Preço</p>
-            </div>
-			
+		    <div class="container_transactions_column" id="transactions_column_category">
+		        <p class="transactions_column_title">Categoria</p>
+		
+		    </div>
+		
+		
+		    <div class="container_transactions_column" id="transactions_column_installments">
+		    	<p class="transactions_column_title">Parcelas</p>
+		
+		    </div>
+		    <div class="container_transactions_column" id="transactions_column_price">
+		        <p class="transactions_column_title">Preço</p>
+		    </div>
+				
+        </div>
+		
+		<div class="left_side_panel">
+			<div class="transaction_group_selection">
+				<h4>Grupo:</h4>						
+				<select id="transaction_group_main" name="group">	
+										
+				</select>
+			</div>		
+		</div>
+					
+		<div class="right_side_panel">	
 			<div class="container_management_transactions container_add">
 				<a class="add_transaction_button">+</a>
 			</div>
+								
 			<div class="container_management_transactions container_remove">
 				<a class="remove_transaction_button"><img class="delete_transaction_img" src="../img/delete.png"></a>			
 			</div>
-			
-			<div class="left_side_panel">
-				<div class="transaction_group_selection">
-					<h4>Filtro</h4>
-									
-					<select id="transaction_group_main" name="group">	
-									
-					</select>
+			<div class="container_total">
+				<div class="credit_card_total">
+					<p>TOTAL FATURA</p> 
+					<span></span>
 				</div>
-				<div class="container_chart">
-					<canvas id="category_chart"></canvas>
+				<div class="not_credit_card_total">
+					<p>TOTAL DÉBITOS</p>
+					<span></span>
 				</div>
 			</div>
-			
-			<div class="right_side_panel">
-				
-				<div class="container_total">
-					<div class="credit_card_total">
-						<p>TOTAL FATURA</p> 
-						<span></span>
-					</div>
-					<div class="not_credit_card_total">
-						<p>TOTAL DÉBITOS</p>
-						<span></span>
-					</div>
-				</div>
-			</div>
-        </div>
-		
-
-		
-	
+		</div>
+		<div class="container_chart">
+			<canvas id="category_chart"></canvas>
+		</div>
     </main>
 	
     <section class="add_transaction_modal_section">

@@ -199,3 +199,70 @@ nav a:hover{
 	height: 1rem;
 }
 
+@media(max-width:900px){
+	.header_title {
+		font-size: 1.5rem;
+	}
+	.header_img {
+		max-width: 80px;
+	}
+}
+
+@media(max-width:625px){
+	.user_links{
+		font-size: 0.7rem;
+		gap: 1px;
+		
+	}
+	
+	.user_links:last-child {
+	  margin-right: 0px;
+	}
+	.balance p{
+		font-size: 0.7rem;
+	}
+	.balance span{
+		font-size: 0.8rem;
+	}
+	.header_title {
+		font-size: 1.2rem;
+	}
+	.header_img {
+		max-width: 60px;
+	}
+}
+
+@media(max-width:515px){
+	.header_img {
+		max-width: 80px;
+	}
+	.header_title {
+			display: none;
+	}
+	
+	.user_links:last-child {
+		  margin-right: 10px;
+	}
+}
+
+@media(max-width: 450px){
+	.header_img {
+		max-width: 60px;
+		margin-left: 10px;
+	}
+	.container_balance{
+		width: fit-content;
+		gap: 0;
+	}
+}
+
+@media(max-width: 305px){
+	.header_img {
+		max-width: 60px;
+	}
+	.header{
+		height: 100px;
+	}
+	
+}
+

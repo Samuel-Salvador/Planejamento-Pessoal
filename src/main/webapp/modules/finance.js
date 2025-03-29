@@ -3,7 +3,7 @@ import * as removeTransaction from "./removeModal.js";
 import { createOptionSelectionGroup, openAdditionModal} from "./addModal.js";
 import {openRemovalModal} from "./removeModal.js";
 import { fetchUser, userData } from './header.js';
-
+import {removeChart, setUpChart} from './categoryChart.js'
 
 await fetchUser();
 let monthInvoice = 	new Date().getDate()>userData.invoiceClosingDate ? new Date().getMonth()+1 : new Date().getMonth();
@@ -16,18 +16,16 @@ const rightArrow = document.querySelector(".right_arrow");
 let monthTitle = document.querySelector(".current_month");
 let yearTitle = document.querySelector(".current_year");
 
-export const invoiceTotal = document.querySelector(".credit_card_total span");
+export const invoiceTotal = document.querySelector(".right_side_panel .container_total .credit_card_total span");
 export let invoiceNumber = global.getNumberOutOfCurrencyString(invoiceTotal.innerText);
-const totalExpenses = document.querySelector(".not_credit_card_total span");
+const totalExpenses = document.querySelector(".right_side_panel .container_total .not_credit_card_total span");
 
 const removeTransactionButton = document.querySelector(".container_remove");
 const addTransactionButton = document.querySelector(".container_add");
 
 export const financeTransactionGroupSelect = document.getElementById("transaction_group_main");
-const containerCreditTotal = document.querySelector(".credit_card_total");
-const containerNonCreditTotal = document.querySelector(".not_credit_card_total");
-
-const chartContainer = document.querySelector(".container_chart");
+const containerCreditTotal = document.querySelector(".right_side_panel .container_total .credit_card_total");
+const containerNonCreditTotal = document.querySelector(".right_side_panel .container_total .not_credit_card_total");
 
 export let transactionsArray = [];
 
@@ -84,9 +82,9 @@ export function setTotal(monthTransactions){
 		let nextNonCreditTotal;
 		
 		if(!arrayCreditPrice.length){
-			containerCreditTotal.setAttribute("hidden",true);
+			containerCreditTotal.classList.add("hidden");
 		}else {
-			containerCreditTotal.removeAttribute("hidden",true);
+			containerCreditTotal.classList.remove("hidden");
 			nextInvoiceTotal = arrayCreditPrice.reduce((accumulator,current)=>accumulator+current);
 			invoiceNumber = nextInvoiceTotal;
 			invoiceTotal.innerHTML = nextInvoiceTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
@@ -94,16 +92,16 @@ export function setTotal(monthTransactions){
 		
 		
 		if(!arrayNotCreditPrice.length){
-			containerNonCreditTotal.setAttribute("hidden",true);
+			containerNonCreditTotal.classList.add("hidden");
 		}else {
-			containerNonCreditTotal.removeAttribute("hidden",true);
+			containerNonCreditTotal.classList.remove("hidden");
 			nextNonCreditTotal = arrayNotCreditPrice.reduce((accumulator,current)=>accumulator+current);
 			totalExpenses.innerHTML = nextNonCreditTotal.toLocaleString("pt-BR",{style: 'currency', currency: 'BRL'});
 		}
 		
 	}else{
-		containerNonCreditTotal.setAttribute("hidden",true);
-		containerCreditTotal.setAttribute("hidden",true);
+		containerNonCreditTotal.classList.add("hidden");
+		containerCreditTotal.classList.add("hidden");
 	}
 }
 
@@ -135,90 +133,6 @@ function clearAllTransactions(){
 	removeChart();
 }
 
-export async function setUpChart(){
-	let chartData = {	type: 'doughnut',
-	    				data: {
-	      					labels: [],
-	      					datasets: [{
-	        					label: '',
-	        					data: [],
-	        					borderWidth: 1
-	      					}]
-	   					 },
-	    				options: {
-	      					scales: {
-	        					y: {
-	          						beginAtZero: true,
-									grid: {
-										display: false
-									},
-									ticks:{
-										display: false
-									},
-									border:{
-										display: false
-									}
-	        					}
-	      					},
-							plugins: {
-								tooltip: {
-										callbacks: {
-											label: function (tooltipItem) {
-											       	let value = tooltipItem.raw;
-											        return `${tooltipItem.dataset.label}: R$ ${value.toFixed(2)}`;
-										}
-											
-									}
-							}
-	    				}
-					}
-				}
-
-	await fetchUser();
-	let seenCategoriesArray = [];
-	let currentCategory;
-	let newArray = [];
-	let categoryQnt=0;
-	
-	for(let i=0;i<=categoryQnt;i++){
-		transactionsArray.forEach((transaction)=>{
-			if(seenCategoriesArray.some((category)=>category==transaction.category)){
-				if(currentCategory == transaction.category){
-					newArray.push(transaction.price);
-				}
-			}else{
-				if(!currentCategory){
-					seenCategoriesArray.push(transaction.category);
-					currentCategory = transaction.category;
-					newArray.push(transaction.price);
-					categoryQnt++;
-				}	
-			}
-		})
-		
-		if(newArray.length){
-			chartData.data.labels.push(currentCategory);
-			let reducedArray = newArray.reduce((acc,curr)=>curr+acc);
-			chartData.data.datasets[0].data.push(reducedArray);
-		}
-		currentCategory = undefined;
-		newArray = [];	
-	}
-
-	removeChart();
-	const chart = document.createElement("canvas");
-	chart.setAttribute("id","category_chart");
-	chartContainer.appendChild(chart);
-	new Chart(chart,chartData);
-}
-
-function removeChart(){
-	if(document.getElementById("category_chart")){
-		if(chartContainer.hasChildNodes()){
-			chartContainer.removeChild(document.getElementById("category_chart"));
-		}
-	}
-}
 
 
 export function addTransaction(transaction){

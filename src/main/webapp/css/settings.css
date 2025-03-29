@@ -225,6 +225,63 @@
 	right: 110px;
 }
 
+@media(max-width:450px){
+	.user_settings_modal{
+		padding: 10px;
+		height: 360px;
+		width: 90%;
+		gap: 20px;
+	}
+	
+	.container_settings_inner_content h3{
+		font-size: 1rem;
+	}
+	#user_settings_fullname_input{
+		width: 170px;
+	}
+	#user_settings_username_input{
+		width: 109px;
+	}
+	
+	#user_settings_birthday_input{
+		width: 89px;
+	}
+	#user_settings_email_input{
+		width: 172px;
+	}
+	#user_settings_password_input{
+		width: 150px;
+	}
+	#user_settings_balance_input,
+	#user_settings_income_input{
+		width: 50px;
+		margin: 5px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+	}
+	
+	#user_settings_invoice_date_input{
+		width: 100px;
+	}
+	
+	.settings_divisor{
+		top: auto;
+		right: auto;
+		left: -10px;
+		bottom: -10px;
+		height: 1px;
+		width: calc(100% + 20px);
+	}
+	.settings_finance_group_data_list{
+		width: 250px;
+		margin-left: 20px;
+	}
+	
+	.delete_account_question{
+		margin-left: 5px;
+	}
+}
+
 
 
 

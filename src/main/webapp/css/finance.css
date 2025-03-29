@@ -1,8 +1,8 @@
 .container_transactions {
   background-color: var(--cor-1);
   display: grid;
-  width: 40%;
   min-height: 45vh;
+  min-width: 85%;
   margin: 20px auto ;
   border-radius: 4px;
   border: 1px solid var(--cor-2);
@@ -11,7 +11,14 @@
   color: var(--cor-3);
   position: relative;
   gap: 0px;
+  grid-column: 3/6;
+  grid-row: 2/4;
+  overflow-y: auto;
+  	scrollbar-color: var(--cor-0) var(--cor-1);
+  	scrollbar-width: thin;
+  
 }
+
 
 .container_transactions .divisor {
   position: absolute;
@@ -25,10 +32,11 @@
 
 .container_transactions_column {
 	width:100%;
+	max-height: 400px;
   	text-align: center;
   	border-right: 1px dotted var(--cor-2);
 	font-family: var(--font-1);
-
+	
 }
 .container_transactions_column:last-child {
   border-right: none;
@@ -48,12 +56,10 @@
 }
 
 .container_management_transactions {
-  position: absolute;
-  width: 20px;
-  right: -30px;
-  height: 20px;
-  border-radius: 50%;
-  text-align: center;
+	position: absolute;
+  	width: 20px;
+  	border-radius: 50%;
+  	text-align: center;
 }
 
 .container_management_transactions a {
@@ -94,3 +100,73 @@
 	background-color: #a45a52;
 	cursor: pointer;
 }
+
+@media(max-width:1750px){
+	.container_transactions {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	}
+	
+	#transactions_column_type{
+		display: none;
+	}
+}
+
+@media(max-width: 1600px){
+	.container_transactions {
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+		}
+		
+	#transactions_column_category{
+			display: none;
+	}
+	
+}
+
+@media (max-width: 1400px){
+	.container_transactions{
+		grid-column: 2/5;
+		grid-row: 2/4;
+	}
+}
+
+@media (max-width: 900px){
+	.container_transactions_column {
+		font-size: 0.8rem;
+	}
+	.transaction{
+		font-size: 0.8rem;
+	}
+	.container_transactions .divisor {
+		top: 40px;
+	}
+}
+
+@media(max-width:750px){
+	.container_transactions{
+		grid-column: 1/3;
+		grid-row: 3;
+	}
+}
+
+@media(max-width:450px){
+	.transaction{
+		font-size: 0.7rem;
+	}
+	.container_transactions{
+		width: 99%;
+		border-radius: 0;
+		
+	}
+	.container_management_transactions{
+		width: 45px;
+		border-radius: 4px;
+		top:auto;
+		right: 10px;
+		bottom: -30px;
+	}
+	.container_add{
+		right: 65px;
+	}
+}
+
+
