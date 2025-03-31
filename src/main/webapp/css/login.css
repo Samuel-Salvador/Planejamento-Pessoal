@@ -1,6 +1,8 @@
 @import "./global.css";
 
-.login_main{
+.login_main,
+.register_main,
+.register_main_mobile{
 	display: flex;
 	height: 100vh;
 	align-items: center;
@@ -116,4 +118,20 @@
 	outline: none;
 }
 
-
+@media(max-width:750px){
+	.login_img{
+		max-width: 80px;
+		margin-top:10px;
+	}
+	.login_title,.login_signin_title{
+		font-size: 1.2rem;
+		
+	}
+	.container_login{
+		max-width: 250px;
+	}
+	.login_input{
+		width: 125px;
+		align-self: center;
+	}
+}

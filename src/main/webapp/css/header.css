@@ -7,11 +7,13 @@
   height: 120px;
 }
 
-.header_title_container{
+.header_title_container,
+.register_title_container{
   display: flex;
 }
 
-.header_img {
+.header_img,
+.register_img {
   padding: 0px;
   margin: 0px 0px 0px 40px;
   max-width: 100px;
@@ -20,7 +22,8 @@
   justify-self: center;
 }
 
-.header_title {
+.header_title,
+.register_title {
 	
   font-size: 2.2rem;
   color: var(--cor-3);
