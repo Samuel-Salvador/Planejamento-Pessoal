@@ -48,6 +48,6 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch("http://127.0.0.1:3030/users", options).then(()=>location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/"));
+			fetch("https://planejamento-pessoal-17b194180e9e.herokuapp.com/users", options).then(()=>location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/"));
 	}
 }
