@@ -2,7 +2,7 @@ export let loggedUserId = sessionStorage.userId;
 
 
 
-if(location.toString()=="http://127.0.0.1:3030/"){
+if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com/"){
 	const userNameElement = document.forms.login.user_name;
 	const userPasswordElement = document.forms.login.password;
 								
@@ -23,7 +23,7 @@ if(location.toString()=="http://127.0.0.1:3030/"){
 		})
 	}else{
 		sessionStorage.userId = localStorage.userId;
-		location.assign("http://127.0.0.1:3030/html/finance.html");
+		location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/html/finance.html");
 	}
 	
 	async function login(event){
@@ -32,7 +32,7 @@ if(location.toString()=="http://127.0.0.1:3030/"){
 		const userPassword = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
 		
-		const responseUsers = await fetch("http://127.0.0.1:3030/users");
+		const responseUsers = await fetch("https://planejamento-pessoal-17b194180e9e.herokuapp.com/users");
 		const usersJSON = await responseUsers.json();
 		
 		console.log(usersJSON);
@@ -45,7 +45,7 @@ if(location.toString()=="http://127.0.0.1:3030/"){
 					}
 				sessionStorage.userId = usersJSON[i].id;
 				loggedUserId = usersJSON[i].id;
-				location.assign("http://127.0.0.1:3030/html/finance.html");
+				location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/html/finance.html");
 				removeOutline(userNameElement);
 				removeOutline(userPasswordElement);
 			}else{	

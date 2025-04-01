@@ -1,7 +1,7 @@
 import {loggedUserId} from "./login.js";
 
-export let transactionUrl = `http://127.0.0.1:3030/transactions/${loggedUserId}`;
-export let userUrl = `http://127.0.0.1:3030/users/${loggedUserId}`;
+export let transactionUrl = `https://planejamento-pessoal-17b194180e9e.herokuapp.com/transactions/${loggedUserId}`;
+export let userUrl = `https://planejamento-pessoal-17b194180e9e.herokuapp.com/users/${loggedUserId}`;
 
 
 export const dateOptions = {

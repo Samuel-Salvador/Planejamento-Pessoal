@@ -1,7 +1,7 @@
 import {formValidated} from "./global.js";
 
 
-if(location.toString()=="http://127.0.0.1:3030/html/register.html"){
+if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com/html/register.html"){
 	const confirmButton = document.querySelector(".confirm");
 	const backButton = document.querySelector(".back");
 
@@ -16,7 +16,7 @@ if(location.toString()=="http://127.0.0.1:3030/html/register.html"){
 	})
 	
 	backButton.addEventListener("click",()=>{
-		location.assign("http://127.0.0.1:3030");
+		location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/");
 	})
 	
 }
@@ -48,6 +48,6 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch("http://127.0.0.1:3030/users", options).then(()=>location.assign("http://127.0.0.1:3030/"));
+			fetch("http://127.0.0.1:3030/users", options).then(()=>location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/"));
 	}
 }
