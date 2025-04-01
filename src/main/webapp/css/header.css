@@ -212,20 +212,16 @@ nav a:hover{
 }
 
 @media(max-width:625px){
-	.user_links{
-		font-size: 0.7rem;
-		gap: 1px;
-		
-	}
+	
 	
 	.user_links:last-child {
 	  margin-right: 0px;
 	}
 	.balance p{
-		font-size: 0.7rem;
+		font-size: 0.9rem;
 	}
 	.balance span{
-		font-size: 0.8rem;
+		font-size: 1rem;
 	}
 	.header_title {
 		font-size: 1.2rem;
@@ -240,7 +236,7 @@ nav a:hover{
 		max-width: 80px;
 	}
 	.header_title {
-			display: none;
+		display: none;
 	}
 	
 	.user_links:last-child {
@@ -250,7 +246,7 @@ nav a:hover{
 
 @media(max-width: 450px){
 	.header_img {
-		max-width: 60px;
+		max-width: 80px;
 		margin-left: 10px;
 	}
 	.container_balance{
@@ -259,13 +255,4 @@ nav a:hover{
 	}
 }
 
-@media(max-width: 305px){
-	.header_img {
-		max-width: 60px;
-	}
-	.header{
-		height: 100px;
-	}
-	
-}
 

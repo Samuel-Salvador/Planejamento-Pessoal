@@ -257,6 +257,7 @@ async function changeCurrentMenuItem(menuItem){
 		settingsInnerContentElement.innerHTML = settingsInnerContentUserData;
 		closeModalButton = document.querySelector(".x_settings");
 		changePlaceholdersUserData();
+		populateInvoiceDueDate();
 		
 		userClickEvents.forEach((userEvent)=>{
 			closeModalButton.addEventListener(userEvent,(event)=>{
