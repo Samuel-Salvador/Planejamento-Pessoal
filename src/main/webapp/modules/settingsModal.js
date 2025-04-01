@@ -1,4 +1,4 @@
-import {userClickEvents,formattedDate,userUrl} from "./global.js";
+import {userClickEvents,formattedDate,userUrl,url} from "./global.js";
 import {userData,fetchUser,updateBalanceHeader} from "./header.js";
 import { addModalTransactionGroupSelect, createOptionSelectionGroup } from "./addModal.js";
 import { financeTransactionGroupSelect } from "./finance.js";
@@ -243,7 +243,7 @@ async function changeCurrentMenuItem(menuItem){
 		
 		userClickEvents.forEach((userEvent)=>{
 			deleteAccountButton.addEventListener(userEvent,()=>{
-				location.assign("http://127.0.0.1:3030");
+				location.assign(url);
 				fetch(userUrl,{method: "DELETE"});
 			})
 			

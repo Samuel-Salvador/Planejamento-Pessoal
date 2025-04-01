@@ -1,8 +1,8 @@
 import {loggedUserId} from "./login.js";
 
-export let transactionUrl = `https://planejamento-pessoal-17b194180e9e.herokuapp.com/transactions/${loggedUserId}`;
-export let userUrl = `https://planejamento-pessoal-17b194180e9e.herokuapp.com/users/${loggedUserId}`;
-
+export const url = `https://planejamento-pessoal-17b194180e9e.herokuapp.com`;
+export let transactionUrl = url+`/transactions/${loggedUserId}`;
+export let userUrl = url+`/users/${loggedUserId}`;
 
 export const dateOptions = {
 	day: 'numeric',

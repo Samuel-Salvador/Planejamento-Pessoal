@@ -120,18 +120,31 @@
 
 @media(max-width:750px){
 	.login_img{
-		max-width: 80px;
+		max-width: 100px;
 		margin-top:10px;
 	}
-	.login_title,.login_signin_title{
+	.login_signin_title{
 		font-size: 1.2rem;
 		
 	}
+	.login_title{
+		font-size: 1.5rem;
+		
+	}
 	.container_login{
-		max-width: 250px;
+		max-width: 300px;
 	}
 	.login_input{
-		width: 125px;
+		width: 200px;
 		align-self: center;
 	}
+	.login_main{
+		height: fit-content;
+		justify-self: center;
+	}
+	body{
+		height: 100vh;
+		align-content: center;
+	}
+	
 }

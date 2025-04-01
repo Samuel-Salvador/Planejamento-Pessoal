@@ -1,6 +1,6 @@
 import outsideClick from "./outsideClick.js";
 import {openSettingsModal} from "./settingsModal.js";
-import {userClickEvents} from "./global.js";
+import {userClickEvents,url} from "./global.js";
 
 export default function initDropdownMenu(){
 	const userNameDiv = document.querySelector(".container_user_name");
@@ -26,7 +26,7 @@ export default function initDropdownMenu(){
 		
 		localStorage.removeItem("userId");
 		sessionStorage.removeItem("userId");
-		location.assign("http://127.0.0.1:3030/");
+		location.assign(url);
 	}	
 }
 

@@ -1,4 +1,4 @@
-import {userClickEvents,formValidated} from "./global.js";
+import {userClickEvents,formValidated,url} from "./global.js";
 import {urlMonthInvoice,addTransaction,setTotal,transactionsArray} from "./finance.js";
 import { loggedUserId } from "./login.js";
 import { fetchUser, userData } from "./header.js";
@@ -35,7 +35,7 @@ function resetFormValues(){
 }
 
 async function postAndAddLastTransactionToArray(options){
-	await fetch("http://127.0.0.1:3030/transactions",options);
+	await fetch(url+"/transactions",options);
 	const monthTransactionResponse = await fetch(urlMonthInvoice);
 	const monthTransactionJSON = await monthTransactionResponse.json();
 	addTransaction(monthTransactionJSON[monthTransactionJSON.length-1]);

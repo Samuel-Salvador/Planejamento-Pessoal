@@ -94,10 +94,13 @@
 	.register_main_mobile{
 		display: flex;
 		height: 100%;
+		align-items: center;
+		height: fit-content;
+		
 	}
 	
 	.register_data_container{
-		max-width: 250px;
+		max-width: 300px;
 		margin-top: 10px;
 		margin-bottom: 20px;
 	}
@@ -108,10 +111,12 @@
 		align-self: center;
 		margin: 0;
 		margin-top: 20px;
+		
 	}
 	
+	
 	.register_title{
-		font-size: 1.3rem;
+		font-size: 1.5rem;
 		text-align: center;
 		margin: 0;
 	}
@@ -128,7 +133,7 @@
 	}
 	
 	.register_data_container input{
-		max-width: 150px;
+		max-width: 200px;
 	}
 	
 	
