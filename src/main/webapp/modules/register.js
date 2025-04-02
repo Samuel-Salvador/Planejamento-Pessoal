@@ -1,6 +1,4 @@
-import {formValidated} from "./global.js";
-
-const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com/`;
+import {formValidated,url,userUrl} from "./global.js";
 
 if(location.toString()==url+"html/register.html"){
 	const confirmButton = document.querySelector(".confirm");
@@ -49,6 +47,6 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch(url+"users", options).then(()=>location.assign(url));
+			fetch(userUrl, options).then(()=>location.assign(url));
 	}
 }

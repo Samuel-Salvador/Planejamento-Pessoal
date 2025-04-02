@@ -1,4 +1,5 @@
 import * as global from './global.js';
+import { transactionUrl } from './login.js';
 import * as removeTransaction from "./removeModal.js";
 import { createOptionSelectionGroup, openAdditionModal} from "./addModal.js";
 import {openRemovalModal} from "./removeModal.js";
@@ -9,7 +10,7 @@ await fetchUser();
 let monthInvoice = 	new Date().getDate()>=userData.invoiceClosingDate ? new Date().getMonth()+1 : new Date().getMonth();
 let yearInvoice = new Date().getFullYear();
 
-export let urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
+export let urlMonthInvoice = transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
 
 const leftArrow = document.querySelector(".left_arrow");
 const rightArrow = document.querySelector(".right_arrow");
@@ -216,7 +217,7 @@ export default function initFinance() {
 				monthInvoice=12;
 			}
 		
-			urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
+			urlMonthInvoice = transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
 			clearAllTransactions();
 			resetTotal();
 			
@@ -240,7 +241,7 @@ export default function initFinance() {
 				monthInvoice=1;
 			}
 			
-			urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
+			urlMonthInvoice = transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
 			clearAllTransactions();
 			resetTotal();
 			
@@ -267,9 +268,9 @@ export default function initFinance() {
 	
 	financeTransactionGroupSelect.addEventListener("change",(event) => {
 		event.preventDefault();
-		urlMonthInvoice = global.transactionUrl.concat("/"+financeTransactionGroupSelect.value);
-		if(urlMonthInvoice == global.transactionUrl.concat("/Dia a dia")){
-			urlMonthInvoice= global.transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
+		urlMonthInvoice = transactionUrl.concat("/"+financeTransactionGroupSelect.value);
+		if(urlMonthInvoice == transactionUrl.concat("/Dia a dia")){
+			urlMonthInvoice= transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
 		}
 		
 		clearAllTransactions();

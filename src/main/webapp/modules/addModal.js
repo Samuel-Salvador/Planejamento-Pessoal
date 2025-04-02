@@ -1,6 +1,6 @@
 import {userClickEvents,formValidated,url} from "./global.js";
 import {urlMonthInvoice,addTransaction,setTotal,transactionsArray} from "./finance.js";
-import { loggedUserId } from "./login.js";
+import { loggedUserId} from "./login.js";
 import { fetchUser, userData } from "./header.js";
 
 const addTransactionModal = document.querySelector(".add_transaction_modal_section");

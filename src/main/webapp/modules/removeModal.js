@@ -1,5 +1,6 @@
 import {transactionsArray,setTotal} from "./finance.js";
-import {transactionUrl, formattedDate,formattedPrice,userClickEvents } from "./global.js";
+import {formattedDate,formattedPrice,userClickEvents } from "./global.js";
+import { transactionUrl } from "./login.js";
 import { setUpChart } from "./categoryChart.js";
 
 const removalModal = document.querySelector(".remove_transaction_modal_section");

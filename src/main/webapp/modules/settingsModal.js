@@ -1,4 +1,5 @@
-import {userClickEvents,formattedDate,userUrl,url} from "./global.js";
+import {userClickEvents,formattedDate,url} from "./global.js";
+import { userUrl } from "./login.js";
 import {userData,fetchUser,updateBalanceHeader} from "./header.js";
 import { addModalTransactionGroupSelect, createOptionSelectionGroup } from "./addModal.js";
 import { financeTransactionGroupSelect } from "./finance.js";

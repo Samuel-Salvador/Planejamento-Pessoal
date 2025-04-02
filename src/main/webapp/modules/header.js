@@ -1,6 +1,7 @@
 import * as global from './global.js';
 import {dataSettingBalanceInput} from './settingsModal.js';
 import {invoiceNumber} from './finance.js';
+import { userUrl } from './login.js';
 
 const balanceSPAN = document.querySelector(".balance span");
 const balanceContainer = document.querySelector(".balance");
@@ -38,7 +39,7 @@ export async function initHeader(){
 }
 
 export async function fetchUser(){
-	userData = await fetch(global.userUrl).then((r)=>r.json());
+	userData = await fetch(userUrl).then((r)=>r.json());
 }
 
 export async function updateBalanceHeader(){
@@ -107,7 +108,7 @@ async function depositIncome(){
 						transactionGroups: userData.transactionGroups
 					}),
 					};
-	fetch(global.userUrl,options);
+	fetch(userUrl,options);
 	updateBalanceHeader();
 	dataSettingBalanceInput.setAttribute("placeholder",newBalance.toFixed(2));
 }
@@ -127,7 +128,7 @@ async function payInvoice(){
 						
 					}),
 					};
-	fetch(global.userUrl,options);
+	fetch(userUrl,options);
 	updateBalanceHeader();
 	dataSettingBalanceInput.setAttribute("placeholder",newBalance.toFixed(2));
 

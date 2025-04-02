@@ -1,6 +1,10 @@
+import { url} from "./global.js";
+
 export let loggedUserId = sessionStorage.userId;
 
-const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com/`;
+export let userUrl = url+`users/${loggedUserId}`;
+
+export let transactionUrl = url+`transactions/${loggedUserId}`;
 
 if(location.toString()==url){
 	const userNameElement = document.forms.login.user_name;
@@ -32,7 +36,7 @@ if(location.toString()==url){
 		const userPassword = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
 		
-		const responseUsers = await fetch(url+"users");
+		const responseUsers = await fetch(url+`users`);
 		const usersJSON = await responseUsers.json();
 		
 			
@@ -44,6 +48,8 @@ if(location.toString()==url){
 					}
 				sessionStorage.userId = usersJSON[i].id;
 				loggedUserId = usersJSON[i].id;
+				userUrl = url+`users/${loggedUserId}`;
+				transactionUrl = url+`transactions/${loggedUserId}`;
 				location.assign(url+"html/finance.html");
 				removeOutline(userNameElement);
 				removeOutline(userPasswordElement);
