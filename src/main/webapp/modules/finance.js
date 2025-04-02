@@ -6,7 +6,7 @@ import { fetchUser, userData } from './header.js';
 import {removeChart, setUpChart} from './categoryChart.js'
 
 await fetchUser();
-let monthInvoice = 	new Date().getDate()>userData.invoiceClosingDate ? new Date().getMonth()+1 : new Date().getMonth();
+let monthInvoice = 	new Date().getDate()>=userData.invoiceClosingDate ? new Date().getMonth()+1 : new Date().getMonth();
 let yearInvoice = new Date().getFullYear();
 
 export let urlMonthInvoice = global.transactionUrl.concat(`/${monthInvoice}/${yearInvoice}`);
