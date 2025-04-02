@@ -47,8 +47,7 @@
   text-align: center;
   align-content: center;
   width: 100%;
-  min-height: 35px;
-  max-height: fit-content;
+  height: 40px;
   border-bottom: 1px dotted var(--cor-2);
   font-family: var(--font-1);
 }
