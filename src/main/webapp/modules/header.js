@@ -22,8 +22,16 @@ export async function initHeader(){
 	updateBalanceHeader();
 	
 	global.userClickEvents.forEach((userEvent)=>{
-		balanceVisibilityImg.addEventListener(userEvent,changeVisibilityBalance);
-		balanceContainer.addEventListener(userEvent,toggleBalanceManagementContainer);
+		balanceVisibilityImg.addEventListener(userEvent,(event)=>{
+			event.stopPropagation();
+			event.preventDefault();
+			changeVisibilityBalance();
+		});
+		balanceContainer.addEventListener(userEvent,(event)=>{
+			event.stopPropagation();
+			event.preventDefault();
+			toggleBalanceManagementContainer();
+		});
 		plusIncomeElement.addEventListener(userEvent,depositIncome);
 		minusInvoiceElement.addEventListener(userEvent,payInvoice);
 	})

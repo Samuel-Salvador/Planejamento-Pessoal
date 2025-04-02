@@ -1,6 +1,6 @@
 import {loggedUserId} from "./login.js";
 
-export const url = `https://planejamento-pessoal-17b194180e9e.herokuapp.com`;
+export const url = `http://127.0.0.1:3030/`;
 export let transactionUrl = url+`/transactions/${loggedUserId}`;
 export let userUrl = url+`/users/${loggedUserId}`;
 

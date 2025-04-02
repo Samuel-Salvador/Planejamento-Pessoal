@@ -1,8 +1,8 @@
 export let loggedUserId = sessionStorage.userId;
 
+const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com`;
 
-
-if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com/"){
+if(location.toString()==url){
 	const userNameElement = document.forms.login.user_name;
 	const userPasswordElement = document.forms.login.password;
 								
@@ -23,7 +23,7 @@ if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com
 		})
 	}else{
 		sessionStorage.userId = localStorage.userId;
-		location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/html/finance.html");
+		location.assign(url+"/html/finance.html");
 	}
 	
 	async function login(event){
@@ -32,7 +32,7 @@ if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com
 		const userPassword = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
 		
-		const responseUsers = await fetch("https://planejamento-pessoal-17b194180e9e.herokuapp.com/users");
+		const responseUsers = await fetch(url+"/users");
 		const usersJSON = await responseUsers.json();
 		
 		console.log(usersJSON);
@@ -45,7 +45,7 @@ if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com
 					}
 				sessionStorage.userId = usersJSON[i].id;
 				loggedUserId = usersJSON[i].id;
-				location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/html/finance.html");
+				location.assign(url+"/html/finance.html");
 				removeOutline(userNameElement);
 				removeOutline(userPasswordElement);
 			}else{	

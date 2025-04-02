@@ -32,6 +32,9 @@ function clickOutsideModal(event){
 export function resetRemovalModal(){
 	containerRemovalData.innerHTML = `<div class="removal_data_msg">
 									<h3> ← Selecione a transação a ser removida: </h3>
+								</div>
+								<div class="removal_data_msg_mobile">
+									<h3>Selecione a transação a ser removida</h3>								
 								</div>`;
 										
 	removalButtonConfirm.classList.remove("block");	

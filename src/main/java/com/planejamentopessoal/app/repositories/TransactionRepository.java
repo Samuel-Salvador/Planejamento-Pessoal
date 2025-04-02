@@ -10,12 +10,12 @@ import com.planejamentopessoal.app.entities.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction,Long>{
 
-	@Query(value = "SELECT * FROM transaction WHERE id_usuario=? AND date >= ? AND date <= ?", nativeQuery = true)
+	@Query(value = "SELECT * FROM transaction WHERE id_usuario=?1 AND date >= ?2 AND date <= ?3", nativeQuery = true)
 	List<Transaction> findByMonth(Long user_id,LocalDate startDate,LocalDate endDate);
 	
-	@Query(value = "SELECT * FROM transaction WHERE id_usuario=? AND mes=? AND ano=? AND categoria=?", nativeQuery = true)
+	@Query(value = "SELECT * FROM transaction WHERE id_usuario=?1 AND mes=?2 AND ano=?3 AND categoria=?4", nativeQuery = true)
 	List<Transaction> findByCategory(Long user_id,Integer month,Integer year,String category);
 
-	@Query(value = "SELECT * FROM transaction WHERE id_usuario=? AND group_name=?", nativeQuery = true)
+	@Query(value = "SELECT * FROM transaction WHERE id_usuario=?1 AND group_name=?2", nativeQuery = true)
 	List<Transaction> findByGroup(Long user_id, String transactionGroup);
 }

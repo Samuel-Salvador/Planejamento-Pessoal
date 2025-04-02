@@ -9,7 +9,7 @@ const settingsInnerContentUserData = document.querySelector(".container_settings
 
 let dataSettingIncomeInput = document.getElementById("user_settings_income_input");
 export let dataSettingBalanceInput = document.getElementById("user_settings_balance_input");
-const invoiceClosingDateInput = document.getElementById("user_settings_invoice_closingdate_input");
+let invoiceClosingDateInput = document.getElementById("user_settings_invoice_closingdate_input");
 
 let rightArrowImg = document.querySelector(".active_option_img");
 let parentElementImg = rightArrowImg.parentElement;
@@ -20,6 +20,7 @@ export function openSettingsModal(){
 
 function closeSettinsModal(event){
 	event.preventDefault();
+	
 	settingsModal.classList.remove("flex");
 }
 
@@ -35,6 +36,7 @@ function populateInvoiceDueDate(){
 		const option = document.createElement("option");
 		option.innerHTML=i;
 		option.setAttribute("value",i);
+		invoiceClosingDateInput = document.getElementById("user_settings_invoice_closingdate_input");
 		invoiceClosingDateInput.appendChild(option);
 	}
 }
@@ -185,7 +187,9 @@ export async function initSettingsModal(){
 		});
 		
 		
-		allMenuItems.forEach((menuItem)=>menuItem.addEventListener(userEvent,()=>{
+		allMenuItems.forEach((menuItem)=>menuItem.addEventListener(userEvent,(event)=>{
+			event.stopPropagation();
+			event.preventDefault();
 			changeCurrentMenuItem(menuItem);
 		}));
 	})

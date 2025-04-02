@@ -1,7 +1,8 @@
 import {formValidated} from "./global.js";
 
+const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com`;
 
-if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com/html/register.html"){
+if(location.toString()==url+"/html/register.html"){
 	const confirmButton = document.querySelector(".confirm");
 	const backButton = document.querySelector(".back");
 
@@ -16,7 +17,7 @@ if(location.toString()=="https://planejamento-pessoal-17b194180e9e.herokuapp.com
 	})
 	
 	backButton.addEventListener("click",()=>{
-		location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/");
+		location.assign(url);
 	})
 	
 }
@@ -48,6 +49,6 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch("https://planejamento-pessoal-17b194180e9e.herokuapp.com/users", options).then(()=>location.assign("https://planejamento-pessoal-17b194180e9e.herokuapp.com/"));
+			fetch(url+"/users", options).then(()=>location.assign(url));
 	}
 }
