@@ -64,8 +64,16 @@ function changeVisibilityPassword(){
 	visibilityOff.setAttribute("img_visibility_off","");
 
 	userClickEvents.forEach((userEvent)=>{
-		visibilityOn.addEventListener(userEvent,changeVisibilityPassword);	
-		visibilityOff.addEventListener(userEvent,changeVisibilityPassword);
+		visibilityOn.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changeVisibilityPassword();
+		});	
+		visibilityOff.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changeVisibilityPassword();
+		});
 	})
 	
 	if(currentImg.hasAttribute("img_visibility_on")){
@@ -335,7 +343,11 @@ async function changePlaceholdersUserData(){
 	invoiceClosingDateInput.selectedIndex = userData.invoiceClosingDate-1;
 	
 	userClickEvents.forEach((userEvent)=>{
-		passwordVisibility.addEventListener(userEvent,changeVisibilityPassword);
+		passwordVisibility.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changeVisibilityPassword();
+		});
 		saveDataButton.addEventListener(userEvent,()=>handleSaveButton(saveDataButton));
 	});		
 }

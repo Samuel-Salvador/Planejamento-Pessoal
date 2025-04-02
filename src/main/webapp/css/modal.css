@@ -23,6 +23,10 @@
 	text-decoration-thickness: 1px;
 }
 
+.removal_data_msg_mobile{
+	display: none;
+}
+
 .container_removal_data h3{
 	display: inline;
 }

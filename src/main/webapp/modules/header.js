@@ -68,8 +68,16 @@ function changeVisibilityBalance(){
 	visibilityOff.setAttribute("img_visibility_off","");
 
 	global.userClickEvents.forEach((userEvent)=>{
-		visibilityOn.addEventListener(userEvent,changeVisibilityBalance);	
-		visibilityOff.addEventListener(userEvent,changeVisibilityBalance);
+		visibilityOn.addEventListener(userEvent,(event)=>{
+			event.stopPropagation();
+			event.preventDefault();
+			changeVisibilityBalance();
+		});	
+		visibilityOff.addEventListener(userEvent,(event)=>{
+			event.stopPropagation();
+			event.preventDefault();
+			changeVisibilityBalance();
+		});	
 	})
 		
 	if(currentImg.hasAttribute("img_visibility_on")){
