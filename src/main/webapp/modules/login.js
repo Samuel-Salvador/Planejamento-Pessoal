@@ -32,7 +32,7 @@ if(location.toString()==url){
 		const userPassword = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
 		
-		const responseUsers = await fetch(url+"/users");
+		const responseUsers = await fetch(url+"users/");
 		const usersJSON = await responseUsers.json();
 		
 		console.log(usersJSON);
