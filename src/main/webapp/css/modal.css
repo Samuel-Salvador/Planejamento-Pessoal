@@ -203,8 +203,10 @@ fieldset label{
 	.removal_data_msg{
 		display: none;
 	}
-	.container_removal_data .removal_data_msg_mobile h3{
+	.removal_data_msg_mobile{
 		display: block;
+	}
+	.container_removal_data .removal_data_msg_mobile h3{
 		text-align: center;
 		font-size: 0.75rem;
 	}
