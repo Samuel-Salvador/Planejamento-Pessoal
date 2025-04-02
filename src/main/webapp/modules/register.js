@@ -1,8 +1,8 @@
 import {formValidated} from "./global.js";
 
-const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com`;
+const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com/`;
 
-if(location.toString()==url+"/html/register.html"){
+if(location.toString()==url+"html/register.html"){
 	const confirmButton = document.querySelector(".confirm");
 	const backButton = document.querySelector(".back");
 

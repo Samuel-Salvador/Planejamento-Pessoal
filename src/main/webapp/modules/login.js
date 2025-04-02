@@ -1,6 +1,6 @@
 export let loggedUserId = sessionStorage.userId;
 
-const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com`;
+const url = `https://plan-pessoal-93978f82c0a7.herokuapp.com/`;
 
 if(location.toString()==url){
 	const userNameElement = document.forms.login.user_name;
@@ -45,7 +45,7 @@ if(location.toString()==url){
 					}
 				sessionStorage.userId = usersJSON[i].id;
 				loggedUserId = usersJSON[i].id;
-				location.assign(url+"/html/finance.html");
+				location.assign(url+"html/finance.html");
 				removeOutline(userNameElement);
 				removeOutline(userPasswordElement);
 			}else{	
