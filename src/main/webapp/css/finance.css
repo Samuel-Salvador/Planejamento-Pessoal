@@ -2,6 +2,7 @@
   background-color: var(--cor-1);
   display: grid;
   min-height: 45vh;
+  max-height: 45vh;
   width: 85%;
   margin: 20px auto ;
   border-radius: 4px;
