@@ -35,7 +35,6 @@ if(location.toString()==url){
 		const responseUsers = await fetch(url+"users");
 		const usersJSON = await responseUsers.json();
 		
-		console.log(usersJSON);
 			
 		for(let i=0;i<usersJSON.length;i++){
 			if(	usersJSON[i].username === userName &&

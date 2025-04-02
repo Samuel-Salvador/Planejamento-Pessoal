@@ -35,7 +35,7 @@ function resetFormValues(){
 }
 
 async function postAndAddLastTransactionToArray(options){
-	await fetch(url+"/transactions",options);
+	await fetch(url+"transactions",options);
 	const monthTransactionResponse = await fetch(urlMonthInvoice);
 	const monthTransactionJSON = await monthTransactionResponse.json();
 	addTransaction(monthTransactionJSON[monthTransactionJSON.length-1]);
