@@ -23,7 +23,7 @@ if(location.toString()==url){
 		})
 	}else{
 		sessionStorage.userId = localStorage.userId;
-		location.assign(url+"/html/finance.html");
+		location.assign(url+"html/finance.html");
 	}
 	
 	async function login(event){
@@ -32,7 +32,7 @@ if(location.toString()==url){
 		const userPassword = document.forms.login.password.value;
 		const rememberCheckBox = document.forms.login.remember.checked;
 		
-		const responseUsers = await fetch(url+"users/");
+		const responseUsers = await fetch(url+"users");
 		const usersJSON = await responseUsers.json();
 		
 		console.log(usersJSON);

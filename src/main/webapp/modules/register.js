@@ -49,6 +49,6 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch(url+"users/", options).then(()=>location.assign(url));
+			fetch(url+"users", options).then(()=>location.assign(url));
 	}
 }
