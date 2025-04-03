@@ -10,26 +10,36 @@ if(location.toString()==url+"html/register.html"){
 	const confirmButton = document.querySelector(".confirm");
 	const backButton = document.querySelector(".back");
 
-	confirmButton.addEventListener("click",()=>{
-		register();
-	});
 	
-	document.addEventListener("keydown",(event)=>{
-		if(event.key==="Enter"){
-			register();
-		}
-	});
 	
-	backButton.addEventListener("click",()=>{
-		location.assign(url);
-	});
+	
 	
 	userClickEvents.forEach((userEvent)=>{
+		
+		backButton.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			location.assign(url);
+		});
+		
+		confirmButton.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			register();
+		});
+			
+		document.addEventListener("keydown",(event)=>{
+			if(event.key==="Enter"){
+				register();
+			}
+		});
+		
 		visibilityPasswordEyeImg.addEventListener(userEvent,(event)=>{
 			event.preventDefault();
 			event.stopPropagation();
 			changePasswordVisibility();
 		});
+		
 		visibilityConfirmPasswordEyeImg.addEventListener(userEvent,(event)=>{
 			event.preventDefault();
 			event.stopPropagation();
@@ -46,6 +56,8 @@ function register(){
 
 	const userPassword = document.forms.register.password.value;
 	const userConfirmPassword = document.forms.register.password_confirm.value;
+	
+	
 	if(	formValidated(userFullName) &&
 		formValidated(userNickname) &&
 		formValidated(userBirthday) &&
@@ -65,7 +77,7 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch(userUrl, options).then(()=>location.assign(url));
+			fetch(url+'users', options).then(()=>console.log(userFullName,userNickname,userBirthday,userEmail,userPassword,userConfirmPassword));
 	}
 }
 

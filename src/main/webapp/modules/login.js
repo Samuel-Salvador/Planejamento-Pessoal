@@ -55,7 +55,7 @@ if(location.toString()==url){
 		
 		const loginButton = document.querySelector(".login_button");
 		
-		['click','touchstart'].forEach((userEvent)=>{
+		userClickEvents.forEach((userEvent)=>{
 			loginButton.addEventListener(userEvent,(event)=>login(event));
 			userNameElement.addEventListener(userEvent,()=>removeOutline(userNameElement));
 			userPasswordElement.addEventListener(userEvent,()=>removeOutline(userPasswordElement));
@@ -79,8 +79,7 @@ if(location.toString()==url){
 		
 		const responseUsers = await fetch(url+`users`);
 		const usersJSON = await responseUsers.json();
-		
-			
+	
 		for(let i=0;i<usersJSON.length;i++){
 			if(	usersJSON[i].username === userName &&
 				usersJSON[i].password === userPassword){
