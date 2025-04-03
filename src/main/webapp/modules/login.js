@@ -1,4 +1,4 @@
-import { url} from "./global.js";
+import { url,userClickEvents} from "./global.js";
 
 export let loggedUserId = sessionStorage.userId;
 
@@ -6,10 +6,51 @@ export let userUrl = url+`users/${loggedUserId}`;
 
 export let transactionUrl = url+`transactions/${loggedUserId}`;
 
+let visibilityEyeImg = document.querySelector('.password_visibility_login');;
+const passwordInputElement = document.querySelector('.login_password');
+
+function changePasswordVisibility(){
+	visibilityEyeImg = document.querySelector('.password_visibility_login');
+	const passwordContainer = document.querySelector('.container_password_login');
+	const newEyeImg = document.createElement('img');
+	
+	userClickEvents.forEach((userEvent)=>{
+		newEyeImg.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changePasswordVisibility();
+		})
+	});
+	
+	if(visibilityEyeImg.classList[1]=='visibility_off'){
+		passwordInputElement.type='text';
+		passwordContainer.removeChild(visibilityEyeImg);
+		newEyeImg.classList.add('password_visibility_login');
+		newEyeImg.classList.add('visibility_on');
+		newEyeImg.setAttribute('src','./img/input_visibility_on.png');
+		passwordContainer.appendChild(newEyeImg);
+	}else{
+		passwordInputElement.type='password';
+		passwordContainer.removeChild(visibilityEyeImg);
+		newEyeImg.classList.add('password_visibility_login');
+		newEyeImg.classList.add('visibility_off');
+		newEyeImg.setAttribute('src','./img/input_visibility_off.png');
+		passwordContainer.appendChild(newEyeImg);
+	}
+}
+
 if(location.toString()==url){
+	userClickEvents.forEach((userEvent)=>{
+		visibilityEyeImg.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changePasswordVisibility();
+		})
+	});
+	
 	const userNameElement = document.forms.login.user_name;
 	const userPasswordElement = document.forms.login.password;
-								
+	
 	if(localStorage.userId==null){
 		
 		const loginButton = document.querySelector(".login_button");

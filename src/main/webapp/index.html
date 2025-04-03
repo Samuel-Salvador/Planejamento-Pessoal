@@ -21,7 +21,10 @@
 		<form class="container_login" name="login">
 			<h2 class="login_signin_title">Entrar</h2>
 			<input class="login_input" name="user_name" type="text" id="user_name" placeholder="Nome de Usuário">
-			<input class="login_input" name="password" type="password" id="password" placeholder="Senha">
+			<div class="container_password_login">
+				<input class="login_input login_password" name="password" type="password" id="password" placeholder="Senha">
+				<img class="password_visibility_login visibility_off" src="./img/input_visibility_off.png">
+			</div>
 			<div class="container_checkbox_login">
 				<input class="login_input_checkbox" name="remember" type="checkbox" id="remember">
 				<label class="remember_label" for="remember">Lembre-se de mim</label>			

@@ -2,6 +2,7 @@ import {userClickEvents,formValidated,url} from "./global.js";
 import {urlMonthInvoice,addTransaction,setTotal,transactionsArray} from "./finance.js";
 import { loggedUserId} from "./login.js";
 import { fetchUser, userData } from "./header.js";
+import { setUpChart } from "./categoryChart.js";
 
 const addTransactionModal = document.querySelector(".add_transaction_modal_section");
 const closeModalButton = document.querySelector(".x_add");
@@ -40,6 +41,7 @@ async function postAndAddLastTransactionToArray(options){
 	const monthTransactionJSON = await monthTransactionResponse.json();
 	addTransaction(monthTransactionJSON[monthTransactionJSON.length-1]);
 	setTotal(transactionsArray);
+	setUpChart();
 }
 
 function httpPostTransaction(){

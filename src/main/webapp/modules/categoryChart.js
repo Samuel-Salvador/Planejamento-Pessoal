@@ -5,49 +5,53 @@ const chartContainer = document.querySelector(".container_chart");
 
 Chart.defaults.color = '#EEEEEE';
 
+let chartData;
+
 export async function setUpChart(){
-	const chartData = {	type: 'doughnut',
-			    				data: {
-			      					labels: [],
-			      					datasets: [{
-			        					label: '',
-			        					data: [],
-			        					borderWidth: 1
-			      					}]
-			   					 },
-			    				options: {
-			      					scales: {
-			        					y: {
-			          						beginAtZero: true,
-											grid: {
-												display: false
-											},
-											ticks:{
-												display: false
-											},
-											border:{
-												display: false
-											}
-			        					}
-			      					},
-									plugins: {
-										title: {
-											text: "Gastos por Categoria",
-											display: true,
-										},
-										tooltip: {
-												callbacks: {
-													label: function (tooltipItem) {
-													       	let value = tooltipItem.raw;
-													        return `${tooltipItem.dataset.label}: R$ ${value.toFixed(2)}`;
-												}
-													
-											}
+	chartData = {	type: 'doughnut',
+			    	data: {
+			      		labels: [],
+			      		datasets: [{
+			        		label: '',
+			        		data: [],
+			        		borderWidth: 1
+			      		}]
+			   			},
+			    	options: {
+			      		scales: {
+			        		y: {
+			          			beginAtZero: true,
+								grid: {
+									display: false
+								},
+								ticks:{
+									display: false
+								},
+								border:{
+									display: false
+								}
+			        		}
+			      		},
+						plugins: {
+							title: {
+								text: "Gastos por Categoria",
+								display: true,
+								align: 'center'
+							},
+							tooltip: {
+								callbacks: {
+									label: function (tooltipItem) {
+												let value = tooltipItem.raw;
+												return `${tooltipItem.dataset.label}: R$ ${value.toFixed(2)}`;
 									}
-			    				}
+								}
+							},
+							legend:{
+								display: false
 							}
-						};
-	
+			    		}
+					}
+	};
 	await fetchUser();
 	let seenCategoriesArray = [];
 	let currentCategory;
@@ -88,9 +92,7 @@ export async function setUpChart(){
 
 export function removeChart(){
 	if(document.getElementById("category_chart")){
-		if(chartContainer.hasChildNodes()){
-			chartContainer.removeChild(document.getElementById("category_chart"));
-		}
+		chartContainer.removeChild(document.getElementById("category_chart"));
 	}
 }
 

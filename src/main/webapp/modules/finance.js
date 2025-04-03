@@ -165,8 +165,7 @@ export function addTransaction(transaction){
 	
 	removeTransaction.addOptionToSelectForRemovalElement(transaction);
 	
-	transactionsArray.push(transaction);
-	setUpChart();		
+	transactionsArray.push(transaction);		
 }
 
 //adds the month transactions to the transactions tab and sets the total for that month
@@ -179,8 +178,10 @@ function addAllTransactions() {
 	      		for (let i = 0; i < body.length; i++) {
 					addTransaction(body[i]);
 	     		}
-				 
-				setTotal(body);		
+				if(body.length){
+					setUpChart(); 
+				}
+				setTotal(body);	
 	   		});
 }
 
@@ -188,7 +189,6 @@ async function addGroupTransactionsToFilter(){
 	
 	
 	await fetchUser();
-	await setUpChart();
 	for(let i=0;i<userData.transactionGroups.length;i++){
 		
 		createOptionSelectionGroup(i,financeTransactionGroupSelect);
@@ -208,6 +208,7 @@ export default function initFinance() {
 		//changes to the previous month
 		leftArrow.addEventListener(userEvent,(event)=>{
 			event.preventDefault();
+			event.stopPropagation();
 			
 			if(monthInvoice>1){
 				monthInvoice--;
@@ -232,6 +233,7 @@ export default function initFinance() {
 		//changes to the next month
 		rightArrow.addEventListener(userEvent,(event)=>{
 			event.preventDefault();
+			event.stopPropagation();
 					
 			if(monthInvoice<12){
 				monthInvoice++;

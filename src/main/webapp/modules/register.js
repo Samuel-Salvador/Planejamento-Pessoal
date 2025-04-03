@@ -1,4 +1,10 @@
-import {formValidated,url,userUrl} from "./global.js";
+import {formValidated,url,userClickEvents} from "./global.js";
+import {userUrl} from "./login.js";
+
+let visibilityPasswordEyeImg = document.querySelector('.password_visibility_register');;
+let visibilityConfirmPasswordEyeImg = document.querySelector('.passwordconfirm_visibility_register');;
+const passwordInputElement = document.getElementById('password');
+const confirmPasswordInputElement = document.getElementById('password_confirm');
 
 if(location.toString()==url+"html/register.html"){
 	const confirmButton = document.querySelector(".confirm");
@@ -6,18 +12,30 @@ if(location.toString()==url+"html/register.html"){
 
 	confirmButton.addEventListener("click",()=>{
 		register();
-	})
+	});
 	
 	document.addEventListener("keydown",(event)=>{
 		if(event.key==="Enter"){
 			register();
 		}
-	})
+	});
 	
 	backButton.addEventListener("click",()=>{
 		location.assign(url);
-	})
+	});
 	
+	userClickEvents.forEach((userEvent)=>{
+		visibilityPasswordEyeImg.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changePasswordVisibility();
+		});
+		visibilityConfirmPasswordEyeImg.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changeConfirmPasswordVisibility();
+		});
+	});	
 }
 
 function register(){
@@ -48,5 +66,65 @@ function register(){
 						password: userPassword})
 			};
 			fetch(userUrl, options).then(()=>location.assign(url));
+	}
+}
+
+function changePasswordVisibility(){
+	visibilityPasswordEyeImg = document.querySelector('.password_visibility_register');
+	const passwordContainer = document.querySelector('.container_register_password');
+	const newEyeImg = document.createElement('img');
+	
+	userClickEvents.forEach((userEvent)=>{
+		newEyeImg.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changePasswordVisibility();
+		})
+	});
+	
+	if(visibilityPasswordEyeImg.classList[1]=='visibility_off'){
+		passwordInputElement.type='text';
+		passwordContainer.removeChild(visibilityPasswordEyeImg);
+		newEyeImg.classList.add('password_visibility_register');
+		newEyeImg.classList.add('visibility_on');
+		newEyeImg.setAttribute('src','../img/input_visibility_on.png');
+		passwordContainer.appendChild(newEyeImg);
+	}else{
+		passwordInputElement.type='password';
+		passwordContainer.removeChild(visibilityPasswordEyeImg);
+		newEyeImg.classList.add('password_visibility_register');
+		newEyeImg.classList.add('visibility_off');
+		newEyeImg.setAttribute('src','../img/input_visibility_off.png');
+		passwordContainer.appendChild(newEyeImg);
+	}
+}
+
+function changeConfirmPasswordVisibility(){
+	visibilityConfirmPasswordEyeImg = document.querySelector('.passwordconfirm_visibility_register');
+	const passwordContainer = document.querySelector('.container_register_confirmpassword');
+	const newEyeImg = document.createElement('img');
+	
+	userClickEvents.forEach((userEvent)=>{
+		newEyeImg.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			event.stopPropagation();
+			changeConfirmPasswordVisibility();
+		})
+	});
+	
+	if(visibilityConfirmPasswordEyeImg.classList[1]=='visibility_off'){
+		confirmPasswordInputElement.type='text';
+		passwordContainer.removeChild(visibilityConfirmPasswordEyeImg);
+		newEyeImg.classList.add('passwordconfirm_visibility_register');
+		newEyeImg.classList.add('visibility_on');
+		newEyeImg.setAttribute('src','../img/input_visibility_on.png');
+		passwordContainer.appendChild(newEyeImg);
+	}else{
+		confirmPasswordInputElement.type='password';
+		passwordContainer.removeChild(visibilityConfirmPasswordEyeImg);
+		newEyeImg.classList.add('passwordconfirm_visibility_register');
+		newEyeImg.classList.add('visibility_off');
+		newEyeImg.setAttribute('src','../img/input_visibility_off.png');
+		passwordContainer.appendChild(newEyeImg);
 	}
 }

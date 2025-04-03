@@ -1,3 +1,12 @@
+.register_main,
+.register_main_mobile{
+	display: flex;
+	height: 100vh;
+	align-items: center;
+	justify-items: center;
+	flex-direction: column;
+}
+
 .register_main_mobile{
 	display: none;
 }
@@ -37,6 +46,24 @@
 	outline: none;
 }
 
+
+.container_register_password,
+.container_register_confirmpassword{
+	position: relative;
+}
+
+.password_visibility_register,
+.passwordconfirm_visibility_register{
+	width: 24px;
+	position: absolute;
+	right: 5px;
+	top: 6px;
+}
+
+.password_visibility_register:hover,
+.passwordconfirm_visibility_register:hover{
+	cursor: pointer;
+}
 .register_doublelabel_container{
 	width: 100%;
 }
@@ -46,7 +73,7 @@
 
 .register_data_container #birthday {
 	width: 173px;
-	height: 31px;
+	height: 33px;
 }
 
 
@@ -87,10 +114,34 @@
 	cursor: pointer;
 }
 
+@media(max-width:1400px){
+	.register_main{
+		flex-direction:row;
+		justify-content: center;
+		gap: 80px;
+	}
+	
+	.register_title_container{
+		flex-direction:column;
+		align-items: center;
+		margin: 0;
+	}
+	.register_img{
+		margin: 0;
+	}
+	.register_title{
+		margin: 0;
+	}
+	.register_data_container{
+		margin: 0;
+	}
+}
+
 @media(max-width:480px){
 	.register_main{
 		display: none;
 	}
+	
 	.register_main_mobile{
 		display: flex;
 		height: 100%;

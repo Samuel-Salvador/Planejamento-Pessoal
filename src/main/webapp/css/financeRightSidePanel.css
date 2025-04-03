@@ -47,11 +47,9 @@
 	margin-bottom: 40px;
 	grid-row: 3;
 	grid-column: 6/7;
+	width: 200px;
 }
 
-#category_chart{
-	width: 240px;
-}
 
 .right_side_panel .container_total .hidden{
 	display: none;
@@ -104,6 +102,7 @@
 	background-color: #a45a52;
 	cursor: pointer;
 }
+
 
 @media(max-width:1700px){
 	.container_management_transactions{
