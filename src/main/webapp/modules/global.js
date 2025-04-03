@@ -1,6 +1,6 @@
 export const testUrl = `http://127.0.0.1:3030/`;
 export const prodUrl = `https://plan-pessoal-93978f82c0a7.herokuapp.com/`;
-export const url = testUrl;
+export const url = prodUrl;
 
 export const dateOptions = {
 	day: 'numeric',
