@@ -379,6 +379,7 @@ async function handleSaveButton(saveDataButton){
 								"Content-Type": "application/json; charset=utf-8",
 							},
 					body: JSON.stringify({	income: incomeFormValue,
+											balance: 0,
 											invoiceClosingDate: invoiceClosingDateValue,
 											transactionGroups: userData.transactionGroups
 					}),
@@ -390,7 +391,8 @@ async function handleSaveButton(saveDataButton){
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
-					body: JSON.stringify({	balance: balanceFormValue,
+					body: JSON.stringify({	income: 0,
+											balance: balanceFormValue,
 											invoiceClosingDate: invoiceClosingDateValue,
 											transactionGroups: userData.transactionGroups
 					}),
@@ -402,7 +404,9 @@ async function handleSaveButton(saveDataButton){
 					headers:{	
 								"Content-Type": "application/json; charset=utf-8",
 							},
-					body: JSON.stringify({	invoiceClosingDate: invoiceClosingDateValue,
+					body: JSON.stringify({	income: 0,
+											balance: 0,
+											invoiceClosingDate: invoiceClosingDateValue,
 											transactionGroups: userData.transactionGroups
 					}),
 				};

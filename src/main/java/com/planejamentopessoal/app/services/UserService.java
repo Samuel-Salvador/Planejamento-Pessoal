@@ -33,8 +33,8 @@ public class UserService {
 	public User update(Long id, User obj) {
 		User entity = repository.getReferenceById(id);
 		
-		
 		entity.setTransactionGroups(obj.getTransactionGroups());
+		entity.setInvoiceClosingDate(obj.getInvoiceClosingDate());
 		
 		if(	obj.getBalance()!=entity.getBalance() && 
 			obj.getIncome()!=entity.getIncome() &&
@@ -45,19 +45,15 @@ public class UserService {
 			entity.setIncome(obj.getIncome());
 		}
 		
-		if(obj.getBalance()!=entity.getBalance() && obj.getIncome()==0) {
+		if(obj.getBalance()!=entity.getBalance() && obj.getBalance()!=0) {
 			entity.setBalance(obj.getBalance());
 		}
 		
-		if(obj.getIncome()!=entity.getIncome() && obj.getBalance()==0) {
+		if(obj.getIncome()!=entity.getIncome() && obj.getIncome()!=0) {
 			entity.setIncome(obj.getIncome());
 			
 		}
-		
-		if(obj.getInvoiceClosingDate()!=entity.getInvoiceClosingDate()) {
-			entity.setInvoiceClosingDate(obj.getInvoiceClosingDate());
-		}
-		
+	
 		return repository.save(entity);
 	}
 	
