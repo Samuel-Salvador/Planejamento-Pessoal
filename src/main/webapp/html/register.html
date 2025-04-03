@@ -24,27 +24,25 @@
 			<label for="fullname">Nome Completo: </label>
 			<input name="fullname" type="text" id="fullname">
 			
-			<div class="register_doublelabel_container">
-				<label for="login">Nome de Usuário: </label>	
-				<label class="birthday_label" for="birthday">Data de Nascimento: </label>
-			</div>
-			<div>
-				<input name="login" type="text" id="login">
-				<input name="birthday" type="date" id="birthday">
-			</div>
+			
+			<label for="login">Nome de Usuário: </label>	
+			<input name="login" type="text" id="login">
+			<label class="birthday_label" for="birthday">Data de Nascimento: </label>
+			<input name="birthday" type="date" id="birthday">
+			
 						
 			
-			<label for="email">Email: </label>
+			<label id="email_label_register" for="email">Email: </label>
 			<input name="email" type="email" id="email">
 			
 			<br>
-			<label for="password">Senha: </label>
+			<label for="password" id="password_label_register">Senha: </label>
 			<div class="container_register_password">
 				<input name="password" type="password" id="password">
 				<img class="password_visibility_register visibility_off" src="../img/input_visibility_off.png">
 			</div>
 			
-			<label for="password_confirm">Confirme a senha: </label>
+			<label for="password_confirm" id="confirmpassword_label_register">Confirme a senha: </label>
 			<div class="container_register_confirmpassword">
 				<input name="password_confirm" type="password" id="password_confirm">
 				<img class="passwordconfirm_visibility_register visibility_off" src="../img/input_visibility_off.png">
@@ -57,43 +55,7 @@
 			
 		</form>
 	</main>
-	
-	<section class="register_main_mobile">
-		
-		<img class="register_img" src="../img/Logo.png" alt="Logo">
-		<h1 class="register_title">Planejamento<br><span>Pessoal</span></h1>
-			
-		<form class="register_data_container" name="register">
-			<h2 class="register_data_title">Cadastro</h2>
-				
-			<label for="fullname">Nome Completo: </label>
-			<input name="fullname" type="text" id="fullname_mobile">
-				
-				
-			<label for="login">Nome de Usuário: </label>	
-			<input name="login" type="text" id="login_mobile">
-				
-			<label class="birthday_label" for="birthday">Data de Nascimento: </label>
-			<input name="birthday" type="date" id="birthday_mobile">
-				
-			<label for="email">Email: </label>
-			<input name="email" type="email" id="email_mobile">
-				
-			<br>
-			<label for="password">Senha: </label>
-			<input name="password" type="password" id="password_mobile">
-				
-			<label for="password_confirm">Confirme a senha: </label>
-			<input name="password_confirm" type="password" id="password_confirm_mobile">
-				
-			<div class="register_button_container">
-				<button class="confirm" type="button">Confirmar</button>
-				<button class="back" type="button">Voltar</button>
-			</div>
-				
-		</form>
-	</section>
-	
+
 	<script type="module" src="../modules/register.js"></script>
 </body>
 
