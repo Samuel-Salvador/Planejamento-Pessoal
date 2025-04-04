@@ -77,7 +77,7 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch(url+'users', options).then(()=>console.log(userFullName,userNickname,userBirthday,userEmail,userPassword,userConfirmPassword));
+			fetch(url+'users', options).then(()=>location.assign(url));
 	}
 }
 
