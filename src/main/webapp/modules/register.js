@@ -1,15 +1,16 @@
 import {formValidated,url,userClickEvents} from "./global.js";
-import {userUrl} from "./login.js";
+
 
 let visibilityPasswordEyeImg = document.querySelector('.password_visibility_register');;
 let visibilityConfirmPasswordEyeImg = document.querySelector('.passwordconfirm_visibility_register');;
 const passwordInputElement = document.getElementById('password');
 const confirmPasswordInputElement = document.getElementById('password_confirm');
+const confirmButton = document.querySelector(".confirm");
 
 if(location.toString()==url+"html/register.html"){
-	const confirmButton = document.querySelector(".confirm");
+	
 	const backButton = document.querySelector(".back");
-
+	confirmButton.removeAttribute('disabled');
 	
 	
 	
@@ -25,6 +26,7 @@ if(location.toString()==url+"html/register.html"){
 		confirmButton.addEventListener(userEvent,(event)=>{
 			event.preventDefault();
 			event.stopPropagation();
+			
 			register();
 		});
 			
@@ -65,6 +67,7 @@ function register(){
 		formValidated(userPassword) &&
 		formValidated(userConfirmPassword) &&
 		userPassword===userConfirmPassword){
+			confirmButton.setAttribute('disabled',true);
 			const options = {
 			method: "POST",
 			headers: {
@@ -77,7 +80,7 @@ function register(){
 						email: userEmail,
 						password: userPassword})
 			};
-			fetch(url+'users', options).then(()=>location.assign(url));
+			fetch(url+'users', options).then(()=>{/*location.assign(url)*/});
 	}
 }
 

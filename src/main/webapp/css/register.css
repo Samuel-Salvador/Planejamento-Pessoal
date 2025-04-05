@@ -121,6 +121,15 @@
 	color: var(--cor-3);
 }
 
+.confirm[disabled='true']{
+	background-color: #008a90;
+}
+
+.confirm[disabled='true']:hover{
+	background-color: #008a90;
+	cursor: default;
+}
+
 .confirm:hover {
   	background-color: #00959C;
   	cursor: pointer;
