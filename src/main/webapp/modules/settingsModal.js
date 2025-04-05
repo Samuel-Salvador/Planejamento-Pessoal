@@ -98,7 +98,7 @@ function resetTransactionGroupInputValue(){
 async function handleAddTransactionGroupButton(){
 	await fetchUser();
 	
-	const financeGroupInput = document.forms.transaction_group_form.transaction_group.value;
+	const financeGroupInput = document.forms.transaction_group_form.transaction_group.value.trimEnd();
 	const arrayTransactionGroups = userData.transactionGroups.concat(financeGroupInput);
 	
 	const options = {

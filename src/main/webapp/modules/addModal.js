@@ -45,11 +45,11 @@ async function postAndAddLastTransactionToArray(options){
 }
 
 function httpPostTransaction(){
-	const formValueName = document.forms.transaction_add_form.name.value;
+	const formValueName = document.forms.transaction_add_form.name.value.trimEnd();
 	const formValueDate = document.forms.transaction_add_form.date.value;
 	const formValuePrice = document.forms.transaction_add_form.price.value;
 	const formValueInstallments = document.forms.transaction_add_form.installments.value;
-	const formValueCategory = document.forms.transaction_add_form.category.value;
+	const formValueCategory = document.forms.transaction_add_form.category.value.trimEnd();
 	const formValueType = document.forms.transaction_add_form.type.value;
 	const formValueGroup = document.forms.transaction_add_form.group.value;
 

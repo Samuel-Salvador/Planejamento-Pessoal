@@ -93,8 +93,7 @@ export function initRemovalModal(){
 		
 	const removalButton = document.querySelector(".removal_modal_button");
 	removalButton.classList.add("block");
-	console.log(transactionsArray);
-	console.log(selectionForRemoval.value,selectionForRemoval.options[selectionForRemoval.selectedIndex].getAttribute("date-data"),selectionForRemoval.options[selectionForRemoval.selectedIndex].getAttribute("price-data"));
+	
 	for(let i=0;i<transactionsArray.length;i++){
 
 		//Gets the correct id in DB and the array index for removal
