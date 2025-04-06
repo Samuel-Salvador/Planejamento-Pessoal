@@ -1,8 +1,9 @@
 import {userClickEvents,formValidated,url} from "./global.js";
 import {urlMonthInvoice,addTransaction,setTotal,transactionsArray} from "./finance.js";
-import { loggedUserId} from "./login.js";
-import { fetchUser, userData } from "./header.js";
+import { loggedUserId,userUrl} from "./login.js";
+import { fetchUser, userData,updateBalanceHeader } from "./header.js";
 import { setUpChart } from "./categoryChart.js";
+import { changePlaceholdersUserData } from "./settingsModal.js";
 
 const addTransactionModal = document.querySelector(".add_transaction_modal_section");
 const closeModalButton = document.querySelector(".x_add");
@@ -59,6 +60,21 @@ function httpPostTransaction(){
 		formValidated(formValueInstallments) &&
 		formValidated(formValueCategory) &&
 		formValidated(formValueType)){
+			if(formValueType == 'Pix' || formValueType == 'Débito'){
+				const options={	method: "PUT",
+									headers:{	
+												"Content-Type": "application/json; charset=utf-8",
+											},
+									body: JSON.stringify({	income: 0,
+															balance: userData.balance-formValuePrice,
+															invoiceClosingDate: userData.invoiceClosingDate,
+															transactionGroups: userData.transactionGroups
+									}),
+								};
+				fetch(userUrl,options);
+				updateBalanceHeader();
+				changePlaceholdersUserData();
+			}
 			const options= {
 				method: "POST",
 				headers: {

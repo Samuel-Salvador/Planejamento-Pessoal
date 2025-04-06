@@ -320,7 +320,7 @@ async function changeCurrentMenuItem(menuItem){
 	 
 }
 
-async function changePlaceholdersUserData(){
+export async function changePlaceholdersUserData(){
 	const passwordVisibility = document.querySelector(".settings_password_visibility");
 		
 	const dataSettingFullnameInput = document.getElementById("user_settings_fullname_input");
