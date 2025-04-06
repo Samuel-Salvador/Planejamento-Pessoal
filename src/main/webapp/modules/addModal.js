@@ -45,7 +45,7 @@ async function postAndAddLastTransactionToArray(options){
 	setUpChart();
 }
 
-function httpPostTransaction(){
+async function httpPostTransaction(){
 	const formValueName = document.forms.transaction_add_form.name.value.trimEnd();
 	const formValueDate = document.forms.transaction_add_form.date.value;
 	const formValuePrice = document.forms.transaction_add_form.price.value;
@@ -71,7 +71,7 @@ function httpPostTransaction(){
 															transactionGroups: userData.transactionGroups
 									}),
 								};
-				fetch(userUrl,options);
+				await fetch(userUrl,options);
 				updateBalanceHeader();
 				changePlaceholdersUserData();
 			}

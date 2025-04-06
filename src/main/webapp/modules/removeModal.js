@@ -1,7 +1,9 @@
 import {transactionsArray,setTotal} from "./finance.js";
 import {formattedDate,formattedPrice,userClickEvents } from "./global.js";
-import { transactionUrl } from "./login.js";
+import { transactionUrl,userUrl } from "./login.js";
 import { setUpChart } from "./categoryChart.js";
+import { updateBalanceHeader,userData } from "./header.js";
+import { changePlaceholdersUserData } from "./settingsModal.js";
 
 const removalModal = document.querySelector(".remove_transaction_modal_section");
 const closeModal = document.querySelector(".x_removal");
@@ -58,19 +60,38 @@ export function clearSelectElement(){
 }
 	
 
-function removeFromDOMSelectedTransaction(){
+async function removeFromDOMSelectedTransaction(){
 	for(let i=0;i<6;i++){
 		const transactionColumn = document.querySelectorAll(".container_transactions_column")[i];
 		transactionColumn.removeChild(transactionColumn.children[removalCorrectArrayIndex+1]);
 	}
 	selectionForRemoval.removeChild(selectionForRemoval.options[selectionForRemoval.selectedIndex]);
 	
+	if(transactionsArray[removalCorrectArrayIndex].type == 'Pix' || transactionsArray[removalCorrectArrayIndex].type == 'Débito'){
+			const options={	method: "PUT",
+							headers:{	
+								"Content-Type": "application/json; charset=utf-8",
+							},
+							body: JSON.stringify({	income: 0,
+													balance: userData.balance+transactionsArray[removalCorrectArrayIndex].price,
+													invoiceClosingDate: userData.invoiceClosingDate,
+													transactionGroups: userData.transactionGroups
+							}),
+			};
+		await fetch(userUrl,options);
+		updateBalanceHeader();
+		changePlaceholdersUserData();
+	}
+	
 	transactionsArray.splice(removalCorrectArrayIndex,1);
 	
 	setTotal(transactionsArray);
 	setUpChart();
 	resetRemovalModal();
+	
+	
 }
+
 
 export function initRemovalModal(){
 	
@@ -81,10 +102,13 @@ export function initRemovalModal(){
 		
 		//http DELETE
 		removalButtonConfirm.addEventListener(userEvent,(event)=>{
+				
 				fetch(transactionUrl.substring(0,transactionUrl.length-2)+"/"+removalIdDB,{method: "DELETE"})
 					.then(removeFromDOMSelectedTransaction());
 				closeRemovalModal(event);
-			})	
+				
+				
+			});
 	})
 
 		
