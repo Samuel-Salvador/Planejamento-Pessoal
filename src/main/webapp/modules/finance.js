@@ -6,6 +6,10 @@ import {openRemovalModal} from "./removeModal.js";
 import { fetchUser, userData } from './header.js';
 import {removeChart, setUpChart} from './categoryChart.js'
 
+if(sessionStorage.userId==null){
+	location.assign(global.url);
+}
+
 await fetchUser();
 let monthInvoice = 	new Date().getDate()>=userData.invoiceClosingDate ? new Date().getMonth()+1 : new Date().getMonth();
 let yearInvoice = new Date().getFullYear();
