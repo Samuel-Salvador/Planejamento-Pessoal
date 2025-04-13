@@ -1,6 +1,6 @@
 import {transactionsArray,setTotal} from "./finance.js";
-import {formattedDate,formattedPrice,userClickEvents } from "./global.js";
-import { transactionUrl,userUrl } from "./login.js";
+import {formattedDate,formattedPrice,userClickEvents,url } from "./global.js";
+import { userUrl } from "./login.js";
 import { setUpChart } from "./categoryChart.js";
 import { updateBalanceHeader,userData } from "./header.js";
 import { changePlaceholdersUserData } from "./settingsModal.js";
@@ -103,7 +103,7 @@ export function initRemovalModal(){
 		//http DELETE
 		removalButtonConfirm.addEventListener(userEvent,(event)=>{
 				
-				fetch(transactionUrl.substring(0,transactionUrl.length-2)+"/"+removalIdDB,{method: "DELETE"})
+				fetch(url+`transactions/`+removalIdDB,{method: "DELETE"})
 					.then(removeFromDOMSelectedTransaction());
 				closeRemovalModal(event);
 				
