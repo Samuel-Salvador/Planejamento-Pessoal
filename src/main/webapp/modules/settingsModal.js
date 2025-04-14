@@ -19,15 +19,15 @@ export function openSettingsModal(){
 	settingsModal.classList.add("flex");
 }
 
-function closeSettinsModal(event){
+function closeSettingsModal(event){
 	event.preventDefault();
 	
 	settingsModal.classList.remove("flex");
 }
 
 function clickOutsideModal(event){
-	if(event.target==this){
-		closeSettinsModal(event);
+	if(event.target===this){
+		closeSettingsModal(event);
 	}	
 }
 
@@ -125,7 +125,7 @@ async function handleRemoveTransactionGroupButton(){
 	const updateUserMsg = document.createElement("p");
 	
 	
-	if(financeGroupInput=="Dia a dia" || !arrayTransactionGroups.some((item)=>item==financeGroupInput)){
+	if(financeGroupInput==="Dia a dia" || !arrayTransactionGroups.some((item)=>item===financeGroupInput)){
 		
 		
 		
@@ -145,7 +145,7 @@ async function handleRemoveTransactionGroupButton(){
 			},
 			body: JSON.stringify({transactionGroups: arrayTransactionGroups})
 		}
-		fetch(userUrl,options);
+		await fetch(userUrl,options);
 		removeTransactionGroupFromDOM(financeGroupInput);
 	}
 	setTimeout(()=>{
@@ -189,7 +189,7 @@ export async function initSettingsModal(){
 	const allMenuItems = Array.from(menuItems).concat(Array.from(financeInnerMenuItems));
 	
 	userClickEvents.forEach((userEvent)=>{
-		closeModalButton.addEventListener(userEvent,closeSettinsModal);
+		closeModalButton.addEventListener(userEvent,closeSettingsModal);
 		settingsModal.addEventListener(userEvent,clickOutsideModal);
 		financeItemMenuSettings.addEventListener(userEvent,()=>{
 			changeVisibilityDropdownMenu(financeItemMenuSettings,dropdownMenuFinance);
@@ -261,7 +261,7 @@ async function changeCurrentMenuItem(menuItem){
 			})
 			
 			closeModalButton.addEventListener(userEvent,(event)=>{
-				closeSettinsModal(event);
+				closeSettingsModal(event);
 			});
 		})
 		
@@ -274,7 +274,7 @@ async function changeCurrentMenuItem(menuItem){
 		
 		userClickEvents.forEach((userEvent)=>{
 			closeModalButton.addEventListener(userEvent,(event)=>{
-				closeSettinsModal(event);
+				closeSettingsModal(event);
 			});
 		})
 		
@@ -305,7 +305,7 @@ async function changeCurrentMenuItem(menuItem){
 				handleRemoveTransactionGroupButton();
 			});
 			closeModalButton.addEventListener(userEvent,(event)=>{
-				closeSettinsModal(event);
+				closeSettingsModal(event);
 			});
 		})
 		
