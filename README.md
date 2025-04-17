@@ -1,6 +1,6 @@
 # Planejamento Pessoal
 
-Free open-sourced software dedicated to organizing monthly expenses, with possibility to create a group of expenses (like weddings, trips, etc).
+Software dedicated to organizing monthly expenses, with possibility to create a group of expenses (like weddings, trips, etc). Web application designed with the purpose to practice Spring Boot Framework and pure HTML/CSS/JS.
 
 ## Technologies
 
