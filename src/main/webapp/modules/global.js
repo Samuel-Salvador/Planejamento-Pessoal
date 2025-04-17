@@ -12,7 +12,7 @@ export const userClickEvents = ['touchstart','click'];
 
 //verifies if there's no empty values in the forms
 export function formValidated(validation) {
-  if (validation == "") {
+  if (validation === "") {
     alert("Todos os campos precisam ser preenchidos!");
     return false;
   }else return true;
