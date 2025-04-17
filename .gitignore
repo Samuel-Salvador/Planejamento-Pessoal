@@ -16,7 +16,6 @@ system.properties
 .project
 .settings/
 .springBeans/
-/target
 .metadata
 
 ### NetBeans ###
