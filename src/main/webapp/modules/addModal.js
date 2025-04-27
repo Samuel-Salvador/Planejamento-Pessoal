@@ -42,7 +42,7 @@ async function postAndAddLastTransactionToArray(options){
 	const monthTransactionJSON = await monthTransactionResponse.json();
 	addTransaction(monthTransactionJSON[monthTransactionJSON.length-1]);
 	setTotal(transactionsArray);
-	setUpChart();
+	await setUpChart();
 }
 
 async function httpPostTransaction(){
@@ -72,8 +72,8 @@ async function httpPostTransaction(){
 									}),
 								};
 				await fetch(userUrl,options);
-				updateBalanceHeader();
-				changePlaceholdersUserData();
+				await updateBalanceHeader();
+				await changePlaceholdersUserData();
 			}
 			const options= {
 				method: "POST",
@@ -89,7 +89,7 @@ async function httpPostTransaction(){
 										group: formValueGroup,
 										user: loggedUserId}),
 				};
-				postAndAddLastTransactionToArray(options);
+				await postAndAddLastTransactionToArray(options);
 				resetFormValues();
 				closeAdditionModal(new Event("click"));
 	}
@@ -107,9 +107,18 @@ export function createOptionSelectionGroup(i,element){
 export async function initModal() {
 
 	userClickEvents.forEach((userEvent)=>{
-		closeModalButton.addEventListener(userEvent,closeAdditionModal);
-		addTransactionModal.addEventListener(userEvent,clickOutsideModal);
-		modalConfirmButton.addEventListener(userEvent,httpPostTransaction);
+		closeModalButton.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			closeAdditionModal();
+		});
+		addTransactionModal.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			clickOutsideModal();
+		});
+		modalConfirmButton.addEventListener(userEvent,(event)=>{
+			event.preventDefault();
+			httpPostTransaction();
+		});
 	})
 	
 	addTransactionModal.addEventListener('keydown', (event) => {
