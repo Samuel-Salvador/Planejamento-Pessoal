@@ -107,14 +107,8 @@ export function createOptionSelectionGroup(i,element){
 export async function initModal() {
 
 	userClickEvents.forEach((userEvent)=>{
-		closeModalButton.addEventListener(userEvent,(event)=>{
-			event.preventDefault();
-			closeAdditionModal();
-		});
-		addTransactionModal.addEventListener(userEvent,(event)=>{
-			event.preventDefault();
-			clickOutsideModal();
-		});
+		closeModalButton.addEventListener(userEvent, closeAdditionModal );
+		addTransactionModal.addEventListener(userEvent, clickOutsideModal);
 		modalConfirmButton.addEventListener(userEvent,(event)=>{
 			event.preventDefault();
 			httpPostTransaction();
