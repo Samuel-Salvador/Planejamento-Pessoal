@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.planejamentopessoal.app.domains.user.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UserDTO> insert(@RequestBody UserCreationDTO userCreationDTO, UriComponentsBuilder uriBuilder){
+	public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserCreationDTO userCreationDTO, UriComponentsBuilder uriBuilder){
 		User newUser = userService.insert(userCreationDTO);
 		
 		URI uri = uriBuilder.path("/users/{id}").buildAndExpand(newUser.getId()).toUri();
@@ -49,7 +50,7 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserUpdateDTO updateDTO){
+	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO updateDTO){
 		var user = userService.update(id,updateDTO);
 		return ResponseEntity.ok().body(new UserDTO(user));
 	}
