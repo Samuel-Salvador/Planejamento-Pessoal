@@ -2,8 +2,12 @@ package com.planejamentopessoal.app.domains.transaction;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.planejamentopessoal.app.domains.transaction.dto.TransactionCreationDTO;
+import com.planejamentopessoal.app.domains.transaction.dto.TransactionDTO;
 import com.planejamentopessoal.app.domains.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,12 +24,10 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@Table(name="transaction")
+@Table(name="transactions")
 @Entity
-public class Transaction implements Serializable{
+public class Transaction{
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,13 +38,45 @@ public class Transaction implements Serializable{
 	private Integer installments;
 	private String category;
 	private String type;
+
 	@Column(name="group_name")
 	private String group;
 	
 	private Integer currentInstallment;
 
-	@ManyToOne
-	@JoinColumn(name="id_usuario",nullable = false)
-	private User user;
+    private Long userId;
+
+    public Transaction(TransactionCreationDTO transactionDTO){
+        this.name = transactionDTO.name();
+        this.date = transactionDTO.date();
+        this.price = transactionDTO.price();
+        this.installments = transactionDTO.installments();
+        this.category = transactionDTO.category();
+        this.type = transactionDTO.type();
+        this.group = transactionDTO.group();
+        this.userId = transactionDTO.userId();
+    }
+
+    public static List<Transaction> generateInstallments(TransactionCreationDTO transactionDTO){
+        List<Transaction> transactionList = new ArrayList<>();
+
+        for(int i = 1 ; i <= transactionDTO.installments() ; i++) {
+            Transaction installment = new Transaction(
+                    null,
+                    transactionDTO.name(),
+                    transactionDTO.date(),
+                    transactionDTO.price() / transactionDTO.installments(),
+                    transactionDTO.installments(),
+                    transactionDTO.category(),
+                    transactionDTO.type(),
+                    transactionDTO.group(),
+                    i,
+                    transactionDTO.userId()
+            );
+            transactionList.add(installment);
+
+        }
+        return transactionList;
+    }
 
 }

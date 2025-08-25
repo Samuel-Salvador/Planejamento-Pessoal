@@ -1,17 +1,15 @@
-package com.planejamentopessoal.app.domains.user;
+package com.planejamentopessoal.app.domains.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.planejamentopessoal.app.domains.transaction.Transaction;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
+import com.planejamentopessoal.app.domains.user.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public record UserDTO(
 
@@ -30,8 +28,7 @@ public record UserDTO(
         Double income,
         Double balance,
         Integer invoiceClosingDate,
-        List<String> transactionGroups,
-        List<Transaction> transactionList
+        Set<String> transactionGroups
 
 ) {
     public UserDTO(User user) {
@@ -43,8 +40,7 @@ public record UserDTO(
                 user.getIncome(),
                 user.getBalance(),
                 user.getInvoiceClosingDate(),
-                user.getTransactionGroups(),
-                user.getTransactionList()
+                user.getTransactionGroups()
         );
     }
 }

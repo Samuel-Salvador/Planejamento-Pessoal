@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.planejamentopessoal.app.domains.transaction.dto.TransactionCreationDTO;
+import com.planejamentopessoal.app.domains.transaction.dto.TransactionDTO;
 import com.planejamentopessoal.app.domains.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,34 +48,25 @@ public class TransactionService {
 		return transactionRepository.findByCategory(id,month,year,category);
 	}
 	
-	public List<Transaction> insert(Transaction newTransaction) {
-		
-		List<Transaction> transactionList = new ArrayList<>();
-		
-		if(newTransaction.getInstallments()==1) {
+	public List<TransactionDTO> insert(TransactionCreationDTO dto) {
+
+		List<TransactionDTO> dtoList = new ArrayList<>();
+
+
+		if(dto.installments() == 1) {
+            Transaction newTransaction = new Transaction(dto);
 			newTransaction.setCurrentInstallment(1);
-			transactionList.add(newTransaction);
 			transactionRepository.save(newTransaction);
+
+            dtoList.add(new TransactionDTO(newTransaction));
 		}else {
-			for(int i = 1 ; i < newTransaction.getInstallments() ; i++) {
-                Transaction installment = new Transaction(
-                        null,
-                        newTransaction.getName(),
-                        newTransaction.getDate(),
-                        newTransaction.getPrice() / newTransaction.getInstallments(),
-                        newTransaction.getInstallments(),
-                        newTransaction.getCategory(),
-                        newTransaction.getType(),
-                        newTransaction.getGroup(),
-                        i,
-                        newTransaction.getUser()
-                );
-                transactionList.add(installment);
-                transactionRepository.save(installment);
-			}
-		}
-		return transactionList;
-	}
+            var transactionList = Transaction.generateInstallments(dto);
+            transactionRepository.saveAll(transactionList);
+            transactionList.forEach(t-> dtoList.add(new TransactionDTO(t)));
+        }
+		return dtoList;
+    }
+
 	
 	public void delete(Long id) {
 		transactionRepository.deleteById(id);

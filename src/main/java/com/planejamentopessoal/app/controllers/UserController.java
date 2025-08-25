@@ -2,14 +2,15 @@ package com.planejamentopessoal.app.controllers;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import com.planejamentopessoal.app.domains.user.*;
+import com.planejamentopessoal.app.domains.user.dto.UserCreationDTO;
+import com.planejamentopessoal.app.domains.user.dto.UserDTO;
+import com.planejamentopessoal.app.domains.user.dto.UserUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController

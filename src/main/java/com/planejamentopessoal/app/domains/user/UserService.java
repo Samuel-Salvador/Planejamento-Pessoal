@@ -1,8 +1,10 @@
 package com.planejamentopessoal.app.domains.user;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.planejamentopessoal.app.domains.user.dto.UserCreationDTO;
+import com.planejamentopessoal.app.domains.user.dto.UserDTO;
+import com.planejamentopessoal.app.domains.user.dto.UserUpdateDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class UserService {
     @Transactional
 	public User insert(UserCreationDTO userCreationDTO) {
 		User newUser = new User(userCreationDTO);
+        newUser.getTransactionGroups().add("Dia a dia");
         repository.save(newUser);
 		return newUser;
 	}
@@ -34,19 +37,20 @@ public class UserService {
     @Transactional
 	public User update(Long id, UserUpdateDTO updateData) {
 		User repositoryUser = repository.getReferenceById(id);
-		
-		repositoryUser.setTransactionGroups(updateData.transactionGroups());
 		repositoryUser.setInvoiceClosingDate(updateData.invoiceClosingDate());
 		
-		if(	updateData.balance() != null && updateData.income() != null) {
-			repositoryUser.setBalance(updateData.balance());
+		if(updateData.income() != null) {
 			repositoryUser.setIncome(updateData.income());
-
-		} else if(updateData.balance() != null) {
+		}
+        if(updateData.balance() != null) {
             repositoryUser.setBalance(updateData.balance());
+        }
+        if (updateData.transactionGroup() != null){
+            if(updateData.transactionGroup().startsWith("-")){
+                var tgToBeRemoved = updateData.transactionGroup().replace("-","");
+                repositoryUser.getTransactionGroups().remove(tgToBeRemoved);
 
-        } else if(updateData.income() != null) {
-            repositoryUser.setIncome(updateData.income());
+            }else repositoryUser.getTransactionGroups().add(updateData.transactionGroup());
         }
 
         return repositoryUser;

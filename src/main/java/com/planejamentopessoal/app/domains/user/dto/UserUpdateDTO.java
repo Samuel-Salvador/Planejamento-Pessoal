@@ -1,4 +1,4 @@
-package com.planejamentopessoal.app.domains.user;
+package com.planejamentopessoal.app.domains.user.dto;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -12,7 +12,7 @@ public record UserUpdateDTO(
 
         @NotNull
         Integer invoiceClosingDate,
-        @NotNull
-        List<String> transactionGroups
+
+        String transactionGroup
 ) {
 }

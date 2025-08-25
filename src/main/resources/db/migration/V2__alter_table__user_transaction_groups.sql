@@ -1,0 +1,3 @@
+
+ALTER TABLE user_transaction_groups
+ADD COLUMN id BIGSERIAL PRIMARY KEY;
