@@ -1,8 +1,6 @@
-package com.planejamentopessoal.app.repositories;
+package com.planejamentopessoal.app.domains.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.planejamentopessoal.app.entities.User;
 
 public interface UserRepository extends JpaRepository<User,Long> {
 

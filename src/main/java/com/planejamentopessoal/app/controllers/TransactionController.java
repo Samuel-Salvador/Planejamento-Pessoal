@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.planejamentopessoal.app.entities.Transaction;
-import com.planejamentopessoal.app.services.TransactionService;
+import com.planejamentopessoal.app.domains.transaction.Transaction;
+import com.planejamentopessoal.app.domains.transaction.TransactionService;
 
 @RestController
 @RequestMapping(value = "/transactions")

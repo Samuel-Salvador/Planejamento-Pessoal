@@ -2,14 +2,14 @@ package com.planejamentopessoal.app.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
+import com.planejamentopessoal.app.domains.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.planejamentopessoal.app.entities.User;
-import com.planejamentopessoal.app.services.UserService;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -18,27 +18,28 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
-		List<User> list = userService.findAll();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<UserDTO>> findAll(){
+		List<UserDTO> userDTOList = userService.findAll();
+
+		return ResponseEntity.ok().body(userDTOList);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id){
-		User obj = userService.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+		UserDTO userDTO = userService.findById(id);
+
+		return ResponseEntity.ok().body(userDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj){
-		obj = userService.insert(obj);
+	public ResponseEntity<UserDTO> insert(@RequestBody UserCreationDTO userCreationDTO, UriComponentsBuilder uriBuilder){
+		User newUser = userService.insert(userCreationDTO);
 		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-			.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = uriBuilder.path("/users/{id}").buildAndExpand(newUser.getId()).toUri();
 			
-		return ResponseEntity.created(uri).body(obj);		
+		return ResponseEntity.created(uri).body(new UserDTO(newUser));
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -48,9 +49,9 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
-		obj = userService.update(id,obj);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserUpdateDTO updateDTO){
+		var user = userService.update(id,updateDTO);
+		return ResponseEntity.ok().body(new UserDTO(user));
 	}
 	
 	
