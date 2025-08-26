@@ -6,6 +6,7 @@ import java.util.List;
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionCreationDTO;
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionDTO;
 import com.planejamentopessoal.app.domains.user.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class TransactionController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<List<TransactionDTO>> insert(@RequestBody TransactionCreationDTO transactionDTO){
+	public ResponseEntity<List<TransactionDTO>> insert(@RequestBody @Valid TransactionCreationDTO transactionDTO){
 		List<TransactionDTO> dtoList = transactionService.insert(transactionDTO).stream().map(TransactionDTO::new).toList();
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
 		return ResponseEntity.created(uri).body(dtoList);
