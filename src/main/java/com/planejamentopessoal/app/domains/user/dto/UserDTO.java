@@ -7,6 +7,7 @@ import java.util.Set;
 
 public record UserDTO(
 
+        Long id,
 
         String name,
 
@@ -26,7 +27,9 @@ public record UserDTO(
 
 ) {
     public UserDTO(User user) {
-        this(user.getName(),
+        this(
+                user.getId(),
+                user.getName(),
                 user.getUsername(),
                 user.getBirthday(),
                 user.getEmail(),
