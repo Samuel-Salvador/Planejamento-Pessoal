@@ -27,34 +27,27 @@ public class TransactionController {
 	
 	@GetMapping
 	public ResponseEntity<List<TransactionDTO>> findAll(){
-		List<Transaction> transactionList = transactionService.findAll();
-        List<TransactionDTO> dtoList = transactionList.stream().map(TransactionDTO::new).toList();
+        List<TransactionDTO> dtoList = transactionService.findAll().stream().map(TransactionDTO::new).toList();
 		return ResponseEntity.ok().body(dtoList);
 	}
 
 	@GetMapping(value = "/{user_id}/{month}/{year}")
-	public ResponseEntity<List<Transaction>> findByMonth(@PathVariable Long user_id,@PathVariable Integer month,@PathVariable Integer year){
-		List<Transaction> list = transactionService.findByMonth(user_id,month,year);
-		return ResponseEntity.ok().body(list);
-	}
-	
-	@GetMapping(value = "/{user_id}/{month}/{year}/{category}")
-	public ResponseEntity<List<Transaction>> findByCategory(@PathVariable Long user_id,@PathVariable Integer month,@PathVariable Integer year,@PathVariable String category){
-		List<Transaction> list = transactionService.findByCategory(user_id,month,year,category);
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<TransactionDTO>> findByMonth(@PathVariable Long user_id,@PathVariable Integer month,@PathVariable Integer year){
+		List<TransactionDTO> dtoList = transactionService.findByMonth(user_id,month,year).stream().map(TransactionDTO::new).toList();
+		return ResponseEntity.ok().body(dtoList);
 	}
 	
 	@GetMapping(value = "/{user_id}/{transactionGroup}")
-	public ResponseEntity<List<Transaction>> findByTrnsactionGroup(@PathVariable Long user_id, @PathVariable String transactionGroup){
-		List<Transaction> list = transactionService.findByTransactionGroup(user_id,transactionGroup);
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<TransactionDTO>> findByTransactionGroup(@PathVariable Long user_id, @PathVariable String transactionGroup){
+		List<TransactionDTO> dtoList = transactionService.findByTransactionGroup(user_id,transactionGroup).stream().map(TransactionDTO::new).toList();
+		return ResponseEntity.ok().body(dtoList);
 	}
 	
 	@PostMapping
 	public ResponseEntity<List<TransactionDTO>> insert(@RequestBody TransactionCreationDTO transactionDTO){
-		List<TransactionDTO> transactionList = transactionService.insert(transactionDTO);
+		List<TransactionDTO> dtoList = transactionService.insert(transactionDTO).stream().map(TransactionDTO::new).toList();
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
-		return ResponseEntity.created(uri).body(transactionList);
+		return ResponseEntity.created(uri).body(dtoList);
 	}
 	
 	@DeleteMapping(value = "/{id}")
