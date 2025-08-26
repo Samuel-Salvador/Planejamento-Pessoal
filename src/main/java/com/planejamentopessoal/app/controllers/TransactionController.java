@@ -17,7 +17,6 @@ import com.planejamentopessoal.app.domains.transaction.TransactionService;
 
 @RestController
 @RequestMapping(value = "/transactions")
-@CrossOrigin(origins = "https://planejamento-pessoal.vercel.app")
 public class TransactionController {
 	
 	@Autowired

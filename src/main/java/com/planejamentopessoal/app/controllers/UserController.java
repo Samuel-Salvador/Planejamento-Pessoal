@@ -15,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/users")
-@CrossOrigin(origins = "https://planejamento-pessoal.vercel.app")
 public class UserController {
 	
 	@Autowired
