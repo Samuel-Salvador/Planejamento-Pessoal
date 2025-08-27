@@ -20,10 +20,10 @@ public class SpringDocConfigurations {
                         .addSecuritySchemes("bearer-key",
                                 new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")))
                 .info(new Info()
-                        .title("ForumHub - API")
+                        .title("Planejamento Pessoal - API")
                         .description("API REST de organização de despesas mensais e agrupamento por eventos (ex.: viagem, casamento, reformas). Projetada para praticar Spring Boot e seus módulos.")
                         .contact(new Contact()
-                                .name("Time Backend")
+                                .name("samuel20018@gmail.com")
                                 .email("samuel20018@gmail.com")));
     }
 
