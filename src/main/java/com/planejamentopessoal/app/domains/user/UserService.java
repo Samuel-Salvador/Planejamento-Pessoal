@@ -7,13 +7,18 @@ import com.planejamentopessoal.app.domains.user.dto.UserDTO;
 import com.planejamentopessoal.app.domains.user.dto.UserUpdateDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class UserService {
 
 	@Autowired
 	private UserRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	public List<UserDTO> findAll() {
 		List<User> userList = repository.findAll();
@@ -23,7 +28,11 @@ public class UserService {
     @Transactional
 	public User insert(UserCreationDTO userCreationDTO) {
 		User newUser = new User(userCreationDTO);
+        if (repository.existsByEmail(userCreationDTO.email()) || repository.existsByUsername(userCreationDTO.username())){
+            throw new IllegalArgumentException("Email ou nome de usuário existente!");
+        }
         newUser.getTransactionGroups().add("Dia a dia");
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         repository.save(newUser);
 		return newUser;
 	}

@@ -7,7 +7,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -18,10 +21,20 @@ public class ErrorHandler {
     }
 
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class )
     public ResponseEntity<List<ValidationErrorsData>> error400Handler(MethodArgumentNotValidException exception){
         var errors = exception.getFieldErrors();
         return ResponseEntity.badRequest().body(errors.stream().map(ValidationErrorsData::new).toList());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<List<Map<String,String>>> userCreationBadRequest(IllegalArgumentException exception){
+        Map<String,String> json = new HashMap<String, String>();
+        json.put("field","username/email");
+        json.put("message",exception.getMessage());
+        List<Map<String,String>> list = new ArrayList<>();
+        list.add(json);
+        return ResponseEntity.badRequest().body(list);
     }
 
     private record ValidationErrorsData(String field, String message){
@@ -29,4 +42,5 @@ public class ErrorHandler {
             this(error.getField(), error.getDefaultMessage());
         }
     }
+
 }
