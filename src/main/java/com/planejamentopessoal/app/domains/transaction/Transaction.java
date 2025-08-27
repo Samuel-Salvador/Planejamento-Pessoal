@@ -64,7 +64,7 @@ public class Transaction{
             Transaction installment = new Transaction(
                     null,
                     transactionDTO.name(),
-                    transactionDTO.date(),
+                    transactionDTO.date().plusMonths(i-1),
                     transactionDTO.price() / transactionDTO.installments(),
                     transactionDTO.installments(),
                     transactionDTO.category(),
