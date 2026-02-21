@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TransactionRepository extends JpaRepository<Transaction,Long>{
 
-	@Query(value = "SELECT * FROM transactions WHERE user_id= ?1 AND date >= ?2 AND date <= ?3", nativeQuery = true)
+	@Query(value = "SELECT * FROM transactions WHERE user_id= ?1 AND date >= ?2 AND date <= ?3 ORDER BY date DESC", nativeQuery = true)
 	List<Transaction> findByMonth(Long user_id,LocalDate startDate,LocalDate endDate);
 	
-	@Query(value = "SELECT * FROM transactions WHERE user_id=?1 AND group_name=?2", nativeQuery = true)
+	@Query(value = "SELECT * FROM transactions WHERE user_id=?1 AND group_name=?2 ORDER BY date DESC", nativeQuery = true)
 	List<Transaction> findByGroup(Long user_id, String transactionGroup);
 }
