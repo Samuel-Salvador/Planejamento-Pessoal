@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionCreationDTO;
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionDTO;
+import com.planejamentopessoal.app.domains.transaction.dto.TransactionUpdateDTO;
 import com.planejamentopessoal.app.domains.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,12 @@ public class TransactionController {
 		return ResponseEntity.created(uri).body(dtoList);
 	}
 	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<TransactionDTO> update(@PathVariable Long id, @RequestBody TransactionUpdateDTO updateDTO){
+		Transaction transaction = transactionService.update(id, updateDTO);
+		return ResponseEntity.ok().body(new TransactionDTO(transaction));
+	}
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		transactionService.delete(id);

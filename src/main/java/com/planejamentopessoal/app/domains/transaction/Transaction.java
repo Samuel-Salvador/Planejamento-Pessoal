@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionCreationDTO;
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionDTO;
+import com.planejamentopessoal.app.domains.transaction.dto.TransactionUpdateDTO;
 import com.planejamentopessoal.app.domains.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,7 +52,7 @@ public class Transaction{
         this.date = transactionDTO.date();
         this.price = transactionDTO.price();
         this.installments = transactionDTO.installments();
-        this.category = transactionDTO.category();
+        this.category = (transactionDTO.category() == null || transactionDTO.category().isBlank()) ? "Sem categoria" : transactionDTO.category();
         this.type = transactionDTO.type();
         this.group = transactionDTO.group();
         this.userId = transactionDTO.userId();
@@ -59,6 +60,7 @@ public class Transaction{
 
     public static List<Transaction> generateInstallments(TransactionCreationDTO transactionDTO){
         List<Transaction> transactionList = new ArrayList<>();
+        String category = (transactionDTO.category() == null || transactionDTO.category().isBlank()) ? "Sem categoria" : transactionDTO.category();
 
         for(int i = 1 ; i <= transactionDTO.installments() ; i++) {
             Transaction installment = new Transaction(
@@ -67,7 +69,7 @@ public class Transaction{
                     transactionDTO.date().plusMonths(i-1),
                     transactionDTO.price() / transactionDTO.installments(),
                     transactionDTO.installments(),
-                    transactionDTO.category(),
+                    category,
                     transactionDTO.type(),
                     transactionDTO.group(),
                     i,
@@ -77,6 +79,15 @@ public class Transaction{
 
         }
         return transactionList;
+    }
+
+    public void update(TransactionUpdateDTO dto) {
+        if (dto.name() != null && !dto.name().isBlank()) {
+            this.name = dto.name().trim();
+        }
+        if (dto.category() != null) {
+            this.category = dto.category().isBlank() ? "Sem categoria" : dto.category().trim();
+        }
     }
 
 }

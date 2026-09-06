@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionCreationDTO;
 import com.planejamentopessoal.app.domains.transaction.dto.TransactionDTO;
+import com.planejamentopessoal.app.domains.transaction.dto.TransactionUpdateDTO;
 import com.planejamentopessoal.app.domains.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,13 @@ public class TransactionService {
             transactionRepository.saveAll(transactionList);
         }
 		return transactionList;
+    }
+
+    @Transactional
+    public Transaction update(Long id, TransactionUpdateDTO dto) {
+        Transaction transaction = transactionRepository.getReferenceById(id);
+        transaction.update(dto);
+        return transaction;
     }
 
 	@Transactional

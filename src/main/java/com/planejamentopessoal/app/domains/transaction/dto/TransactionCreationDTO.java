@@ -16,7 +16,6 @@ public record TransactionCreationDTO(
         Double price,
         @NotNull
         Integer installments,
-        @NotBlank
         String category,
 
         @NotBlank
