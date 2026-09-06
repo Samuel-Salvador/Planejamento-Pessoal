@@ -50,6 +50,12 @@ public class TransactionController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
 		return ResponseEntity.created(uri).body(dtoList);
 	}
+
+	@PostMapping(value = "/batch")
+	public ResponseEntity<List<TransactionDTO>> insertBatch(@RequestBody @Valid List<TransactionCreationDTO> transactionDTOList){
+		List<TransactionDTO> dtoList = transactionService.insertBatch(transactionDTOList).stream().map(TransactionDTO::new).toList();
+		return ResponseEntity.ok().body(dtoList);
+	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<TransactionDTO> update(@PathVariable Long id, @RequestBody TransactionUpdateDTO updateDTO){

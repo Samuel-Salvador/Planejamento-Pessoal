@@ -60,6 +60,15 @@ public class TransactionService {
     }
 
     @Transactional
+    public List<Transaction> insertBatch(List<TransactionCreationDTO> dtoList) {
+        List<Transaction> allTransactions = new ArrayList<>();
+        for (TransactionCreationDTO dto : dtoList) {
+            allTransactions.addAll(this.insert(dto));
+        }
+        return allTransactions;
+    }
+
+    @Transactional
     public Transaction update(Long id, TransactionUpdateDTO dto) {
         Transaction transaction = transactionRepository.getReferenceById(id);
         transaction.update(dto);
