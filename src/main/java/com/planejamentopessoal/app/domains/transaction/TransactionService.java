@@ -80,4 +80,28 @@ public class TransactionService {
 		transactionRepository.deleteById(id);
 	}
 
+    @Transactional
+    public int deleteForCsvReplacement(Long userId, Integer month, Integer year, boolean creditOnly) {
+        List<Transaction> existing = findByMonth(userId, month, year);
+
+        List<Transaction> toDelete = existing.stream()
+            .filter(t -> {
+                // Preserva parcelas geradas por compras de meses anteriores
+                if (t.getCurrentInstallment() != null && t.getCurrentInstallment() > 1) {
+                    return false;
+                }
+                // Se creditOnly for true, preserva transações que não são de crédito (Débito, Pix)
+                if (creditOnly && !"Crédito".equalsIgnoreCase(t.getType())) {
+                    return false;
+                }
+                return true;
+            })
+            .toList();
+
+        if (!toDelete.isEmpty()) {
+            transactionRepository.deleteAll(toDelete);
+        }
+        return toDelete.size();
+    }
+
 }

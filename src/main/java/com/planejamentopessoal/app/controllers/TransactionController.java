@@ -68,4 +68,15 @@ public class TransactionController {
 		transactionService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	@DeleteMapping(value = "/{user_id}/{month}/{year}/replace")
+	public ResponseEntity<Void> deleteForReplacement(
+			@PathVariable Long user_id,
+			@PathVariable Integer month,
+			@PathVariable Integer year,
+			@RequestParam(defaultValue = "true") boolean creditOnly
+	){
+		transactionService.deleteForCsvReplacement(user_id, month, year, creditOnly);
+		return ResponseEntity.noContent().build();
+	}
 }
